@@ -1,0 +1,13 @@
+product_id,product_name,category,current_stock,on_order,lead_time_days,min_order_qty,case_pack_size
+PROD-001,Aashirvaad Atta 5kg,Groceries,18,0,4,10,5
+PROD-002,Fortune Sunflower Oil 1L,Groceries,8,12,5,15,6
+PROD-003,Tata Salt 1kg,Groceries,45,0,3,25,10
+PROD-004,Amul Butter 500g,Dairy & Breakfast,4,0,2,6,4
+PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,40,20,1,20,10
+PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,15,24,4,20,12
+PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,80,0,3,24,12
+PROD-008,Taj Mahal Tea 500g,Beverages,2,0,6,5,4
+PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,10,0,7,8,4
+PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,0,0,5,6,6
+PROD-011,Classmate Notebook 172 Pgs,Stationery,25,0,5,10,5
+PROD-012,Cello Butterflow Pen Blue,Stationery,35,40,4,50,20

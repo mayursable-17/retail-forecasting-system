@@ -1,0 +1,4 @@
+Date,Product_ID,Product_Name,Category,Quantity,Unit_Price,Revenue
+2026-10-01,SKU-101,Basmati Rice 1kg,Groceries,5,120.0,600.0
+2026-10-01,SKU-102,Sunflower Oil 1L,Groceries,3,145.0,435.0
+2026-10-02,SKU-101,Basmati Rice 1kg,Groceries,7,120.0,840.0

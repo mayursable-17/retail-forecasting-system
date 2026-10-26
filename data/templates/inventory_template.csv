@@ -1,0 +1,3 @@
+Product_ID,Product_Name,Category,Current_Stock,On_Order,Lead_Time_Days,Min_Order_Qty,Case_Pack_Size
+SKU-101,Basmati Rice 1kg,Groceries,25,10,5,10,5
+SKU-102,Sunflower Oil 1L,Groceries,12,0,7,15,6

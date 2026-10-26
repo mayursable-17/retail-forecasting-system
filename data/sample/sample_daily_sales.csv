@@ -1,0 +1,1081 @@
+sale_date,product_id,product_name,category,quantity_sold,revenue
+2026-07-28,PROD-001,Aashirvaad Atta 5kg,Groceries,11,2695.0
+2026-07-28,PROD-002,Fortune Sunflower Oil 1L,Groceries,18,2520.0
+2026-07-28,PROD-003,Tata Salt 1kg,Groceries,15,420.0
+2026-07-28,PROD-004,Amul Butter 500g,Dairy & Breakfast,7,1925.0
+2026-07-28,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,29,1566.0
+2026-07-28,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,22,1100.0
+2026-07-28,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,17,510.0
+2026-07-28,PROD-008,Taj Mahal Tea 500g,Beverages,6,2280.0
+2026-07-28,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,5,1050.0
+2026-07-28,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,6,750.0
+2026-07-28,PROD-011,Classmate Notebook 172 Pgs,Stationery,6,360.0
+2026-07-28,PROD-012,Cello Butterflow Pen Blue,Stationery,26,260.0
+2026-07-29,PROD-001,Aashirvaad Atta 5kg,Groceries,10,2450.0
+2026-07-29,PROD-002,Fortune Sunflower Oil 1L,Groceries,15,2100.0
+2026-07-29,PROD-003,Tata Salt 1kg,Groceries,21,588.0
+2026-07-29,PROD-004,Amul Butter 500g,Dairy & Breakfast,3,825.0
+2026-07-29,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,33,1782.0
+2026-07-29,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,30,1500.0
+2026-07-29,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,15,450.0
+2026-07-29,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-07-29,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,5,1050.0
+2026-07-29,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-07-29,PROD-011,Classmate Notebook 172 Pgs,Stationery,8,480.0
+2026-07-29,PROD-012,Cello Butterflow Pen Blue,Stationery,34,340.0
+2026-07-30,PROD-001,Aashirvaad Atta 5kg,Groceries,17,4165.0
+2026-07-30,PROD-002,Fortune Sunflower Oil 1L,Groceries,10,1400.0
+2026-07-30,PROD-003,Tata Salt 1kg,Groceries,24,672.0
+2026-07-30,PROD-004,Amul Butter 500g,Dairy & Breakfast,5,1375.0
+2026-07-30,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,32,1728.0
+2026-07-30,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,33,1650.0
+2026-07-30,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,17,510.0
+2026-07-30,PROD-008,Taj Mahal Tea 500g,Beverages,3,1140.0
+2026-07-30,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,11,2310.0
+2026-07-30,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,4,500.0
+2026-07-30,PROD-011,Classmate Notebook 172 Pgs,Stationery,10,600.0
+2026-07-30,PROD-012,Cello Butterflow Pen Blue,Stationery,25,250.0
+2026-07-31,PROD-001,Aashirvaad Atta 5kg,Groceries,10,2450.0
+2026-07-31,PROD-002,Fortune Sunflower Oil 1L,Groceries,17,2380.0
+2026-07-31,PROD-003,Tata Salt 1kg,Groceries,16,448.0
+2026-07-31,PROD-004,Amul Butter 500g,Dairy & Breakfast,5,1375.0
+2026-07-31,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,31,1674.0
+2026-07-31,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,21,1050.0
+2026-07-31,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,14,420.0
+2026-07-31,PROD-008,Taj Mahal Tea 500g,Beverages,7,2660.0
+2026-07-31,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,5,1050.0
+2026-07-31,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,2,250.0
+2026-07-31,PROD-011,Classmate Notebook 172 Pgs,Stationery,11,660.0
+2026-07-31,PROD-012,Cello Butterflow Pen Blue,Stationery,33,330.0
+2026-08-01,PROD-001,Aashirvaad Atta 5kg,Groceries,24,5880.0
+2026-08-01,PROD-002,Fortune Sunflower Oil 1L,Groceries,18,2520.0
+2026-08-01,PROD-003,Tata Salt 1kg,Groceries,36,1008.0
+2026-08-01,PROD-004,Amul Butter 500g,Dairy & Breakfast,8,2200.0
+2026-08-01,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,54,2916.0
+2026-08-01,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,34,1700.0
+2026-08-01,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,32,960.0
+2026-08-01,PROD-008,Taj Mahal Tea 500g,Beverages,10,3800.0
+2026-08-01,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,3,630.0
+2026-08-01,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,7,875.0
+2026-08-01,PROD-011,Classmate Notebook 172 Pgs,Stationery,16,960.0
+2026-08-01,PROD-012,Cello Butterflow Pen Blue,Stationery,48,480.0
+2026-08-02,PROD-001,Aashirvaad Atta 5kg,Groceries,17,4165.0
+2026-08-02,PROD-002,Fortune Sunflower Oil 1L,Groceries,18,2520.0
+2026-08-02,PROD-003,Tata Salt 1kg,Groceries,25,700.0
+2026-08-02,PROD-004,Amul Butter 500g,Dairy & Breakfast,12,3300.0
+2026-08-02,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,47,2538.0
+2026-08-02,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,34,1700.0
+2026-08-02,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,28,840.0
+2026-08-02,PROD-008,Taj Mahal Tea 500g,Beverages,7,2660.0
+2026-08-02,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,14,2940.0
+2026-08-02,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,11,1375.0
+2026-08-02,PROD-011,Classmate Notebook 172 Pgs,Stationery,14,840.0
+2026-08-02,PROD-012,Cello Butterflow Pen Blue,Stationery,47,470.0
+2026-08-03,PROD-001,Aashirvaad Atta 5kg,Groceries,14,3430.0
+2026-08-03,PROD-002,Fortune Sunflower Oil 1L,Groceries,21,2940.0
+2026-08-03,PROD-003,Tata Salt 1kg,Groceries,18,504.0
+2026-08-03,PROD-004,Amul Butter 500g,Dairy & Breakfast,6,1650.0
+2026-08-03,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,32,1728.0
+2026-08-03,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,25,1250.0
+2026-08-03,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,14,420.0
+2026-08-03,PROD-008,Taj Mahal Tea 500g,Beverages,2,760.0
+2026-08-03,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,9,1890.0
+2026-08-03,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,4,500.0
+2026-08-03,PROD-011,Classmate Notebook 172 Pgs,Stationery,6,360.0
+2026-08-03,PROD-012,Cello Butterflow Pen Blue,Stationery,26,260.0
+2026-08-04,PROD-001,Aashirvaad Atta 5kg,Groceries,14,3430.0
+2026-08-04,PROD-002,Fortune Sunflower Oil 1L,Groceries,18,2520.0
+2026-08-04,PROD-003,Tata Salt 1kg,Groceries,21,588.0
+2026-08-04,PROD-004,Amul Butter 500g,Dairy & Breakfast,4,1100.0
+2026-08-04,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,21,1134.0
+2026-08-04,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,31,1550.0
+2026-08-04,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,18,540.0
+2026-08-04,PROD-008,Taj Mahal Tea 500g,Beverages,7,2660.0
+2026-08-04,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,6,1260.0
+2026-08-04,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,4,500.0
+2026-08-04,PROD-011,Classmate Notebook 172 Pgs,Stationery,9,540.0
+2026-08-04,PROD-012,Cello Butterflow Pen Blue,Stationery,29,290.0
+2026-08-05,PROD-001,Aashirvaad Atta 5kg,Groceries,19,4655.0
+2026-08-05,PROD-002,Fortune Sunflower Oil 1L,Groceries,11,1540.0
+2026-08-05,PROD-003,Tata Salt 1kg,Groceries,13,364.0
+2026-08-05,PROD-004,Amul Butter 500g,Dairy & Breakfast,5,1375.0
+2026-08-05,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,41,2214.0
+2026-08-05,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,18,900.0
+2026-08-05,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,21,630.0
+2026-08-05,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-08-05,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,11,2310.0
+2026-08-05,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,2,250.0
+2026-08-05,PROD-011,Classmate Notebook 172 Pgs,Stationery,17,1020.0
+2026-08-05,PROD-012,Cello Butterflow Pen Blue,Stationery,32,320.0
+2026-08-06,PROD-001,Aashirvaad Atta 5kg,Groceries,10,2450.0
+2026-08-06,PROD-002,Fortune Sunflower Oil 1L,Groceries,17,2380.0
+2026-08-06,PROD-003,Tata Salt 1kg,Groceries,24,672.0
+2026-08-06,PROD-004,Amul Butter 500g,Dairy & Breakfast,6,1650.0
+2026-08-06,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,27,1458.0
+2026-08-06,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,29,1450.0
+2026-08-06,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,11,330.0
+2026-08-06,PROD-008,Taj Mahal Tea 500g,Beverages,4,1520.0
+2026-08-06,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,9,1890.0
+2026-08-06,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,6,750.0
+2026-08-06,PROD-011,Classmate Notebook 172 Pgs,Stationery,10,600.0
+2026-08-06,PROD-012,Cello Butterflow Pen Blue,Stationery,22,220.0
+2026-08-07,PROD-001,Aashirvaad Atta 5kg,Groceries,14,3430.0
+2026-08-07,PROD-002,Fortune Sunflower Oil 1L,Groceries,13,1820.0
+2026-08-07,PROD-003,Tata Salt 1kg,Groceries,26,728.0
+2026-08-07,PROD-004,Amul Butter 500g,Dairy & Breakfast,5,1375.0
+2026-08-07,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,35,1890.0
+2026-08-07,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,28,1400.0
+2026-08-07,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,20,600.0
+2026-08-07,PROD-008,Taj Mahal Tea 500g,Beverages,7,2660.0
+2026-08-07,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-08-07,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,9,1125.0
+2026-08-07,PROD-011,Classmate Notebook 172 Pgs,Stationery,3,180.0
+2026-08-07,PROD-012,Cello Butterflow Pen Blue,Stationery,28,280.0
+2026-08-08,PROD-001,Aashirvaad Atta 5kg,Groceries,17,4165.0
+2026-08-08,PROD-002,Fortune Sunflower Oil 1L,Groceries,25,3500.0
+2026-08-08,PROD-003,Tata Salt 1kg,Groceries,26,728.0
+2026-08-08,PROD-004,Amul Butter 500g,Dairy & Breakfast,15,4125.0
+2026-08-08,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,46,2484.0
+2026-08-08,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,47,2350.0
+2026-08-08,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,20,600.0
+2026-08-08,PROD-008,Taj Mahal Tea 500g,Beverages,12,4560.0
+2026-08-08,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,6,1260.0
+2026-08-08,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,9,1125.0
+2026-08-08,PROD-011,Classmate Notebook 172 Pgs,Stationery,13,780.0
+2026-08-08,PROD-012,Cello Butterflow Pen Blue,Stationery,40,400.0
+2026-08-09,PROD-001,Aashirvaad Atta 5kg,Groceries,18,4410.0
+2026-08-09,PROD-002,Fortune Sunflower Oil 1L,Groceries,12,1680.0
+2026-08-09,PROD-003,Tata Salt 1kg,Groceries,20,560.0
+2026-08-09,PROD-004,Amul Butter 500g,Dairy & Breakfast,7,1925.0
+2026-08-09,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,40,2160.0
+2026-08-09,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,42,2100.0
+2026-08-09,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,27,810.0
+2026-08-09,PROD-008,Taj Mahal Tea 500g,Beverages,4,1520.0
+2026-08-09,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,7,1470.0
+2026-08-09,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,6,750.0
+2026-08-09,PROD-011,Classmate Notebook 172 Pgs,Stationery,17,1020.0
+2026-08-09,PROD-012,Cello Butterflow Pen Blue,Stationery,34,340.0
+2026-08-10,PROD-001,Aashirvaad Atta 5kg,Groceries,11,2695.0
+2026-08-10,PROD-002,Fortune Sunflower Oil 1L,Groceries,16,2240.0
+2026-08-10,PROD-003,Tata Salt 1kg,Groceries,19,532.0
+2026-08-10,PROD-004,Amul Butter 500g,Dairy & Breakfast,6,1650.0
+2026-08-10,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,34,1836.0
+2026-08-10,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,21,1050.0
+2026-08-10,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,16,480.0
+2026-08-10,PROD-008,Taj Mahal Tea 500g,Beverages,4,1520.0
+2026-08-10,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,9,1890.0
+2026-08-10,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,7,875.0
+2026-08-10,PROD-011,Classmate Notebook 172 Pgs,Stationery,5,300.0
+2026-08-10,PROD-012,Cello Butterflow Pen Blue,Stationery,26,260.0
+2026-08-11,PROD-001,Aashirvaad Atta 5kg,Groceries,8,1960.0
+2026-08-11,PROD-002,Fortune Sunflower Oil 1L,Groceries,11,1540.0
+2026-08-11,PROD-003,Tata Salt 1kg,Groceries,12,336.0
+2026-08-11,PROD-004,Amul Butter 500g,Dairy & Breakfast,11,3025.0
+2026-08-11,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,36,1944.0
+2026-08-11,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,29,1450.0
+2026-08-11,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,16,480.0
+2026-08-11,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-08-11,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,4,840.0
+2026-08-11,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,3,375.0
+2026-08-11,PROD-011,Classmate Notebook 172 Pgs,Stationery,13,780.0
+2026-08-11,PROD-012,Cello Butterflow Pen Blue,Stationery,33,330.0
+2026-08-12,PROD-001,Aashirvaad Atta 5kg,Groceries,13,3185.0
+2026-08-12,PROD-002,Fortune Sunflower Oil 1L,Groceries,14,1960.0
+2026-08-12,PROD-003,Tata Salt 1kg,Groceries,28,784.0
+2026-08-12,PROD-004,Amul Butter 500g,Dairy & Breakfast,9,2475.0
+2026-08-12,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,41,2214.0
+2026-08-12,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,19,950.0
+2026-08-12,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,22,660.0
+2026-08-12,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-08-12,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,10,2100.0
+2026-08-12,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,7,875.0
+2026-08-12,PROD-011,Classmate Notebook 172 Pgs,Stationery,8,480.0
+2026-08-12,PROD-012,Cello Butterflow Pen Blue,Stationery,34,340.0
+2026-08-13,PROD-001,Aashirvaad Atta 5kg,Groceries,13,3185.0
+2026-08-13,PROD-002,Fortune Sunflower Oil 1L,Groceries,20,2800.0
+2026-08-13,PROD-003,Tata Salt 1kg,Groceries,25,700.0
+2026-08-13,PROD-004,Amul Butter 500g,Dairy & Breakfast,9,2475.0
+2026-08-13,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,36,1944.0
+2026-08-13,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,23,1150.0
+2026-08-13,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,25,750.0
+2026-08-13,PROD-008,Taj Mahal Tea 500g,Beverages,7,2660.0
+2026-08-13,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,14,2940.0
+2026-08-13,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,8,1000.0
+2026-08-13,PROD-011,Classmate Notebook 172 Pgs,Stationery,8,480.0
+2026-08-13,PROD-012,Cello Butterflow Pen Blue,Stationery,28,280.0
+2026-08-14,PROD-001,Aashirvaad Atta 5kg,Groceries,18,4410.0
+2026-08-14,PROD-002,Fortune Sunflower Oil 1L,Groceries,13,1820.0
+2026-08-14,PROD-003,Tata Salt 1kg,Groceries,19,532.0
+2026-08-14,PROD-004,Amul Butter 500g,Dairy & Breakfast,8,2200.0
+2026-08-14,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,28,1512.0
+2026-08-14,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,25,1250.0
+2026-08-14,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,14,420.0
+2026-08-14,PROD-008,Taj Mahal Tea 500g,Beverages,3,1140.0
+2026-08-14,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,7,1470.0
+2026-08-14,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,6,750.0
+2026-08-14,PROD-011,Classmate Notebook 172 Pgs,Stationery,6,360.0
+2026-08-14,PROD-012,Cello Butterflow Pen Blue,Stationery,33,330.0
+2026-08-15,PROD-001,Aashirvaad Atta 5kg,Groceries,12,2940.0
+2026-08-15,PROD-002,Fortune Sunflower Oil 1L,Groceries,23,3220.0
+2026-08-15,PROD-003,Tata Salt 1kg,Groceries,19,532.0
+2026-08-15,PROD-004,Amul Butter 500g,Dairy & Breakfast,7,1925.0
+2026-08-15,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,42,2268.0
+2026-08-15,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,29,1450.0
+2026-08-15,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,30,900.0
+2026-08-15,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-08-15,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,4,840.0
+2026-08-15,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,8,1000.0
+2026-08-15,PROD-011,Classmate Notebook 172 Pgs,Stationery,12,720.0
+2026-08-15,PROD-012,Cello Butterflow Pen Blue,Stationery,39,390.0
+2026-08-16,PROD-001,Aashirvaad Atta 5kg,Groceries,16,3920.0
+2026-08-16,PROD-002,Fortune Sunflower Oil 1L,Groceries,25,3500.0
+2026-08-16,PROD-003,Tata Salt 1kg,Groceries,28,784.0
+2026-08-16,PROD-004,Amul Butter 500g,Dairy & Breakfast,8,2200.0
+2026-08-16,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,48,2592.0
+2026-08-16,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,30,1500.0
+2026-08-16,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,32,960.0
+2026-08-16,PROD-008,Taj Mahal Tea 500g,Beverages,6,2280.0
+2026-08-16,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,11,2310.0
+2026-08-16,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-08-16,PROD-011,Classmate Notebook 172 Pgs,Stationery,11,660.0
+2026-08-16,PROD-012,Cello Butterflow Pen Blue,Stationery,45,450.0
+2026-08-17,PROD-001,Aashirvaad Atta 5kg,Groceries,13,3185.0
+2026-08-17,PROD-002,Fortune Sunflower Oil 1L,Groceries,18,2520.0
+2026-08-17,PROD-003,Tata Salt 1kg,Groceries,21,588.0
+2026-08-17,PROD-004,Amul Butter 500g,Dairy & Breakfast,7,1925.0
+2026-08-17,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,38,2052.0
+2026-08-17,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,21,1050.0
+2026-08-17,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,22,660.0
+2026-08-17,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-08-17,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,12,2520.0
+2026-08-17,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-08-17,PROD-011,Classmate Notebook 172 Pgs,Stationery,10,600.0
+2026-08-17,PROD-012,Cello Butterflow Pen Blue,Stationery,36,360.0
+2026-08-18,PROD-001,Aashirvaad Atta 5kg,Groceries,16,3920.0
+2026-08-18,PROD-002,Fortune Sunflower Oil 1L,Groceries,16,2240.0
+2026-08-18,PROD-003,Tata Salt 1kg,Groceries,14,392.0
+2026-08-18,PROD-004,Amul Butter 500g,Dairy & Breakfast,8,2200.0
+2026-08-18,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,43,2322.0
+2026-08-18,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,21,1050.0
+2026-08-18,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,24,720.0
+2026-08-18,PROD-008,Taj Mahal Tea 500g,Beverages,14,5320.0
+2026-08-18,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,5,1050.0
+2026-08-18,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,2,250.0
+2026-08-18,PROD-011,Classmate Notebook 172 Pgs,Stationery,9,540.0
+2026-08-18,PROD-012,Cello Butterflow Pen Blue,Stationery,35,350.0
+2026-08-19,PROD-001,Aashirvaad Atta 5kg,Groceries,11,2695.0
+2026-08-19,PROD-002,Fortune Sunflower Oil 1L,Groceries,23,3220.0
+2026-08-19,PROD-003,Tata Salt 1kg,Groceries,21,588.0
+2026-08-19,PROD-004,Amul Butter 500g,Dairy & Breakfast,9,2475.0
+2026-08-19,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,40,2160.0
+2026-08-19,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,23,1150.0
+2026-08-19,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,21,630.0
+2026-08-19,PROD-008,Taj Mahal Tea 500g,Beverages,6,2280.0
+2026-08-19,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,9,1890.0
+2026-08-19,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-08-19,PROD-011,Classmate Notebook 172 Pgs,Stationery,7,420.0
+2026-08-19,PROD-012,Cello Butterflow Pen Blue,Stationery,30,300.0
+2026-08-20,PROD-001,Aashirvaad Atta 5kg,Groceries,13,3185.0
+2026-08-20,PROD-002,Fortune Sunflower Oil 1L,Groceries,13,1820.0
+2026-08-20,PROD-003,Tata Salt 1kg,Groceries,21,588.0
+2026-08-20,PROD-004,Amul Butter 500g,Dairy & Breakfast,14,3850.0
+2026-08-20,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,41,2214.0
+2026-08-20,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,22,1100.0
+2026-08-20,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,13,390.0
+2026-08-20,PROD-008,Taj Mahal Tea 500g,Beverages,3,1140.0
+2026-08-20,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,11,2310.0
+2026-08-20,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-08-20,PROD-011,Classmate Notebook 172 Pgs,Stationery,8,480.0
+2026-08-20,PROD-012,Cello Butterflow Pen Blue,Stationery,20,200.0
+2026-08-21,PROD-001,Aashirvaad Atta 5kg,Groceries,10,2450.0
+2026-08-21,PROD-002,Fortune Sunflower Oil 1L,Groceries,18,2520.0
+2026-08-21,PROD-003,Tata Salt 1kg,Groceries,24,672.0
+2026-08-21,PROD-004,Amul Butter 500g,Dairy & Breakfast,6,1650.0
+2026-08-21,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,34,1836.0
+2026-08-21,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,30,1500.0
+2026-08-21,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,14,420.0
+2026-08-21,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-08-21,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,7,1470.0
+2026-08-21,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,10,1250.0
+2026-08-21,PROD-011,Classmate Notebook 172 Pgs,Stationery,11,660.0
+2026-08-21,PROD-012,Cello Butterflow Pen Blue,Stationery,32,320.0
+2026-08-22,PROD-001,Aashirvaad Atta 5kg,Groceries,16,3920.0
+2026-08-22,PROD-002,Fortune Sunflower Oil 1L,Groceries,14,1960.0
+2026-08-22,PROD-003,Tata Salt 1kg,Groceries,26,728.0
+2026-08-22,PROD-004,Amul Butter 500g,Dairy & Breakfast,11,3025.0
+2026-08-22,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,49,2646.0
+2026-08-22,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,39,1950.0
+2026-08-22,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,24,720.0
+2026-08-22,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-08-22,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,9,1890.0
+2026-08-22,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,4,500.0
+2026-08-22,PROD-011,Classmate Notebook 172 Pgs,Stationery,7,420.0
+2026-08-22,PROD-012,Cello Butterflow Pen Blue,Stationery,32,320.0
+2026-08-23,PROD-001,Aashirvaad Atta 5kg,Groceries,12,2940.0
+2026-08-23,PROD-002,Fortune Sunflower Oil 1L,Groceries,13,1820.0
+2026-08-23,PROD-003,Tata Salt 1kg,Groceries,30,840.0
+2026-08-23,PROD-004,Amul Butter 500g,Dairy & Breakfast,17,4675.0
+2026-08-23,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,48,2592.0
+2026-08-23,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,41,2050.0
+2026-08-23,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,29,870.0
+2026-08-23,PROD-008,Taj Mahal Tea 500g,Beverages,9,3420.0
+2026-08-23,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,7,1470.0
+2026-08-23,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,11,1375.0
+2026-08-23,PROD-011,Classmate Notebook 172 Pgs,Stationery,13,780.0
+2026-08-23,PROD-012,Cello Butterflow Pen Blue,Stationery,45,450.0
+2026-08-24,PROD-001,Aashirvaad Atta 5kg,Groceries,11,2695.0
+2026-08-24,PROD-002,Fortune Sunflower Oil 1L,Groceries,16,2240.0
+2026-08-24,PROD-003,Tata Salt 1kg,Groceries,23,644.0
+2026-08-24,PROD-004,Amul Butter 500g,Dairy & Breakfast,11,3025.0
+2026-08-24,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,44,2376.0
+2026-08-24,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,20,1000.0
+2026-08-24,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,18,540.0
+2026-08-24,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-08-24,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,7,1470.0
+2026-08-24,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-08-24,PROD-011,Classmate Notebook 172 Pgs,Stationery,11,660.0
+2026-08-24,PROD-012,Cello Butterflow Pen Blue,Stationery,24,240.0
+2026-08-25,PROD-001,Aashirvaad Atta 5kg,Groceries,14,3430.0
+2026-08-25,PROD-002,Fortune Sunflower Oil 1L,Groceries,16,2240.0
+2026-08-25,PROD-003,Tata Salt 1kg,Groceries,16,448.0
+2026-08-25,PROD-004,Amul Butter 500g,Dairy & Breakfast,4,1100.0
+2026-08-25,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,27,1458.0
+2026-08-25,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,34,1700.0
+2026-08-25,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,18,540.0
+2026-08-25,PROD-008,Taj Mahal Tea 500g,Beverages,3,1140.0
+2026-08-25,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-08-25,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-08-25,PROD-011,Classmate Notebook 172 Pgs,Stationery,12,720.0
+2026-08-25,PROD-012,Cello Butterflow Pen Blue,Stationery,37,370.0
+2026-08-26,PROD-001,Aashirvaad Atta 5kg,Groceries,19,4655.0
+2026-08-26,PROD-002,Fortune Sunflower Oil 1L,Groceries,15,2100.0
+2026-08-26,PROD-003,Tata Salt 1kg,Groceries,26,728.0
+2026-08-26,PROD-004,Amul Butter 500g,Dairy & Breakfast,8,2200.0
+2026-08-26,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,33,1782.0
+2026-08-26,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,29,1450.0
+2026-08-26,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,17,510.0
+2026-08-26,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-08-26,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,7,1470.0
+2026-08-26,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,3,375.0
+2026-08-26,PROD-011,Classmate Notebook 172 Pgs,Stationery,11,660.0
+2026-08-26,PROD-012,Cello Butterflow Pen Blue,Stationery,28,280.0
+2026-08-27,PROD-001,Aashirvaad Atta 5kg,Groceries,12,2940.0
+2026-08-27,PROD-002,Fortune Sunflower Oil 1L,Groceries,14,1960.0
+2026-08-27,PROD-003,Tata Salt 1kg,Groceries,21,588.0
+2026-08-27,PROD-004,Amul Butter 500g,Dairy & Breakfast,7,1925.0
+2026-08-27,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,32,1728.0
+2026-08-27,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,25,1250.0
+2026-08-27,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,15,450.0
+2026-08-27,PROD-008,Taj Mahal Tea 500g,Beverages,7,2660.0
+2026-08-27,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,5,1050.0
+2026-08-27,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,6,750.0
+2026-08-27,PROD-011,Classmate Notebook 172 Pgs,Stationery,11,660.0
+2026-08-27,PROD-012,Cello Butterflow Pen Blue,Stationery,38,380.0
+2026-08-28,PROD-001,Aashirvaad Atta 5kg,Groceries,9,2205.0
+2026-08-28,PROD-002,Fortune Sunflower Oil 1L,Groceries,14,1960.0
+2026-08-28,PROD-003,Tata Salt 1kg,Groceries,27,756.0
+2026-08-28,PROD-004,Amul Butter 500g,Dairy & Breakfast,8,2200.0
+2026-08-28,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,36,1944.0
+2026-08-28,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,20,1000.0
+2026-08-28,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,19,570.0
+2026-08-28,PROD-008,Taj Mahal Tea 500g,Beverages,7,2660.0
+2026-08-28,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-08-28,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,2,250.0
+2026-08-28,PROD-011,Classmate Notebook 172 Pgs,Stationery,7,420.0
+2026-08-28,PROD-012,Cello Butterflow Pen Blue,Stationery,25,250.0
+2026-08-29,PROD-001,Aashirvaad Atta 5kg,Groceries,9,2205.0
+2026-08-29,PROD-002,Fortune Sunflower Oil 1L,Groceries,12,1680.0
+2026-08-29,PROD-003,Tata Salt 1kg,Groceries,23,644.0
+2026-08-29,PROD-004,Amul Butter 500g,Dairy & Breakfast,15,4125.0
+2026-08-29,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,48,2592.0
+2026-08-29,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,31,1550.0
+2026-08-29,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,25,750.0
+2026-08-29,PROD-008,Taj Mahal Tea 500g,Beverages,7,2660.0
+2026-08-29,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,11,2310.0
+2026-08-29,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,7,875.0
+2026-08-29,PROD-011,Classmate Notebook 172 Pgs,Stationery,11,660.0
+2026-08-29,PROD-012,Cello Butterflow Pen Blue,Stationery,41,410.0
+2026-08-30,PROD-001,Aashirvaad Atta 5kg,Groceries,15,3675.0
+2026-08-30,PROD-002,Fortune Sunflower Oil 1L,Groceries,22,3080.0
+2026-08-30,PROD-003,Tata Salt 1kg,Groceries,36,1008.0
+2026-08-30,PROD-004,Amul Butter 500g,Dairy & Breakfast,8,2200.0
+2026-08-30,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,38,2052.0
+2026-08-30,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,32,1600.0
+2026-08-30,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,29,870.0
+2026-08-30,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-08-30,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,10,2100.0
+2026-08-30,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-08-30,PROD-011,Classmate Notebook 172 Pgs,Stationery,11,660.0
+2026-08-30,PROD-012,Cello Butterflow Pen Blue,Stationery,39,390.0
+2026-08-31,PROD-001,Aashirvaad Atta 5kg,Groceries,13,3185.0
+2026-08-31,PROD-002,Fortune Sunflower Oil 1L,Groceries,16,2240.0
+2026-08-31,PROD-003,Tata Salt 1kg,Groceries,15,420.0
+2026-08-31,PROD-004,Amul Butter 500g,Dairy & Breakfast,7,1925.0
+2026-08-31,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,28,1512.0
+2026-08-31,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,22,1100.0
+2026-08-31,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,20,600.0
+2026-08-31,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-08-31,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-08-31,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,2,250.0
+2026-08-31,PROD-011,Classmate Notebook 172 Pgs,Stationery,7,420.0
+2026-08-31,PROD-012,Cello Butterflow Pen Blue,Stationery,23,230.0
+2026-09-01,PROD-001,Aashirvaad Atta 5kg,Groceries,9,2205.0
+2026-09-01,PROD-002,Fortune Sunflower Oil 1L,Groceries,15,2100.0
+2026-09-01,PROD-003,Tata Salt 1kg,Groceries,21,588.0
+2026-09-01,PROD-004,Amul Butter 500g,Dairy & Breakfast,7,1925.0
+2026-09-01,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,33,1782.0
+2026-09-01,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,22,1100.0
+2026-09-01,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,17,510.0
+2026-09-01,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-09-01,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,6,1260.0
+2026-09-01,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,2,250.0
+2026-09-01,PROD-011,Classmate Notebook 172 Pgs,Stationery,4,240.0
+2026-09-01,PROD-012,Cello Butterflow Pen Blue,Stationery,43,430.0
+2026-09-02,PROD-001,Aashirvaad Atta 5kg,Groceries,10,2450.0
+2026-09-02,PROD-002,Fortune Sunflower Oil 1L,Groceries,13,1820.0
+2026-09-02,PROD-003,Tata Salt 1kg,Groceries,22,616.0
+2026-09-02,PROD-004,Amul Butter 500g,Dairy & Breakfast,5,1375.0
+2026-09-02,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,31,1674.0
+2026-09-02,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,27,1350.0
+2026-09-02,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,14,420.0
+2026-09-02,PROD-008,Taj Mahal Tea 500g,Beverages,7,2660.0
+2026-09-02,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,10,2100.0
+2026-09-02,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-09-02,PROD-011,Classmate Notebook 172 Pgs,Stationery,7,420.0
+2026-09-02,PROD-012,Cello Butterflow Pen Blue,Stationery,32,320.0
+2026-09-03,PROD-001,Aashirvaad Atta 5kg,Groceries,9,2205.0
+2026-09-03,PROD-002,Fortune Sunflower Oil 1L,Groceries,14,1960.0
+2026-09-03,PROD-003,Tata Salt 1kg,Groceries,23,644.0
+2026-09-03,PROD-004,Amul Butter 500g,Dairy & Breakfast,7,1925.0
+2026-09-03,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,39,2106.0
+2026-09-03,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,20,1000.0
+2026-09-03,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,18,540.0
+2026-09-03,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-09-03,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,4,840.0
+2026-09-03,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,6,750.0
+2026-09-03,PROD-011,Classmate Notebook 172 Pgs,Stationery,9,540.0
+2026-09-03,PROD-012,Cello Butterflow Pen Blue,Stationery,31,310.0
+2026-09-04,PROD-001,Aashirvaad Atta 5kg,Groceries,15,3675.0
+2026-09-04,PROD-002,Fortune Sunflower Oil 1L,Groceries,18,2520.0
+2026-09-04,PROD-003,Tata Salt 1kg,Groceries,31,868.0
+2026-09-04,PROD-004,Amul Butter 500g,Dairy & Breakfast,10,2750.0
+2026-09-04,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,33,1782.0
+2026-09-04,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,23,1150.0
+2026-09-04,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,11,330.0
+2026-09-04,PROD-008,Taj Mahal Tea 500g,Beverages,6,2280.0
+2026-09-04,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,6,1260.0
+2026-09-04,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,6,750.0
+2026-09-04,PROD-011,Classmate Notebook 172 Pgs,Stationery,8,480.0
+2026-09-04,PROD-012,Cello Butterflow Pen Blue,Stationery,21,210.0
+2026-09-05,PROD-001,Aashirvaad Atta 5kg,Groceries,17,4165.0
+2026-09-05,PROD-002,Fortune Sunflower Oil 1L,Groceries,22,3080.0
+2026-09-05,PROD-003,Tata Salt 1kg,Groceries,29,812.0
+2026-09-05,PROD-004,Amul Butter 500g,Dairy & Breakfast,6,1650.0
+2026-09-05,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,55,2970.0
+2026-09-05,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,35,1750.0
+2026-09-05,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,19,570.0
+2026-09-05,PROD-008,Taj Mahal Tea 500g,Beverages,2,760.0
+2026-09-05,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,13,2730.0
+2026-09-05,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,6,750.0
+2026-09-05,PROD-011,Classmate Notebook 172 Pgs,Stationery,15,900.0
+2026-09-05,PROD-012,Cello Butterflow Pen Blue,Stationery,45,450.0
+2026-09-06,PROD-001,Aashirvaad Atta 5kg,Groceries,26,6370.0
+2026-09-06,PROD-002,Fortune Sunflower Oil 1L,Groceries,11,1540.0
+2026-09-06,PROD-003,Tata Salt 1kg,Groceries,23,644.0
+2026-09-06,PROD-004,Amul Butter 500g,Dairy & Breakfast,16,4400.0
+2026-09-06,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,42,2268.0
+2026-09-06,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,33,1650.0
+2026-09-06,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,15,450.0
+2026-09-06,PROD-008,Taj Mahal Tea 500g,Beverages,3,1140.0
+2026-09-06,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,9,1890.0
+2026-09-06,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,8,1000.0
+2026-09-06,PROD-011,Classmate Notebook 172 Pgs,Stationery,12,720.0
+2026-09-06,PROD-012,Cello Butterflow Pen Blue,Stationery,33,330.0
+2026-09-07,PROD-001,Aashirvaad Atta 5kg,Groceries,13,3185.0
+2026-09-07,PROD-002,Fortune Sunflower Oil 1L,Groceries,18,2520.0
+2026-09-07,PROD-003,Tata Salt 1kg,Groceries,23,644.0
+2026-09-07,PROD-004,Amul Butter 500g,Dairy & Breakfast,8,2200.0
+2026-09-07,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,38,2052.0
+2026-09-07,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,15,750.0
+2026-09-07,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,22,660.0
+2026-09-07,PROD-008,Taj Mahal Tea 500g,Beverages,3,1140.0
+2026-09-07,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-09-07,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,4,500.0
+2026-09-07,PROD-011,Classmate Notebook 172 Pgs,Stationery,10,600.0
+2026-09-07,PROD-012,Cello Butterflow Pen Blue,Stationery,31,310.0
+2026-09-08,PROD-001,Aashirvaad Atta 5kg,Groceries,7,1715.0
+2026-09-08,PROD-002,Fortune Sunflower Oil 1L,Groceries,19,2660.0
+2026-09-08,PROD-003,Tata Salt 1kg,Groceries,16,448.0
+2026-09-08,PROD-004,Amul Butter 500g,Dairy & Breakfast,12,3300.0
+2026-09-08,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,44,2376.0
+2026-09-08,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,20,1000.0
+2026-09-08,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,24,720.0
+2026-09-08,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-09-08,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,9,1890.0
+2026-09-08,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,2,250.0
+2026-09-08,PROD-011,Classmate Notebook 172 Pgs,Stationery,7,420.0
+2026-09-08,PROD-012,Cello Butterflow Pen Blue,Stationery,36,360.0
+2026-09-09,PROD-001,Aashirvaad Atta 5kg,Groceries,14,3430.0
+2026-09-09,PROD-002,Fortune Sunflower Oil 1L,Groceries,15,2100.0
+2026-09-09,PROD-003,Tata Salt 1kg,Groceries,19,532.0
+2026-09-09,PROD-004,Amul Butter 500g,Dairy & Breakfast,8,2200.0
+2026-09-09,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,32,1728.0
+2026-09-09,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,29,1450.0
+2026-09-09,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,19,570.0
+2026-09-09,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-09-09,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-09-09,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,2,250.0
+2026-09-09,PROD-011,Classmate Notebook 172 Pgs,Stationery,13,780.0
+2026-09-09,PROD-012,Cello Butterflow Pen Blue,Stationery,26,260.0
+2026-09-10,PROD-001,Aashirvaad Atta 5kg,Groceries,14,3430.0
+2026-09-10,PROD-002,Fortune Sunflower Oil 1L,Groceries,9,1260.0
+2026-09-10,PROD-003,Tata Salt 1kg,Groceries,19,532.0
+2026-09-10,PROD-004,Amul Butter 500g,Dairy & Breakfast,6,1650.0
+2026-09-10,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,45,2430.0
+2026-09-10,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,31,1550.0
+2026-09-10,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,25,750.0
+2026-09-10,PROD-008,Taj Mahal Tea 500g,Beverages,6,2280.0
+2026-09-10,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,5,1050.0
+2026-09-10,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,1,125.0
+2026-09-10,PROD-011,Classmate Notebook 172 Pgs,Stationery,8,480.0
+2026-09-10,PROD-012,Cello Butterflow Pen Blue,Stationery,27,270.0
+2026-09-11,PROD-001,Aashirvaad Atta 5kg,Groceries,15,3675.0
+2026-09-11,PROD-002,Fortune Sunflower Oil 1L,Groceries,17,2380.0
+2026-09-11,PROD-003,Tata Salt 1kg,Groceries,27,756.0
+2026-09-11,PROD-004,Amul Butter 500g,Dairy & Breakfast,4,1100.0
+2026-09-11,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,35,1890.0
+2026-09-11,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,31,1550.0
+2026-09-11,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,12,360.0
+2026-09-11,PROD-008,Taj Mahal Tea 500g,Beverages,12,4560.0
+2026-09-11,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,7,1470.0
+2026-09-11,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,7,875.0
+2026-09-11,PROD-011,Classmate Notebook 172 Pgs,Stationery,7,420.0
+2026-09-11,PROD-012,Cello Butterflow Pen Blue,Stationery,29,290.0
+2026-09-12,PROD-001,Aashirvaad Atta 5kg,Groceries,11,2695.0
+2026-09-12,PROD-002,Fortune Sunflower Oil 1L,Groceries,34,4760.0
+2026-09-12,PROD-003,Tata Salt 1kg,Groceries,27,756.0
+2026-09-12,PROD-004,Amul Butter 500g,Dairy & Breakfast,12,3300.0
+2026-09-12,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,41,2214.0
+2026-09-12,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,28,1400.0
+2026-09-12,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,17,510.0
+2026-09-12,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-09-12,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,13,2730.0
+2026-09-12,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,4,500.0
+2026-09-12,PROD-011,Classmate Notebook 172 Pgs,Stationery,15,900.0
+2026-09-12,PROD-012,Cello Butterflow Pen Blue,Stationery,36,360.0
+2026-09-13,PROD-001,Aashirvaad Atta 5kg,Groceries,17,4165.0
+2026-09-13,PROD-002,Fortune Sunflower Oil 1L,Groceries,14,1960.0
+2026-09-13,PROD-003,Tata Salt 1kg,Groceries,26,728.0
+2026-09-13,PROD-004,Amul Butter 500g,Dairy & Breakfast,6,1650.0
+2026-09-13,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,53,2862.0
+2026-09-13,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,24,1200.0
+2026-09-13,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,34,1020.0
+2026-09-13,PROD-008,Taj Mahal Tea 500g,Beverages,9,3420.0
+2026-09-13,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,4,840.0
+2026-09-13,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-09-13,PROD-011,Classmate Notebook 172 Pgs,Stationery,14,840.0
+2026-09-13,PROD-012,Cello Butterflow Pen Blue,Stationery,45,450.0
+2026-09-14,PROD-001,Aashirvaad Atta 5kg,Groceries,16,3920.0
+2026-09-14,PROD-002,Fortune Sunflower Oil 1L,Groceries,14,1960.0
+2026-09-14,PROD-003,Tata Salt 1kg,Groceries,17,476.0
+2026-09-14,PROD-004,Amul Butter 500g,Dairy & Breakfast,14,3850.0
+2026-09-14,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,34,1836.0
+2026-09-14,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,32,1600.0
+2026-09-14,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,13,390.0
+2026-09-14,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-09-14,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-09-14,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,3,375.0
+2026-09-14,PROD-011,Classmate Notebook 172 Pgs,Stationery,2,120.0
+2026-09-14,PROD-012,Cello Butterflow Pen Blue,Stationery,28,280.0
+2026-09-15,PROD-001,Aashirvaad Atta 5kg,Groceries,11,2695.0
+2026-09-15,PROD-002,Fortune Sunflower Oil 1L,Groceries,21,2940.0
+2026-09-15,PROD-003,Tata Salt 1kg,Groceries,31,868.0
+2026-09-15,PROD-004,Amul Butter 500g,Dairy & Breakfast,11,3025.0
+2026-09-15,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,36,1944.0
+2026-09-15,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,31,1550.0
+2026-09-15,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,15,450.0
+2026-09-15,PROD-008,Taj Mahal Tea 500g,Beverages,3,1140.0
+2026-09-15,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-09-15,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,7,875.0
+2026-09-15,PROD-011,Classmate Notebook 172 Pgs,Stationery,10,600.0
+2026-09-15,PROD-012,Cello Butterflow Pen Blue,Stationery,39,390.0
+2026-09-16,PROD-001,Aashirvaad Atta 5kg,Groceries,12,2940.0
+2026-09-16,PROD-002,Fortune Sunflower Oil 1L,Groceries,10,1400.0
+2026-09-16,PROD-003,Tata Salt 1kg,Groceries,14,392.0
+2026-09-16,PROD-004,Amul Butter 500g,Dairy & Breakfast,11,3025.0
+2026-09-16,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,40,2160.0
+2026-09-16,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,25,1250.0
+2026-09-16,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,19,570.0
+2026-09-16,PROD-008,Taj Mahal Tea 500g,Beverages,9,3420.0
+2026-09-16,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-09-16,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-09-16,PROD-011,Classmate Notebook 172 Pgs,Stationery,9,540.0
+2026-09-16,PROD-012,Cello Butterflow Pen Blue,Stationery,26,260.0
+2026-09-17,PROD-001,Aashirvaad Atta 5kg,Groceries,20,4900.0
+2026-09-17,PROD-002,Fortune Sunflower Oil 1L,Groceries,19,2660.0
+2026-09-17,PROD-003,Tata Salt 1kg,Groceries,25,700.0
+2026-09-17,PROD-004,Amul Butter 500g,Dairy & Breakfast,9,2475.0
+2026-09-17,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,33,1782.0
+2026-09-17,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,15,750.0
+2026-09-17,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,12,360.0
+2026-09-17,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-09-17,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,5,1050.0
+2026-09-17,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-09-17,PROD-011,Classmate Notebook 172 Pgs,Stationery,15,900.0
+2026-09-17,PROD-012,Cello Butterflow Pen Blue,Stationery,30,300.0
+2026-09-18,PROD-001,Aashirvaad Atta 5kg,Groceries,13,3185.0
+2026-09-18,PROD-002,Fortune Sunflower Oil 1L,Groceries,17,2380.0
+2026-09-18,PROD-003,Tata Salt 1kg,Groceries,26,728.0
+2026-09-18,PROD-004,Amul Butter 500g,Dairy & Breakfast,10,2750.0
+2026-09-18,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,28,1512.0
+2026-09-18,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,21,1050.0
+2026-09-18,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,15,450.0
+2026-09-18,PROD-008,Taj Mahal Tea 500g,Beverages,4,1520.0
+2026-09-18,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,4,840.0
+2026-09-18,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,1,125.0
+2026-09-18,PROD-011,Classmate Notebook 172 Pgs,Stationery,7,420.0
+2026-09-18,PROD-012,Cello Butterflow Pen Blue,Stationery,27,270.0
+2026-09-19,PROD-001,Aashirvaad Atta 5kg,Groceries,14,3430.0
+2026-09-19,PROD-002,Fortune Sunflower Oil 1L,Groceries,25,3500.0
+2026-09-19,PROD-003,Tata Salt 1kg,Groceries,26,728.0
+2026-09-19,PROD-004,Amul Butter 500g,Dairy & Breakfast,11,3025.0
+2026-09-19,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,50,2700.0
+2026-09-19,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,37,1850.0
+2026-09-19,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,35,1050.0
+2026-09-19,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-09-19,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,9,1890.0
+2026-09-19,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,9,1125.0
+2026-09-19,PROD-011,Classmate Notebook 172 Pgs,Stationery,9,540.0
+2026-09-19,PROD-012,Cello Butterflow Pen Blue,Stationery,45,450.0
+2026-09-20,PROD-001,Aashirvaad Atta 5kg,Groceries,18,4410.0
+2026-09-20,PROD-002,Fortune Sunflower Oil 1L,Groceries,23,3220.0
+2026-09-20,PROD-003,Tata Salt 1kg,Groceries,34,952.0
+2026-09-20,PROD-004,Amul Butter 500g,Dairy & Breakfast,9,2475.0
+2026-09-20,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,37,1998.0
+2026-09-20,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,29,1450.0
+2026-09-20,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,22,660.0
+2026-09-20,PROD-008,Taj Mahal Tea 500g,Beverages,6,2280.0
+2026-09-20,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,10,2100.0
+2026-09-20,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,4,500.0
+2026-09-20,PROD-011,Classmate Notebook 172 Pgs,Stationery,11,660.0
+2026-09-20,PROD-012,Cello Butterflow Pen Blue,Stationery,41,410.0
+2026-09-21,PROD-001,Aashirvaad Atta 5kg,Groceries,11,2695.0
+2026-09-21,PROD-002,Fortune Sunflower Oil 1L,Groceries,13,1820.0
+2026-09-21,PROD-003,Tata Salt 1kg,Groceries,19,532.0
+2026-09-21,PROD-004,Amul Butter 500g,Dairy & Breakfast,6,1650.0
+2026-09-21,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,47,2538.0
+2026-09-21,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,38,1900.0
+2026-09-21,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,16,480.0
+2026-09-21,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-09-21,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,11,2310.0
+2026-09-21,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,1,125.0
+2026-09-21,PROD-011,Classmate Notebook 172 Pgs,Stationery,11,660.0
+2026-09-21,PROD-012,Cello Butterflow Pen Blue,Stationery,30,300.0
+2026-09-22,PROD-001,Aashirvaad Atta 5kg,Groceries,12,2940.0
+2026-09-22,PROD-002,Fortune Sunflower Oil 1L,Groceries,8,1120.0
+2026-09-22,PROD-003,Tata Salt 1kg,Groceries,24,672.0
+2026-09-22,PROD-004,Amul Butter 500g,Dairy & Breakfast,5,1375.0
+2026-09-22,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,42,2268.0
+2026-09-22,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,38,1900.0
+2026-09-22,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,19,570.0
+2026-09-22,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-09-22,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,13,2730.0
+2026-09-22,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,3,375.0
+2026-09-22,PROD-011,Classmate Notebook 172 Pgs,Stationery,16,960.0
+2026-09-22,PROD-012,Cello Butterflow Pen Blue,Stationery,32,320.0
+2026-09-23,PROD-001,Aashirvaad Atta 5kg,Groceries,10,2450.0
+2026-09-23,PROD-002,Fortune Sunflower Oil 1L,Groceries,18,2520.0
+2026-09-23,PROD-003,Tata Salt 1kg,Groceries,19,532.0
+2026-09-23,PROD-004,Amul Butter 500g,Dairy & Breakfast,7,1925.0
+2026-09-23,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,40,2160.0
+2026-09-23,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,23,1150.0
+2026-09-23,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,19,570.0
+2026-09-23,PROD-008,Taj Mahal Tea 500g,Beverages,6,2280.0
+2026-09-23,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,4,840.0
+2026-09-23,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,1,125.0
+2026-09-23,PROD-011,Classmate Notebook 172 Pgs,Stationery,14,840.0
+2026-09-23,PROD-012,Cello Butterflow Pen Blue,Stationery,42,420.0
+2026-09-24,PROD-001,Aashirvaad Atta 5kg,Groceries,11,2695.0
+2026-09-24,PROD-002,Fortune Sunflower Oil 1L,Groceries,15,2100.0
+2026-09-24,PROD-003,Tata Salt 1kg,Groceries,17,476.0
+2026-09-24,PROD-004,Amul Butter 500g,Dairy & Breakfast,12,3300.0
+2026-09-24,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,24,1296.0
+2026-09-24,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,35,1750.0
+2026-09-24,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,17,510.0
+2026-09-24,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-09-24,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,4,840.0
+2026-09-24,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,4,500.0
+2026-09-24,PROD-011,Classmate Notebook 172 Pgs,Stationery,8,480.0
+2026-09-24,PROD-012,Cello Butterflow Pen Blue,Stationery,25,250.0
+2026-09-25,PROD-001,Aashirvaad Atta 5kg,Groceries,9,2205.0
+2026-09-25,PROD-002,Fortune Sunflower Oil 1L,Groceries,14,1960.0
+2026-09-25,PROD-003,Tata Salt 1kg,Groceries,18,504.0
+2026-09-25,PROD-004,Amul Butter 500g,Dairy & Breakfast,11,3025.0
+2026-09-25,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,39,2106.0
+2026-09-25,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,29,1450.0
+2026-09-25,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,28,840.0
+2026-09-25,PROD-008,Taj Mahal Tea 500g,Beverages,6,2280.0
+2026-09-25,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,13,2730.0
+2026-09-25,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,9,1125.0
+2026-09-25,PROD-011,Classmate Notebook 172 Pgs,Stationery,12,720.0
+2026-09-25,PROD-012,Cello Butterflow Pen Blue,Stationery,25,250.0
+2026-09-26,PROD-001,Aashirvaad Atta 5kg,Groceries,20,4900.0
+2026-09-26,PROD-002,Fortune Sunflower Oil 1L,Groceries,33,4620.0
+2026-09-26,PROD-003,Tata Salt 1kg,Groceries,27,756.0
+2026-09-26,PROD-004,Amul Butter 500g,Dairy & Breakfast,15,4125.0
+2026-09-26,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,54,2916.0
+2026-09-26,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,32,1600.0
+2026-09-26,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,31,930.0
+2026-09-26,PROD-008,Taj Mahal Tea 500g,Beverages,10,3800.0
+2026-09-26,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,9,1890.0
+2026-09-26,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,6,750.0
+2026-09-26,PROD-011,Classmate Notebook 172 Pgs,Stationery,12,720.0
+2026-09-26,PROD-012,Cello Butterflow Pen Blue,Stationery,43,430.0
+2026-09-27,PROD-001,Aashirvaad Atta 5kg,Groceries,18,4410.0
+2026-09-27,PROD-002,Fortune Sunflower Oil 1L,Groceries,19,2660.0
+2026-09-27,PROD-003,Tata Salt 1kg,Groceries,19,532.0
+2026-09-27,PROD-004,Amul Butter 500g,Dairy & Breakfast,8,2200.0
+2026-09-27,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,48,2592.0
+2026-09-27,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,52,2600.0
+2026-09-27,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,23,690.0
+2026-09-27,PROD-008,Taj Mahal Tea 500g,Beverages,7,2660.0
+2026-09-27,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-09-27,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,4,500.0
+2026-09-27,PROD-011,Classmate Notebook 172 Pgs,Stationery,23,1380.0
+2026-09-27,PROD-012,Cello Butterflow Pen Blue,Stationery,44,440.0
+2026-09-28,PROD-001,Aashirvaad Atta 5kg,Groceries,13,3185.0
+2026-09-28,PROD-002,Fortune Sunflower Oil 1L,Groceries,12,1680.0
+2026-09-28,PROD-003,Tata Salt 1kg,Groceries,13,364.0
+2026-09-28,PROD-004,Amul Butter 500g,Dairy & Breakfast,8,2200.0
+2026-09-28,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,36,1944.0
+2026-09-28,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,24,1200.0
+2026-09-28,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,17,510.0
+2026-09-28,PROD-008,Taj Mahal Tea 500g,Beverages,4,1520.0
+2026-09-28,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-09-28,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-09-28,PROD-011,Classmate Notebook 172 Pgs,Stationery,7,420.0
+2026-09-28,PROD-012,Cello Butterflow Pen Blue,Stationery,34,340.0
+2026-09-29,PROD-001,Aashirvaad Atta 5kg,Groceries,9,2205.0
+2026-09-29,PROD-002,Fortune Sunflower Oil 1L,Groceries,12,1680.0
+2026-09-29,PROD-003,Tata Salt 1kg,Groceries,11,308.0
+2026-09-29,PROD-004,Amul Butter 500g,Dairy & Breakfast,14,3850.0
+2026-09-29,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,24,1296.0
+2026-09-29,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,34,1700.0
+2026-09-29,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,18,540.0
+2026-09-29,PROD-008,Taj Mahal Tea 500g,Beverages,9,3420.0
+2026-09-29,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,6,1260.0
+2026-09-29,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,3,375.0
+2026-09-29,PROD-011,Classmate Notebook 172 Pgs,Stationery,16,960.0
+2026-09-29,PROD-012,Cello Butterflow Pen Blue,Stationery,35,350.0
+2026-09-30,PROD-001,Aashirvaad Atta 5kg,Groceries,14,3430.0
+2026-09-30,PROD-002,Fortune Sunflower Oil 1L,Groceries,10,1400.0
+2026-09-30,PROD-003,Tata Salt 1kg,Groceries,12,336.0
+2026-09-30,PROD-004,Amul Butter 500g,Dairy & Breakfast,9,2475.0
+2026-09-30,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,32,1728.0
+2026-09-30,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,30,1500.0
+2026-09-30,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,28,840.0
+2026-09-30,PROD-008,Taj Mahal Tea 500g,Beverages,7,2660.0
+2026-09-30,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,10,2100.0
+2026-09-30,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,3,375.0
+2026-09-30,PROD-011,Classmate Notebook 172 Pgs,Stationery,12,720.0
+2026-09-30,PROD-012,Cello Butterflow Pen Blue,Stationery,24,240.0
+2026-10-01,PROD-001,Aashirvaad Atta 5kg,Groceries,17,4165.0
+2026-10-01,PROD-002,Fortune Sunflower Oil 1L,Groceries,13,1820.0
+2026-10-01,PROD-003,Tata Salt 1kg,Groceries,16,448.0
+2026-10-01,PROD-004,Amul Butter 500g,Dairy & Breakfast,5,1375.0
+2026-10-01,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,36,1944.0
+2026-10-01,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,24,1200.0
+2026-10-01,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,21,630.0
+2026-10-01,PROD-008,Taj Mahal Tea 500g,Beverages,6,2280.0
+2026-10-01,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,5,1050.0
+2026-10-01,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-10-01,PROD-011,Classmate Notebook 172 Pgs,Stationery,13,780.0
+2026-10-01,PROD-012,Cello Butterflow Pen Blue,Stationery,30,300.0
+2026-10-02,PROD-001,Aashirvaad Atta 5kg,Groceries,13,3185.0
+2026-10-02,PROD-002,Fortune Sunflower Oil 1L,Groceries,12,1680.0
+2026-10-02,PROD-003,Tata Salt 1kg,Groceries,23,644.0
+2026-10-02,PROD-004,Amul Butter 500g,Dairy & Breakfast,11,3025.0
+2026-10-02,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,33,1782.0
+2026-10-02,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,33,1650.0
+2026-10-02,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,17,510.0
+2026-10-02,PROD-008,Taj Mahal Tea 500g,Beverages,4,1520.0
+2026-10-02,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-10-02,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-10-02,PROD-011,Classmate Notebook 172 Pgs,Stationery,7,420.0
+2026-10-02,PROD-012,Cello Butterflow Pen Blue,Stationery,30,300.0
+2026-10-03,PROD-001,Aashirvaad Atta 5kg,Groceries,20,4900.0
+2026-10-03,PROD-002,Fortune Sunflower Oil 1L,Groceries,21,2940.0
+2026-10-03,PROD-003,Tata Salt 1kg,Groceries,31,868.0
+2026-10-03,PROD-004,Amul Butter 500g,Dairy & Breakfast,14,3850.0
+2026-10-03,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,39,2106.0
+2026-10-03,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,36,1800.0
+2026-10-03,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,19,570.0
+2026-10-03,PROD-008,Taj Mahal Tea 500g,Beverages,13,4940.0
+2026-10-03,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,7,1470.0
+2026-10-03,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,10,1250.0
+2026-10-03,PROD-011,Classmate Notebook 172 Pgs,Stationery,11,660.0
+2026-10-03,PROD-012,Cello Butterflow Pen Blue,Stationery,44,440.0
+2026-10-04,PROD-001,Aashirvaad Atta 5kg,Groceries,17,4165.0
+2026-10-04,PROD-002,Fortune Sunflower Oil 1L,Groceries,22,3080.0
+2026-10-04,PROD-003,Tata Salt 1kg,Groceries,22,616.0
+2026-10-04,PROD-004,Amul Butter 500g,Dairy & Breakfast,13,3575.0
+2026-10-04,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,46,2484.0
+2026-10-04,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,29,1450.0
+2026-10-04,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,31,930.0
+2026-10-04,PROD-008,Taj Mahal Tea 500g,Beverages,11,4180.0
+2026-10-04,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,10,2100.0
+2026-10-04,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,3,375.0
+2026-10-04,PROD-011,Classmate Notebook 172 Pgs,Stationery,17,1020.0
+2026-10-04,PROD-012,Cello Butterflow Pen Blue,Stationery,37,370.0
+2026-10-05,PROD-001,Aashirvaad Atta 5kg,Groceries,9,2205.0
+2026-10-05,PROD-002,Fortune Sunflower Oil 1L,Groceries,18,2520.0
+2026-10-05,PROD-003,Tata Salt 1kg,Groceries,24,672.0
+2026-10-05,PROD-004,Amul Butter 500g,Dairy & Breakfast,16,4400.0
+2026-10-05,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,35,1890.0
+2026-10-05,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,27,1350.0
+2026-10-05,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,21,630.0
+2026-10-05,PROD-008,Taj Mahal Tea 500g,Beverages,6,2280.0
+2026-10-05,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-10-05,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-10-05,PROD-011,Classmate Notebook 172 Pgs,Stationery,13,780.0
+2026-10-05,PROD-012,Cello Butterflow Pen Blue,Stationery,33,330.0
+2026-10-06,PROD-001,Aashirvaad Atta 5kg,Groceries,12,2940.0
+2026-10-06,PROD-002,Fortune Sunflower Oil 1L,Groceries,14,1960.0
+2026-10-06,PROD-003,Tata Salt 1kg,Groceries,21,588.0
+2026-10-06,PROD-004,Amul Butter 500g,Dairy & Breakfast,5,1375.0
+2026-10-06,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,34,1836.0
+2026-10-06,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,27,1350.0
+2026-10-06,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,24,720.0
+2026-10-06,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-10-06,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,7,1470.0
+2026-10-06,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,6,750.0
+2026-10-06,PROD-011,Classmate Notebook 172 Pgs,Stationery,7,420.0
+2026-10-06,PROD-012,Cello Butterflow Pen Blue,Stationery,29,290.0
+2026-10-07,PROD-001,Aashirvaad Atta 5kg,Groceries,7,1715.0
+2026-10-07,PROD-002,Fortune Sunflower Oil 1L,Groceries,14,1960.0
+2026-10-07,PROD-003,Tata Salt 1kg,Groceries,24,672.0
+2026-10-07,PROD-004,Amul Butter 500g,Dairy & Breakfast,6,1650.0
+2026-10-07,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,29,1566.0
+2026-10-07,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,19,950.0
+2026-10-07,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,23,690.0
+2026-10-07,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-10-07,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,6,1260.0
+2026-10-07,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,3,375.0
+2026-10-07,PROD-011,Classmate Notebook 172 Pgs,Stationery,9,540.0
+2026-10-07,PROD-012,Cello Butterflow Pen Blue,Stationery,34,340.0
+2026-10-08,PROD-001,Aashirvaad Atta 5kg,Groceries,14,3430.0
+2026-10-08,PROD-002,Fortune Sunflower Oil 1L,Groceries,20,2800.0
+2026-10-08,PROD-003,Tata Salt 1kg,Groceries,20,560.0
+2026-10-08,PROD-004,Amul Butter 500g,Dairy & Breakfast,12,3300.0
+2026-10-08,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,34,1836.0
+2026-10-08,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,18,900.0
+2026-10-08,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,27,810.0
+2026-10-08,PROD-008,Taj Mahal Tea 500g,Beverages,8,3040.0
+2026-10-08,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,6,1260.0
+2026-10-08,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,7,875.0
+2026-10-08,PROD-011,Classmate Notebook 172 Pgs,Stationery,10,600.0
+2026-10-08,PROD-012,Cello Butterflow Pen Blue,Stationery,35,350.0
+2026-10-09,PROD-001,Aashirvaad Atta 5kg,Groceries,14,3430.0
+2026-10-09,PROD-002,Fortune Sunflower Oil 1L,Groceries,12,1680.0
+2026-10-09,PROD-003,Tata Salt 1kg,Groceries,24,672.0
+2026-10-09,PROD-004,Amul Butter 500g,Dairy & Breakfast,7,1925.0
+2026-10-09,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,31,1674.0
+2026-10-09,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,21,1050.0
+2026-10-09,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,18,540.0
+2026-10-09,PROD-008,Taj Mahal Tea 500g,Beverages,9,3420.0
+2026-10-09,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,4,840.0
+2026-10-09,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,4,500.0
+2026-10-09,PROD-011,Classmate Notebook 172 Pgs,Stationery,10,600.0
+2026-10-09,PROD-012,Cello Butterflow Pen Blue,Stationery,36,360.0
+2026-10-10,PROD-001,Aashirvaad Atta 5kg,Groceries,13,3185.0
+2026-10-10,PROD-002,Fortune Sunflower Oil 1L,Groceries,23,3220.0
+2026-10-10,PROD-003,Tata Salt 1kg,Groceries,29,812.0
+2026-10-10,PROD-004,Amul Butter 500g,Dairy & Breakfast,7,1925.0
+2026-10-10,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,54,2916.0
+2026-10-10,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,38,1900.0
+2026-10-10,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,29,870.0
+2026-10-10,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-10-10,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,11,2310.0
+2026-10-10,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,8,1000.0
+2026-10-10,PROD-011,Classmate Notebook 172 Pgs,Stationery,16,960.0
+2026-10-10,PROD-012,Cello Butterflow Pen Blue,Stationery,37,370.0
+2026-10-11,PROD-001,Aashirvaad Atta 5kg,Groceries,9,2205.0
+2026-10-11,PROD-002,Fortune Sunflower Oil 1L,Groceries,17,2380.0
+2026-10-11,PROD-003,Tata Salt 1kg,Groceries,22,616.0
+2026-10-11,PROD-004,Amul Butter 500g,Dairy & Breakfast,17,4675.0
+2026-10-11,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,36,1944.0
+2026-10-11,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,35,1750.0
+2026-10-11,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,24,720.0
+2026-10-11,PROD-008,Taj Mahal Tea 500g,Beverages,9,3420.0
+2026-10-11,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,11,2310.0
+2026-10-11,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,7,875.0
+2026-10-11,PROD-011,Classmate Notebook 172 Pgs,Stationery,11,660.0
+2026-10-11,PROD-012,Cello Butterflow Pen Blue,Stationery,39,390.0
+2026-10-12,PROD-001,Aashirvaad Atta 5kg,Groceries,7,1715.0
+2026-10-12,PROD-002,Fortune Sunflower Oil 1L,Groceries,21,2940.0
+2026-10-12,PROD-003,Tata Salt 1kg,Groceries,23,644.0
+2026-10-12,PROD-004,Amul Butter 500g,Dairy & Breakfast,8,2200.0
+2026-10-12,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,41,2214.0
+2026-10-12,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,26,1300.0
+2026-10-12,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,14,420.0
+2026-10-12,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-10-12,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,9,1890.0
+2026-10-12,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,1,125.0
+2026-10-12,PROD-011,Classmate Notebook 172 Pgs,Stationery,12,720.0
+2026-10-12,PROD-012,Cello Butterflow Pen Blue,Stationery,25,250.0
+2026-10-13,PROD-001,Aashirvaad Atta 5kg,Groceries,9,2205.0
+2026-10-13,PROD-002,Fortune Sunflower Oil 1L,Groceries,13,1820.0
+2026-10-13,PROD-003,Tata Salt 1kg,Groceries,25,700.0
+2026-10-13,PROD-004,Amul Butter 500g,Dairy & Breakfast,6,1650.0
+2026-10-13,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,35,1890.0
+2026-10-13,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,20,1000.0
+2026-10-13,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,16,480.0
+2026-10-13,PROD-008,Taj Mahal Tea 500g,Beverages,6,2280.0
+2026-10-13,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,7,1470.0
+2026-10-13,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-10-13,PROD-011,Classmate Notebook 172 Pgs,Stationery,8,480.0
+2026-10-13,PROD-012,Cello Butterflow Pen Blue,Stationery,28,280.0
+2026-10-14,PROD-001,Aashirvaad Atta 5kg,Groceries,16,3920.0
+2026-10-14,PROD-002,Fortune Sunflower Oil 1L,Groceries,13,1820.0
+2026-10-14,PROD-003,Tata Salt 1kg,Groceries,13,364.0
+2026-10-14,PROD-004,Amul Butter 500g,Dairy & Breakfast,6,1650.0
+2026-10-14,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,41,2214.0
+2026-10-14,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,24,1200.0
+2026-10-14,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,24,720.0
+2026-10-14,PROD-008,Taj Mahal Tea 500g,Beverages,10,3800.0
+2026-10-14,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,11,2310.0
+2026-10-14,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,7,875.0
+2026-10-14,PROD-011,Classmate Notebook 172 Pgs,Stationery,19,1140.0
+2026-10-14,PROD-012,Cello Butterflow Pen Blue,Stationery,34,340.0
+2026-10-15,PROD-001,Aashirvaad Atta 5kg,Groceries,19,4655.0
+2026-10-15,PROD-002,Fortune Sunflower Oil 1L,Groceries,19,2660.0
+2026-10-15,PROD-003,Tata Salt 1kg,Groceries,21,588.0
+2026-10-15,PROD-004,Amul Butter 500g,Dairy & Breakfast,7,1925.0
+2026-10-15,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,33,1782.0
+2026-10-15,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,19,950.0
+2026-10-15,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,11,330.0
+2026-10-15,PROD-008,Taj Mahal Tea 500g,Beverages,1,380.0
+2026-10-15,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,4,840.0
+2026-10-15,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,7,875.0
+2026-10-15,PROD-011,Classmate Notebook 172 Pgs,Stationery,9,540.0
+2026-10-15,PROD-012,Cello Butterflow Pen Blue,Stationery,31,310.0
+2026-10-16,PROD-001,Aashirvaad Atta 5kg,Groceries,15,3675.0
+2026-10-16,PROD-002,Fortune Sunflower Oil 1L,Groceries,15,2100.0
+2026-10-16,PROD-003,Tata Salt 1kg,Groceries,23,644.0
+2026-10-16,PROD-004,Amul Butter 500g,Dairy & Breakfast,8,2200.0
+2026-10-16,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,26,1404.0
+2026-10-16,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,22,1100.0
+2026-10-16,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,11,330.0
+2026-10-16,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-10-16,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,6,1260.0
+2026-10-16,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,4,500.0
+2026-10-16,PROD-011,Classmate Notebook 172 Pgs,Stationery,12,720.0
+2026-10-16,PROD-012,Cello Butterflow Pen Blue,Stationery,32,320.0
+2026-10-17,PROD-001,Aashirvaad Atta 5kg,Groceries,14,3430.0
+2026-10-17,PROD-002,Fortune Sunflower Oil 1L,Groceries,19,2660.0
+2026-10-17,PROD-003,Tata Salt 1kg,Groceries,30,840.0
+2026-10-17,PROD-004,Amul Butter 500g,Dairy & Breakfast,10,2750.0
+2026-10-17,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,52,2808.0
+2026-10-17,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,37,1850.0
+2026-10-17,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,27,810.0
+2026-10-17,PROD-008,Taj Mahal Tea 500g,Beverages,11,4180.0
+2026-10-17,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-10-17,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-10-17,PROD-011,Classmate Notebook 172 Pgs,Stationery,18,1080.0
+2026-10-17,PROD-012,Cello Butterflow Pen Blue,Stationery,44,440.0
+2026-10-18,PROD-001,Aashirvaad Atta 5kg,Groceries,17,4165.0
+2026-10-18,PROD-002,Fortune Sunflower Oil 1L,Groceries,21,2940.0
+2026-10-18,PROD-003,Tata Salt 1kg,Groceries,23,644.0
+2026-10-18,PROD-004,Amul Butter 500g,Dairy & Breakfast,8,2200.0
+2026-10-18,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,41,2214.0
+2026-10-18,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,38,1900.0
+2026-10-18,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,14,420.0
+2026-10-18,PROD-008,Taj Mahal Tea 500g,Beverages,9,3420.0
+2026-10-18,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,6,1260.0
+2026-10-18,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,8,1000.0
+2026-10-18,PROD-011,Classmate Notebook 172 Pgs,Stationery,12,720.0
+2026-10-18,PROD-012,Cello Butterflow Pen Blue,Stationery,39,390.0
+2026-10-19,PROD-001,Aashirvaad Atta 5kg,Groceries,14,3430.0
+2026-10-19,PROD-002,Fortune Sunflower Oil 1L,Groceries,15,2100.0
+2026-10-19,PROD-003,Tata Salt 1kg,Groceries,22,616.0
+2026-10-19,PROD-004,Amul Butter 500g,Dairy & Breakfast,2,550.0
+2026-10-19,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,31,1674.0
+2026-10-19,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,27,1350.0
+2026-10-19,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,19,570.0
+2026-10-19,PROD-008,Taj Mahal Tea 500g,Beverages,6,2280.0
+2026-10-19,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-10-19,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,3,375.0
+2026-10-19,PROD-011,Classmate Notebook 172 Pgs,Stationery,10,600.0
+2026-10-19,PROD-012,Cello Butterflow Pen Blue,Stationery,43,430.0
+2026-10-20,PROD-001,Aashirvaad Atta 5kg,Groceries,12,2940.0
+2026-10-20,PROD-002,Fortune Sunflower Oil 1L,Groceries,15,2100.0
+2026-10-20,PROD-003,Tata Salt 1kg,Groceries,21,588.0
+2026-10-20,PROD-004,Amul Butter 500g,Dairy & Breakfast,4,1100.0
+2026-10-20,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,35,1890.0
+2026-10-20,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,30,1500.0
+2026-10-20,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,15,450.0
+2026-10-20,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-10-20,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,9,1890.0
+2026-10-20,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-10-20,PROD-011,Classmate Notebook 172 Pgs,Stationery,18,1080.0
+2026-10-20,PROD-012,Cello Butterflow Pen Blue,Stationery,30,300.0
+2026-10-21,PROD-001,Aashirvaad Atta 5kg,Groceries,12,2940.0
+2026-10-21,PROD-002,Fortune Sunflower Oil 1L,Groceries,7,980.0
+2026-10-21,PROD-003,Tata Salt 1kg,Groceries,21,588.0
+2026-10-21,PROD-004,Amul Butter 500g,Dairy & Breakfast,7,1925.0
+2026-10-21,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,37,1998.0
+2026-10-21,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,30,1500.0
+2026-10-21,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,21,630.0
+2026-10-21,PROD-008,Taj Mahal Tea 500g,Beverages,7,2660.0
+2026-10-21,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,6,1260.0
+2026-10-21,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-10-21,PROD-011,Classmate Notebook 172 Pgs,Stationery,9,540.0
+2026-10-21,PROD-012,Cello Butterflow Pen Blue,Stationery,27,270.0
+2026-10-22,PROD-001,Aashirvaad Atta 5kg,Groceries,8,1960.0
+2026-10-22,PROD-002,Fortune Sunflower Oil 1L,Groceries,13,1820.0
+2026-10-22,PROD-003,Tata Salt 1kg,Groceries,14,392.0
+2026-10-22,PROD-004,Amul Butter 500g,Dairy & Breakfast,10,2750.0
+2026-10-22,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,35,1890.0
+2026-10-22,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,26,1300.0
+2026-10-22,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,16,480.0
+2026-10-22,PROD-008,Taj Mahal Tea 500g,Beverages,4,1520.0
+2026-10-22,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,10,2100.0
+2026-10-22,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,2,250.0
+2026-10-22,PROD-011,Classmate Notebook 172 Pgs,Stationery,9,540.0
+2026-10-22,PROD-012,Cello Butterflow Pen Blue,Stationery,21,210.0
+2026-10-23,PROD-001,Aashirvaad Atta 5kg,Groceries,15,3675.0
+2026-10-23,PROD-002,Fortune Sunflower Oil 1L,Groceries,19,2660.0
+2026-10-23,PROD-003,Tata Salt 1kg,Groceries,20,560.0
+2026-10-23,PROD-004,Amul Butter 500g,Dairy & Breakfast,9,2475.0
+2026-10-23,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,33,1782.0
+2026-10-23,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,26,1300.0
+2026-10-23,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,20,600.0
+2026-10-23,PROD-008,Taj Mahal Tea 500g,Beverages,4,1520.0
+2026-10-23,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,6,1260.0
+2026-10-23,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,5,625.0
+2026-10-23,PROD-011,Classmate Notebook 172 Pgs,Stationery,11,660.0
+2026-10-23,PROD-012,Cello Butterflow Pen Blue,Stationery,35,350.0
+2026-10-24,PROD-001,Aashirvaad Atta 5kg,Groceries,21,5145.0
+2026-10-24,PROD-002,Fortune Sunflower Oil 1L,Groceries,24,3360.0
+2026-10-24,PROD-003,Tata Salt 1kg,Groceries,26,728.0
+2026-10-24,PROD-004,Amul Butter 500g,Dairy & Breakfast,11,3025.0
+2026-10-24,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,41,2214.0
+2026-10-24,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,35,1750.0
+2026-10-24,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,28,840.0
+2026-10-24,PROD-008,Taj Mahal Tea 500g,Beverages,5,1900.0
+2026-10-24,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,8,1680.0
+2026-10-24,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,4,500.0
+2026-10-24,PROD-011,Classmate Notebook 172 Pgs,Stationery,19,1140.0
+2026-10-24,PROD-012,Cello Butterflow Pen Blue,Stationery,57,570.0
+2026-10-25,PROD-001,Aashirvaad Atta 5kg,Groceries,10,2450.0
+2026-10-25,PROD-002,Fortune Sunflower Oil 1L,Groceries,15,2100.0
+2026-10-25,PROD-003,Tata Salt 1kg,Groceries,29,812.0
+2026-10-25,PROD-004,Amul Butter 500g,Dairy & Breakfast,9,2475.0
+2026-10-25,PROD-005,Mother Dairy Toned Milk 1L,Dairy & Breakfast,40,2160.0
+2026-10-25,PROD-006,Maggi 2-Minute Noodles 280g,Snacks & Instant Food,26,1300.0
+2026-10-25,PROD-007,Britannia Good Day Biscuits,Snacks & Instant Food,20,600.0
+2026-10-25,PROD-008,Taj Mahal Tea 500g,Beverages,7,2660.0
+2026-10-25,PROD-009,Surf Excel Matic Powder 1kg,Personal & Home Care,7,1470.0
+2026-10-25,PROD-010,Dettol Antiseptic Liquid 250ml,Personal & Home Care,7,875.0
+2026-10-25,PROD-011,Classmate Notebook 172 Pgs,Stationery,15,900.0
+2026-10-25,PROD-012,Cello Butterflow Pen Blue,Stationery,40,400.0
