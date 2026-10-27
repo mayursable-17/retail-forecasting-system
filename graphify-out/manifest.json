@@ -1,0 +1,326 @@
+{
+  "app.py": {
+    "mtime": 1793030637.7368617,
+    "seen": 1793120225.1098413,
+    "ast_hash": "8280a3c50ec1af13498b922d1acd05d4",
+    "semantic_hash": ""
+  },
+  "pages/1_Upload_Data.py": {
+    "mtime": 1793029659.8993795,
+    "seen": 1793120225.1098485,
+    "ast_hash": "6d292c4be6497ff5db91f2e68ca6411e",
+    "semantic_hash": ""
+  },
+  "pages/2_Data_Quality.py": {
+    "mtime": 1793030754.3622139,
+    "seen": 1793120225.1098518,
+    "ast_hash": "84862f89be69a82aac70245c5bbb0fa7",
+    "semantic_hash": ""
+  },
+  "pages/3_Sales_Analytics.py": {
+    "mtime": 1793030800.190199,
+    "seen": 1793120225.1098537,
+    "ast_hash": "05eb6981bfa6da8611ea0c87411efb28",
+    "semantic_hash": ""
+  },
+  "pages/4_Demand_Forecasting.py": {
+    "mtime": 1793030826.20006,
+    "seen": 1793120225.1098552,
+    "ast_hash": "ca0900fa9d72eb096eeb31a0155700d8",
+    "semantic_hash": ""
+  },
+  "pages/5_Inventory_Optimization.py": {
+    "mtime": 1793030850.2764828,
+    "seen": 1793120225.1098568,
+    "ast_hash": "13b23b4dd2a039b42e55e43e75a2c67f",
+    "semantic_hash": ""
+  },
+  "pages/6_Product_Management.py": {
+    "mtime": 1793029802.1697886,
+    "seen": 1793120225.1098583,
+    "ast_hash": "ba0770d594b0e7b3b6884a0a9b80826e",
+    "semantic_hash": ""
+  },
+  "pages/7_Reports.py": {
+    "mtime": 1793030865.1789873,
+    "seen": 1793120225.1098595,
+    "ast_hash": "c0a12b59028ef1a50e1e5188f7024f6d",
+    "semantic_hash": ""
+  },
+  "pages/8_Settings.py": {
+    "mtime": 1793029871.1200497,
+    "seen": 1793120225.109861,
+    "ast_hash": "cd0e59837d9e71c5fd199393dba89ba6",
+    "semantic_hash": ""
+  },
+  "src/__init__.py": {
+    "mtime": 1793028962.5741107,
+    "seen": 1793120225.1098623,
+    "ast_hash": "d188529553fded10b18cd13545682970",
+    "semantic_hash": ""
+  },
+  "src/analytics/__init__.py": {
+    "mtime": 1793029422.3270507,
+    "seen": 1793120225.1098638,
+    "ast_hash": "74ab18aa063f8ebef4d713bb4c20244d",
+    "semantic_hash": ""
+  },
+  "src/analytics/charts.py": {
+    "mtime": 1793029477.8434427,
+    "seen": 1793120225.1098652,
+    "ast_hash": "7f0450a2863ab469f843cfa1312184b9",
+    "semantic_hash": ""
+  },
+  "src/analytics/kpis.py": {
+    "mtime": 1793030164.8842602,
+    "seen": 1793120225.1098664,
+    "ast_hash": "d815b5ab41be19cd6a7e6567d6c92418",
+    "semantic_hash": ""
+  },
+  "src/config.py": {
+    "mtime": 1793028939.4113321,
+    "seen": 1793120225.109868,
+    "ast_hash": "65112c9cd7d09109c9e53b8028f2f526",
+    "semantic_hash": ""
+  },
+  "src/database/__init__.py": {
+    "mtime": 1793028987.7528095,
+    "seen": 1793120225.1098692,
+    "ast_hash": "7f12d2e8b4345a697b02c170a3232b13",
+    "semantic_hash": ""
+  },
+  "src/database/connection.py": {
+    "mtime": 1793030256.5429022,
+    "seen": 1793120225.1098707,
+    "ast_hash": "b0f72f60ffa577606db98986f9e78954",
+    "semantic_hash": ""
+  },
+  "src/database/models.py": {
+    "mtime": 1793030319.361462,
+    "seen": 1793120225.109872,
+    "ast_hash": "6db30f16adffbe99ac7f303311da762a",
+    "semantic_hash": ""
+  },
+  "src/database/repository.py": {
+    "mtime": 1793030332.197569,
+    "seen": 1793120225.1098738,
+    "ast_hash": "5a22d302a65abaecab13fadeb34a3d0b",
+    "semantic_hash": ""
+  },
+  "src/exports/__init__.py": {
+    "mtime": 1793029490.8625655,
+    "seen": 1793120225.1098752,
+    "ast_hash": "b37339f031b29388cd192a1ff8ceebdb",
+    "semantic_hash": ""
+  },
+  "src/exports/excel_report.py": {
+    "mtime": 1793030351.2003067,
+    "seen": 1793120225.1098764,
+    "ast_hash": "018d37e223d816403d07b8b2e78b1ef5",
+    "semantic_hash": ""
+  },
+  "src/forecasting/__init__.py": {
+    "mtime": 1793029242.8318896,
+    "seen": 1793120225.109878,
+    "ast_hash": "c775b6d6f61f74d3ac7feb363c66934e",
+    "semantic_hash": ""
+  },
+  "src/forecasting/baseline.py": {
+    "mtime": 1793029269.4467914,
+    "seen": 1793120225.1098793,
+    "ast_hash": "f378b829025ff8c0fed17471ad1e24cb",
+    "semantic_hash": ""
+  },
+  "src/forecasting/evaluate.py": {
+    "mtime": 1793029254.8548791,
+    "seen": 1793120225.1098814,
+    "ast_hash": "ef1a4a2b9311b19ae90635703634639d",
+    "semantic_hash": ""
+  },
+  "src/forecasting/features.py": {
+    "mtime": 1793029298.4215298,
+    "seen": 1793120225.1098826,
+    "ast_hash": "0dff282b12557542d6a0e0ab0e0c84d1",
+    "semantic_hash": ""
+  },
+  "src/forecasting/predict.py": {
+    "mtime": 1793029343.548388,
+    "seen": 1793120225.1098838,
+    "ast_hash": "bd652bcd8f85e1a2c3656943b33361f0",
+    "semantic_hash": ""
+  },
+  "src/forecasting/train.py": {
+    "mtime": 1793029325.6332908,
+    "seen": 1793120225.1098855,
+    "ast_hash": "4131461a049b329b68f78a59d21571a8",
+    "semantic_hash": ""
+  },
+  "src/generate_samples.py": {
+    "mtime": 1793029537.3308675,
+    "seen": 1793120225.1098866,
+    "ast_hash": "17bd76b1e0f53b7ec07deeb3e64591da",
+    "semantic_hash": ""
+  },
+  "src/ingestion/__init__.py": {
+    "mtime": 1793029148.9498956,
+    "seen": 1793120225.109888,
+    "ast_hash": "a1e4b80a46dea17d72730d3d0bdaf2ea",
+    "semantic_hash": ""
+  },
+  "src/ingestion/column_mapper.py": {
+    "mtime": 1793029174.9882703,
+    "seen": 1793120225.1098893,
+    "ast_hash": "f53db3daf4dbdda4c54b6e8018660c19",
+    "semantic_hash": ""
+  },
+  "src/ingestion/file_reader.py": {
+    "mtime": 1793029162.5463634,
+    "seen": 1793120225.1098907,
+    "ast_hash": "e96b09e068976d341f0170c7294c550c",
+    "semantic_hash": ""
+  },
+  "src/ingestion/validation.py": {
+    "mtime": 1793029180.350606,
+    "seen": 1793120225.1098921,
+    "ast_hash": "0bfe8f03d750407a884cdaeecb6817a8",
+    "semantic_hash": ""
+  },
+  "src/inventory/__init__.py": {
+    "mtime": 1793029356.994434,
+    "seen": 1793120225.1098936,
+    "ast_hash": "a3a60d466e93d53bd204b400b93af901",
+    "semantic_hash": ""
+  },
+  "src/inventory/recommendations.py": {
+    "mtime": 1793029410.1837232,
+    "seen": 1793120225.1098952,
+    "ast_hash": "2b6107a815bbbae803fed056417db703",
+    "semantic_hash": ""
+  },
+  "src/inventory/reorder_point.py": {
+    "mtime": 1793030201.734042,
+    "seen": 1793120225.1098964,
+    "ast_hash": "0304aea211c734bd1e1c3d457139ccdc",
+    "semantic_hash": ""
+  },
+  "src/inventory/safety_stock.py": {
+    "mtime": 1793029369.7507198,
+    "seen": 1793120225.1098976,
+    "ast_hash": "300efd30f136c457eb7429caf199cea9",
+    "semantic_hash": ""
+  },
+  "src/preprocessing/__init__.py": {
+    "mtime": 1793029189.424389,
+    "seen": 1793120225.109899,
+    "ast_hash": "8025d9ef6f6f05568e6bccc5994ac694",
+    "semantic_hash": ""
+  },
+  "src/preprocessing/aggregation.py": {
+    "mtime": 1793029232.1761103,
+    "seen": 1793120225.1099002,
+    "ast_hash": "f3ea0f36cd3fce4d688776b669e71b0e",
+    "semantic_hash": ""
+  },
+  "src/preprocessing/cleaning.py": {
+    "mtime": 1793030212.159209,
+    "seen": 1793120225.1099017,
+    "ast_hash": "8c2256bbfcb5e4df178ecc6631f98a54",
+    "semantic_hash": ""
+  },
+  "src/ui_helpers.py": {
+    "mtime": 1793029594.9008133,
+    "seen": 1793120225.1099029,
+    "ast_hash": "56524638960b692342b92bf18d1eea3d",
+    "semantic_hash": ""
+  },
+  "tests/__init__.py": {
+    "mtime": 1793029993.1612258,
+    "seen": 1793120225.109904,
+    "ast_hash": "261bc29c5d901e61b5215b68544de6fc",
+    "semantic_hash": ""
+  },
+  "tests/conftest.py": {
+    "mtime": 1793030289.682138,
+    "seen": 1793120225.1099055,
+    "ast_hash": "bae512f27b5a79198b8485d28e988801",
+    "semantic_hash": ""
+  },
+  "tests/test_aggregation.py": {
+    "mtime": 1793030067.037161,
+    "seen": 1793120225.1099067,
+    "ast_hash": "c235dc03c1b4613be3ed8b7e24ac00e4",
+    "semantic_hash": ""
+  },
+  "tests/test_cleaning.py": {
+    "mtime": 1793030051.1764767,
+    "seen": 1793120225.1099086,
+    "ast_hash": "574e101b8844febdc9e4c22cd3b0c22e",
+    "semantic_hash": ""
+  },
+  "tests/test_database.py": {
+    "mtime": 1793030116.3806944,
+    "seen": 1793120225.1099105,
+    "ast_hash": "b093a4454a34a20e6868d23baee0dfd9",
+    "semantic_hash": ""
+  },
+  "tests/test_forecasting.py": {
+    "mtime": 1793030082.590713,
+    "seen": 1793120225.109912,
+    "ast_hash": "970f28ad25cc95b38745cf65a102ed58",
+    "semantic_hash": ""
+  },
+  "tests/test_integration.py": {
+    "mtime": 1793030135.372921,
+    "seen": 1793120225.1099133,
+    "ast_hash": "5979ebc50d58a652843d5be5e7eb85d0",
+    "semantic_hash": ""
+  },
+  "tests/test_inventory.py": {
+    "mtime": 1793030101.3410268,
+    "seen": 1793120225.1099145,
+    "ast_hash": "4a6526344be7238c75e98e3761594aa8",
+    "semantic_hash": ""
+  },
+  "tests/test_upload.py": {
+    "mtime": 1793030037.719374,
+    "seen": 1793120225.1099162,
+    "ast_hash": "672fc3f828649dea04207938619f1e66",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1793031080.6535559,
+    "seen": 1793120225.1099174,
+    "ast_hash": "078d46a6bdc929143c72396fcd32032f",
+    "semantic_hash": ""
+  },
+  "docs/architecture.md": {
+    "mtime": 1793030945.7759657,
+    "seen": 1793120225.109919,
+    "ast_hash": "ddfe120605879ed9c50dd365806a455a",
+    "semantic_hash": ""
+  },
+  "docs/data_dictionary.md": {
+    "mtime": 1793030972.852982,
+    "seen": 1793120225.1099205,
+    "ast_hash": "0dc6b98cfe6b1065ffe5651af839fa82",
+    "semantic_hash": ""
+  },
+  "docs/test_plan.md": {
+    "mtime": 1793030999.4936526,
+    "seen": 1793120225.1099217,
+    "ast_hash": "a6c4c76664c5c5c9be38693968d6ecdb",
+    "semantic_hash": ""
+  },
+  "docs/user_guide.md": {
+    "mtime": 1793031034.2551403,
+    "seen": 1793120225.1099234,
+    "ast_hash": "6b5e3e372ecacea9ad83ac881e50ec2d",
+    "semantic_hash": ""
+  },
+  "requirements.txt": {
+    "mtime": 1793029906.3977177,
+    "seen": 1793120225.1099246,
+    "ast_hash": "229041ec15388238513a84c5db393e56",
+    "semantic_hash": ""
+  }
+}
