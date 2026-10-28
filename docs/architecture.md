@@ -4,12 +4,12 @@
 
 ### 1. Architectural Overview
 
-The system is designed following a **layered, decoupled service-oriented architecture (SOA)**. It cleanly isolates user interface presentation (Streamlit), data ingestion, validation, machine learning forecasting, inventory optimization algorithms, and relational data persistence (SQLAlchemy / SQLite).
+The system is designed following a **layered, decoupled service-oriented architecture (SOA)**. It cleanly isolates user interface presentation (Tailwind CSS SPA + Plotly.js), API gateway and routing (FastAPI / Vercel Serverless Functions), data ingestion, validation, machine learning forecasting, inventory optimization algorithms, and relational data persistence (SQLAlchemy / SQLite).
 
 ```mermaid
 flowchart TD
-    subgraph UI ["Presentation Layer (Streamlit Multipage)"]
-        Dashboard["Home Dashboard (app.py)"]
+    subgraph UI ["Presentation Layer (FastAPI + Tailwind SPA)"]
+        Dashboard["Overview Dashboard"]
         UploadPage["Upload & Column Mapping"]
         QualityPage["Data Quality & Audit"]
         AnalyticsPage["Sales Analytics"]

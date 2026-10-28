@@ -8,17 +8,34 @@ from pathlib import Path
 
 # Base Paths
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = PROJECT_ROOT / "data"
-SAMPLE_DIR = DATA_DIR / "sample"
-TEMPLATE_DIR = DATA_DIR / "templates"
-DB_DIR = PROJECT_ROOT / "db"
-DB_DIR.mkdir(parents=True, exist_ok=True)
-SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
-TEMPLATE_DIR.mkdir(parents=True, exist_ok=True)
+IS_VERCEL = bool(os.getenv("VERCEL"))
 
-# Database Configuration
-DEFAULT_SQLITE_PATH = DB_DIR / "retail_inventory.db"
-DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{DEFAULT_SQLITE_PATH.as_posix()}")
+if IS_VERCEL:
+    TMP_DIR = Path("/tmp")
+    DB_DIR = TMP_DIR / "db"
+    DATA_DIR = TMP_DIR / "data"
+    SAMPLE_DIR = DATA_DIR / "sample"
+    TEMPLATE_DIR = DATA_DIR / "templates"
+    try:
+        for d in [DB_DIR, SAMPLE_DIR, TEMPLATE_DIR]:
+            d.mkdir(parents=True, exist_ok=True)
+    except Exception:
+        pass
+    DEFAULT_SQLITE_PATH = DB_DIR / "retail_inventory.db"
+    DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{DEFAULT_SQLITE_PATH.as_posix()}")
+else:
+    DATA_DIR = PROJECT_ROOT / "data"
+    SAMPLE_DIR = DATA_DIR / "sample"
+    TEMPLATE_DIR = DATA_DIR / "templates"
+    DB_DIR = PROJECT_ROOT / "db"
+    try:
+        DB_DIR.mkdir(parents=True, exist_ok=True)
+        SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
+        TEMPLATE_DIR.mkdir(parents=True, exist_ok=True)
+    except Exception:
+        pass
+    DEFAULT_SQLITE_PATH = DB_DIR / "retail_inventory.db"
+    DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{DEFAULT_SQLITE_PATH.as_posix()}")
 
 # Default Business Settings
 DEFAULT_CURRENCY = "₹"

@@ -1,25 +1,44 @@
 # Retail Sales Forecasting & Inventory Optimization System Using Machine Learning
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=mayursable-17/retail-forecasting-system&branch=main&mainModule=app.py)
-[![Live Demo](https://img.shields.io/badge/Live%20App-Streamlit%20Community%20Cloud-FF4B4B?logo=streamlit&logoColor=white)](https://share.streamlit.io/deploy?repository=mayursable-17/retail-forecasting-system&branch=main&mainModule=app.py)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/mayursable-17/retail-forecasting-system)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black.svg?logo=vercel&logoColor=white)](https://vercel.com)
+[![Framework](https://img.shields.io/badge/FastAPI-0.110%2B-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Python Version](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
-[![Framework](https://img.shields.io/badge/Streamlit-1.40%2B-FF4B4B.svg)](https://streamlit.io/)
 [![Database](https://img.shields.io/badge/Database-SQLite%20%2F%20SQLAlchemy-003B57.svg)](https://www.sqlalchemy.org/)
 [![Machine Learning](https://img.shields.io/badge/ML-XGBoost%20%7C%20Scikit--Learn-F7931E.svg)](https://xgboost.readthedocs.io/)
-[![Tests](https://img.shields.io/badge/Tests-34%20Passed%20%28100%25%29-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/Tests-42%20Passed%20%28100%25%29-brightgreen.svg)](tests/)
 
 ---
 
-## 🌐 Live Application & 1-Click Launch
+## 🌐 Live Application & 1-Click Vercel Deployment
 
-Access and run the live application directly on the web:
+Deploy and run this project live on Vercel with a single click:
 
-* **1-Click Streamlit Cloud Deployment:** Click the badge below to immediately launch or connect this repository to Streamlit Community Cloud for free:
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/mayursable-17/retail-forecasting-system)
 
-  [![Deploy with Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=mayursable-17/retail-forecasting-system&branch=main&mainModule=app.py)
+### How to Deploy Your Own Live Instance on Vercel:
 
-* **Direct App URL:** [https://share.streamlit.io/mayursable-17/retail-forecasting-system/main/app.py](https://share.streamlit.io/mayursable-17/retail-forecasting-system/main/app.py)
-* **Custom Domain (When Hosted):** https://retail-forecasting-system.streamlit.app
+1. **Option A: 1-Click Button (Fastest)**
+   - Click the **Deploy with Vercel** button above.
+   - Connect your GitHub account and select your repository: `mayursable-17/retail-forecasting-system`.
+   - Vercel automatically detects `vercel.json` and builds the `@vercel/python` serverless deployment.
+   - Your live public URL (e.g. `https://retail-forecasting-system.vercel.app`) is generated in under 60 seconds!
+
+2. **Option B: Vercel Dashboard Import**
+   - Log into [vercel.com](https://vercel.com).
+   - Click **Add New...** -> **Project**.
+   - Select `mayursable-17/retail-forecasting-system` from your GitHub repos.
+   - Leave default settings unchanged (`vercel.json` handles routing and runtime).
+   - Click **Deploy**.
+
+3. **Option C: Vercel CLI**
+   ```bash
+   npm i -g vercel
+   vercel
+   ```
+
+> [!NOTE]
+> The backend automatically detects the Vercel serverless environment (`VERCEL=1`) and routes ephemeral database writes to `/tmp/db/retail_inventory.db` to adhere to Vercel's read-only serverless filesystem. For permanent database persistence across cold starts, simply set `DATABASE_URL=postgresql://user:pass@host:5432/db` (e.g. Neon, Supabase, or AWS RDS) in your Vercel Project Environment Variables.
 
 ---
 
@@ -46,7 +65,7 @@ Small retailers face major hurdles when attempting to utilize modern analytics:
 3. **Dual Inventory Workflows:** Support both **Workflow A** (sales-only gross requirement estimation with clear caveats) and **Workflow B** (full inventory optimization with safety stock and reorder points).
 4. **Time-Series Machine Learning:** Implement and benchmark Naive baselines, Seasonal Naive, Moving Averages, Exponential Smoothing, and XGBoost regressor using strictly chronological out-of-sample holdout validation without target leakage.
 5. **Supply Chain Optimization:** Formulate Reorder Points ($ROP$), Safety Stock ($SS$) via normal distribution variability ($z \times \sigma_d \times \sqrt{L}$), Order-up-to Targets ($S$), and supplier MOQ/case pack constraints.
-6. **Production-Ready Multi-Page UI:** Provide an intuitive Streamlit interface, interactive Plotly charts, and formatted multi-sheet Excel exports.
+6. **Production-Ready Web Architecture:** Full-stack high-performance FastAPI server with modern Tailwind CSS responsive single-page dashboard, interactive Plotly charts, and formatted multi-sheet Excel exports deployed on Vercel Serverless.
 
 ---
 
@@ -55,13 +74,15 @@ Small retailers face major hurdles when attempting to utilize modern analytics:
 | Layer | Technology | Version | Purpose |
 | :--- | :--- | :--- | :--- |
 | **Language** | Python | 3.11, 3.12, 3.13 | Core runtime environment |
-| **Frontend Framework** | Streamlit | $\ge 1.40.0$ | Multipage interactive web application |
-| **Data Visualization** | Plotly Express & Graph Objects | $\ge 5.18.0$ | Interactive analytical and forecast visualizations |
+| **Backend & Web Framework** | FastAPI & Uvicorn | $\ge 0.110.0$ | Async ASGI web API & serverless endpoints |
+| **Cloud Deployment** | Vercel Serverless Functions | `@vercel/python` | Global serverless deployment via `vercel.json` |
+| **Frontend UI** | Tailwind CSS & Modern HTML5 SPA | CDN / ES6 | Responsive, tabbed storekeeper dashboard |
+| **Data Visualization** | Plotly.js | $\ge 2.29.0$ | Interactive analytical, Pareto, and forecast charts |
 | **Data Processing** | Pandas, NumPy | $\ge 2.0.0$ | DataFrames, matrix math, aggregation, date indexing |
 | **Spreadsheet Engine** | openpyxl | $\ge 3.1.0$ | Safe formula-isolated Excel read/write |
 | **Machine Learning** | XGBoost, Scikit-learn, Statsmodels | $\ge 2.0.0$ | Boosted trees, Random Forests, statistical baselines |
 | **ORM & Database** | SQLAlchemy, SQLite | $\ge 2.0.0$ | Relational data persistence, PostgreSQL-ready |
-| **Test Automation** | Pytest | $\ge 8.0.0$ | Automated unit, mathematical, and integration tests |
+| **Test Automation** | Pytest, HTTPX / TestClient | $\ge 8.0.0$ | Automated unit, mathematical, and API integration tests |
 
 ---
 
@@ -69,37 +90,45 @@ Small retailers face major hurdles when attempting to utilize modern analytics:
 
 ```mermaid
 flowchart TD
-    subgraph UI ["Presentation Layer (Streamlit Multipage)"]
-        Dashboard["Home Dashboard (app.py)"]
-        UploadPage["Upload & Column Mapping"]
-        QualityPage["Data Quality & Audit"]
-        AnalyticsPage["Sales Analytics"]
-        ForecastPage["Demand Forecasting"]
-        InventoryPage["Inventory Optimization"]
-        ProductPage["Product Management"]
-        ReportsPage["Reports & Downloads"]
-        SettingsPage["Settings & Configuration"]
+    subgraph Client ["Client Browser (Single-Page Application)"]
+        UI["Tailwind CSS + Plotly.js SPA (templates/index.html)"]
+        Tab1["Overview Dashboard"]
+        Tab2["Upload & Smart Mapper"]
+        Tab3["Data Quality & Anomaly Audit"]
+        Tab4["Sales & ABC Pareto Analytics"]
+        Tab5["ML Forecasting & What-If Simulator"]
+        Tab6["Inventory Optimization & PO Calc"]
+        Tab7["Product Catalog & Live Stock Take"]
+        Tab8["Reports & Excel Export"]
+        Tab9["Store Settings & SLA Rules"]
+        UI --> Tab1 & Tab2 & Tab3 & Tab4 & Tab5 & Tab6 & Tab7 & Tab8 & Tab9
+    end
+
+    subgraph ServerlessGateway ["Vercel Serverless Gateway"]
+        VercelRoute["vercel.json Routing"]
+        API["FastAPI Entrypoint (api/index.py)"]
+        VercelRoute --> API
     end
 
     subgraph Ingestion ["Ingestion & Preprocessing Engine"]
-        Reader["file_reader.py<br/>(openpyxl data_only / CSV)"]
-        Mapper["column_mapper.py<br/>(Synonym Auto-Detection)"]
-        Cleaner["cleaning.py<br/>(Anomalies, Returns, Imputation)"]
-        Aggregator["aggregation.py<br/>(Daily Normalization & Zero Filling)"]
+        Reader["file_reader.py (CSV / XLSX data_only)"]
+        Mapper["column_mapper.py (Synonym Auto-Detection)"]
+        Cleaner["cleaning.py (Anomalies, Returns, Imputation)"]
+        Aggregator["aggregation.py (Daily Normalization & Zero Filling)"]
     end
 
     subgraph Forecasting ["Forecasting & Machine Learning Engine"]
-        Trainer["train.py<br/>(Chronological Split & Benchmarking)"]
-        Features["features.py<br/>(Strict Non-Leaking Lags & Rolling Stats)"]
-        Models["baseline.py & ML<br/>(Naive, SES, MA, XGBoost, RF)"]
-        Evaluator["evaluate.py<br/>(MAE, RMSE, WAPE, Bias)"]
-        Predictor["predict.py<br/>(Multi-Step Recursive Horizon Projections)"]
+        Trainer["train.py (Chronological Split & Benchmarking)"]
+        Features["features.py (Strict Non-Leaking Lags & Rolling Stats)"]
+        Models["baseline.py & ML (Naive, SES, MA, XGBoost, RF)"]
+        Evaluator["evaluate.py (MAE, RMSE, WAPE, Bias)"]
+        Predictor["predict.py (Multi-Step Recursive Horizon Projections)"]
     end
 
     subgraph Optimization ["Inventory Optimization Engine"]
-        SafetyStock["safety_stock.py<br/>(Variability: z * σ_d * √L / Fixed Buffer)"]
-        ROP["reorder_point.py<br/>(ROP = D_L + SS, S = D_L+R + SS, MOQ, Packs)"]
-        Recommender["recommendations.py<br/>(Workflow A & Workflow B Logic)"]
+        SafetyStock["safety_stock.py (Variability: z * σ_d * √L / Fixed Buffer)"]
+        ROP["reorder_point.py (ROP = D_L + SS, S = D_L+R + SS, MOQ, Packs)"]
+        Recommender["recommendations.py (Workflow A & Workflow B Logic)"]
     end
 
     subgraph DataAccess ["Persistence Layer"]
@@ -108,15 +137,14 @@ flowchart TD
         DB[(SQLite / PostgreSQL Engine)]
     end
 
-    UploadPage --> Reader --> Mapper --> Cleaner --> Aggregator --> Repo
+    UI <-->|JSON REST API| API
+    API --> Reader --> Mapper --> Cleaner --> Aggregator --> Repo
     Repo --> ORM --> DB
-    Dashboard --> Repo
-    AnalyticsPage --> Repo
-    ForecastPage --> Trainer --> Features --> Models --> Evaluator
+    API --> Repo
+    API --> Trainer --> Features --> Models --> Evaluator
     Trainer --> Predictor --> Repo
-    InventoryPage --> Recommender --> SafetyStock
+    API --> Recommender --> SafetyStock
     Recommender --> ROP --> Repo
-    ReportsPage --> Repo
 ```
 
 ---
@@ -143,7 +171,6 @@ flowchart TD
   $$\text{RMSE} = \sqrt{\frac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2}$$
 - **Weighted Absolute Percentage Error (WAPE):**
   $$\text{WAPE} = \frac{\sum_{i=1}^n |y_i - \hat{y}_i|}{\sum_{i=1}^n y_i} \times 100\%$$
-  *Advantage over MAPE:* Well-defined even when individual actual demand days are zero.
 - **Forecast Bias:**
   $$\text{Bias} = \frac{\sum_{i=1}^n (\hat{y}_i - y_i)}{\sum_{i=1}^n y_i} \times 100\%$$
 
@@ -171,32 +198,27 @@ flowchart TD
 ```
 retail-forecasting-system/
 │
-├── app.py                      # Main entrypoint & Home Dashboard
-├── requirements.txt            # Python dependencies
-├── README.md                   # Academic project documentation
+├── vercel.json                 # Vercel Serverless Function & routing configuration
+├── requirements.txt            # Python dependencies (FastAPI, ML, SQLAlchemy)
+├── README.md                   # Academic and operational documentation
 ├── .gitignore                  # Git ignore rules
 │
-├── pages/                      # Streamlit Multipage application
-│   ├── 1_Upload_Data.py        # File ingestion & column mapping
-│   ├── 2_Data_Quality.py       # Data cleaning & anomaly audit
-│   ├── 3_Sales_Analytics.py    # Sales trends & visual exploration
-│   ├── 4_Demand_Forecasting.py # ML forecasting & validation holdout
-│   ├── 5_Inventory_Optimization.py # Reorder points & safety stock
-│   ├── 6_Product_Management.py # Catalog & stock snapshot logging
-│   ├── 7_Reports.py            # Master Excel & CSV export
-│   └── 8_Settings.py           # Store profile & operational defaults
+├── api/                        # Serverless API layer
+│   └── index.py                # FastAPI entrypoint, REST endpoints & Vercel handler
+│
+├── templates/                  # Frontend single-page application
+│   └── index.html              # Responsive Tailwind CSS, Plotly.js & vanilla JS UI
 │
 ├── src/                        # Modular service packages
-│   ├── config.py               # Constants, thresholds, and paths
-│   ├── ui_helpers.py           # CSS injection & UI widgets
-│   ├── generate_samples.py     # Synthetic data generation script
+│   ├── config.py               # Constants, thresholds, and Vercel /tmp path routing
+│   ├── generate_samples.py     # Synthetic retail data generation script
 │   ├── ingestion/              # File reader, column mapper, schema validation
 │   ├── preprocessing/          # Cleaning, anomaly audit, daily aggregation
 │   ├── forecasting/            # Baseline models, feature engineering, trainer, evaluation
 │   ├── inventory/              # Safety stock, ROP, order-up-to, Mode A & B recommenders
-│   ├── database/               # SQLAlchemy models, connection, repository DAO
+│   ├── database/               # SQLAlchemy models, connection, repository DAO, migrations
 │   ├── analytics/              # Overview KPIs, Pareto analysis, day-of-week patterns
-│   └── exports/                # Multi-tab styled Excel report builder
+│   └── exports/                # Multi-tab styled Excel report builder & CSV streams
 │
 ├── data/
 │   ├── sample/                 # Synthetic transactions, daily sales, inventory, messy datasets
@@ -204,12 +226,13 @@ retail-forecasting-system/
 │
 ├── tests/                      # Automated test suite (Pytest)
 │   ├── conftest.py             # Isolated SQLite fixtures
+│   ├── test_api.py             # FastAPI REST endpoints & TestClient tests
 │   ├── test_upload.py          # Upload & column mapping tests
 │   ├── test_cleaning.py        # Cleaning, returns, and anomaly tests
 │   ├── test_aggregation.py     # Aggregation and gap-filling tests
 │   ├── test_forecasting.py     # Lags, chronological split, metrics, model tests
 │   ├── test_inventory.py       # Safety stock, ROP, MOQ, Mode A & B math proofs
-│   ├── test_database.py        # SQLAlchemy CRUD and snapshot persistence tests
+│   ├── test_database.py        # SQLAlchemy CRUD, migrations, and snapshot persistence
 │   └── test_integration.py     # Full end-to-end integration test
 │
 └── docs/                       # Technical documentation
@@ -221,39 +244,46 @@ retail-forecasting-system/
 
 ---
 
-## 7. Local Setup & Execution Guide (Windows)
+## 7. Local Setup & Execution Guide
 
 ### Prerequisites
 - Python 3.11, 3.12, or 3.13 installed.
-- Windows PowerShell or Command Prompt.
+- Windows PowerShell, macOS Terminal, or Linux Shell.
 
-### Step 1: Navigate to Project Directory
-```powershell
-cd "C:\Users\MAYUR\.gemini\antigravity\scratch\retail-forecasting-system"
+### Step 1: Clone Repository & Navigate
+```bash
+git clone https://github.com/mayursable-17/retail-forecasting-system.git
+cd retail-forecasting-system
 ```
 
-### Step 2: Create and Activate Virtual Environment
-```powershell
+### Step 2: Create & Activate Virtual Environment
+```bash
+# Windows
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+
+# Linux / macOS
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
 ### Step 3: Install Required Dependencies
-```powershell
+```bash
 pip install -r requirements.txt
 ```
 
 ### Step 4: Run the Automated Test Suite
-Verify that all 31 automated tests pass:
-```powershell
-pytest -v
+Verify that all 42 automated tests pass with 100% success:
+```bash
+python -m pytest -v
 ```
 
-### Step 5: Launch the Streamlit Web Application
-```powershell
-streamlit run app.py
+### Step 5: Launch Local FastAPI Server
+```bash
+python -m uvicorn api.index:app --host 127.0.0.1 --port 8000 --reload
 ```
-*The application will open automatically in your browser at `http://localhost:8501`.*
+*Open your browser and navigate to:* **`http://localhost:8000`**
+*Interactive API Swagger Documentation:* **`http://localhost:8000/docs`**
 
 ---
 
@@ -272,60 +302,70 @@ The repository contains reproducible synthetic datasets in `data/sample/`:
 
 ## 9. Verification & Test Suite Summary
 
-All 31 automated tests execute in under 3.5 seconds with zero errors:
+All 42 automated tests execute in under 4.5 seconds with zero failures:
 
 ```
 ============================= test session starts =============================
 platform win32 -- Python 3.13.7, pytest-9.1.1, pluggy-1.7.0
-rootdir: C:\Users\MAYUR\.gemini\antigravity\scratch\retail-forecasting-system
+rootdir: retail-forecasting-system
 plugins: anyio-4.15.1
-collected 31 items
+collected 42 items
 
-tests/test_aggregation.py::test_aggregate_daily_sales_basic PASSED       [  3%]
-tests/test_aggregation.py::test_net_demand_non_negativity_with_excess_returns PASSED [  6%]
-tests/test_aggregation.py::test_gap_filling_creates_zero_sales PASSED    [  9%]
-tests/test_cleaning.py::test_clean_missing_and_unparseable_dates PASSED  [ 12%]
-tests/test_cleaning.py::test_clean_negative_quantities_as_returns PASSED [ 16%]
-tests/test_cleaning.py::test_clean_duplicate_transactions PASSED         [ 19%]
-tests/test_cleaning.py::test_impute_missing_quantity_and_revenue PASSED  [ 22%]
-tests/test_database.py::test_shop_and_products_operations PASSED         [ 25%]
-tests/test_database.py::test_sales_daily_operations PASSED               [ 29%]
-tests/test_database.py::test_inventory_snapshot_latest_query PASSED      [ 32%]
-tests/test_database.py::test_forecast_and_recommendations_persistence PASSED [ 35%]
-tests/test_forecasting.py::test_evaluation_metrics_known_values PASSED   [ 38%]
-tests/test_forecasting.py::test_wape_zero_actual_handling PASSED         [ 41%]
-tests/test_forecasting.py::test_chronological_split_no_leakage PASSED    [ 45%]
-tests/test_forecasting.py::test_feature_engineering_strictly_causal PASSED [ 48%]
-tests/test_forecasting.py::test_baseline_forecasters PASSED              [ 51%]
-tests/test_forecasting.py::test_demand_model_trainer_and_predict PASSED  [ 54%]
-tests/test_integration.py::test_full_pipeline_integration PASSED         [ 58%]
-tests/test_inventory.py::test_inventory_position_formula PASSED          [ 61%]
-tests/test_inventory.py::test_safety_stock_variability_analytical_proof PASSED [ 64%]
-tests/test_inventory.py::test_reorder_point_and_order_up_to_target PASSED [ 67%]
-tests/test_inventory.py::test_moq_and_case_pack_rounding PASSED          [ 70%]
-tests/test_inventory.py::test_mode_a_recommendations_sales_only PASSED   [ 74%]
-tests/test_inventory.py::test_mode_b_recommendations_full PASSED         [ 77%]
-tests/test_upload.py::test_read_valid_csv PASSED                         [ 80%]
-tests/test_upload.py::test_read_empty_csv PASSED                         [ 83%]
-tests/test_upload.py::test_unsupported_file_extension PASSED             [ 87%]
-tests/test_upload.py::test_read_valid_xlsx PASSED                        [ 90%]
-tests/test_upload.py::test_column_auto_detection PASSED                  [ 93%]
-tests/test_upload.py::test_validate_mapping_valid PASSED                 [ 96%]
+tests/test_aggregation.py::test_aggregate_daily_sales_basic PASSED       [  2%]
+tests/test_aggregation.py::test_net_demand_non_negativity_with_excess_returns PASSED [  4%]
+tests/test_aggregation.py::test_gap_filling_creates_zero_sales PASSED    [  7%]
+tests/test_api.py::test_root_serves_html PASSED                          [  9%]
+tests/test_api.py::test_api_health PASSED                                [ 11%]
+tests/test_api.py::test_api_shop PASSED                                  [ 14%]
+tests/test_api.py::test_api_dashboard PASSED                             [ 16%]
+tests/test_api.py::test_api_products PASSED                              [ 19%]
+tests/test_api.py::test_api_inventory_recommendations_endpoint PASSED    [ 21%]
+tests/test_api.py::test_api_csv_export PASSED                            [ 23%]
+tests/test_api.py::test_api_shop_defaults_update PASSED                  [ 26%]
+tests/test_cleaning.py::test_clean_missing_and_unparseable_dates PASSED  [ 28%]
+tests/test_cleaning.py::test_clean_negative_quantities_as_returns PASSED [ 30%]
+tests/test_cleaning.py::test_clean_duplicate_transactions PASSED         [ 33%]
+tests/test_cleaning.py::test_impute_missing_quantity_and_revenue PASSED  [ 35%]
+tests/test_database.py::test_shop_and_products_operations PASSED         [ 38%]
+tests/test_database.py::test_sales_daily_operations PASSED               [ 40%]
+tests/test_database.py::test_inventory_snapshot_latest_query PASSED      [ 42%]
+tests/test_database.py::test_forecast_and_recommendations_persistence PASSED [ 45%]
+tests/test_database.py::test_operational_defaults_persistence PASSED     [ 47%]
+tests/test_database.py::test_batch_update_products PASSED                [ 50%]
+tests/test_database.py::test_latest_upload_and_alerts_summary PASSED     [ 52%]
+tests/test_forecasting.py::test_evaluation_metrics_known_values PASSED   [ 54%]
+tests/test_forecasting.py::test_wape_zero_actual_handling PASSED         [ 57%]
+tests/test_forecasting.py::test_chronological_split_no_leakage PASSED    [ 59%]
+tests/test_forecasting.py::test_feature_engineering_strictly_causal PASSED [ 61%]
+tests/test_forecasting.py::test_baseline_forecasters PASSED              [ 64%]
+tests/test_forecasting.py::test_demand_model_trainer_and_predict PASSED  [ 66%]
+tests/test_integration.py::test_full_pipeline_integration PASSED         [ 69%]
+tests/test_inventory.py::test_inventory_position_formula PASSED          [ 71%]
+tests/test_inventory.py::test_safety_stock_variability_analytical_proof PASSED [ 73%]
+tests/test_inventory.py::test_reorder_point_and_order_up_to_target PASSED [ 76%]
+tests/test_inventory.py::test_moq_and_case_pack_rounding PASSED          [ 78%]
+tests/test_inventory.py::test_mode_a_recommendations_sales_only PASSED   [ 80%]
+tests/test_inventory.py::test_mode_b_recommendations_full PASSED         [ 83%]
+tests/test_upload.py::test_read_valid_csv PASSED                         [ 85%]
+tests/test_upload.py::test_read_empty_csv PASSED                         [ 88%]
+tests/test_upload.py::test_unsupported_file_extension PASSED             [ 90%]
+tests/test_upload.py::test_read_valid_xlsx PASSED                        [ 92%]
+tests/test_upload.py::test_column_auto_detection PASSED                  [ 95%]
+tests/test_upload.py::test_validate_mapping_valid PASSED                 [ 97%]
 tests/test_upload.py::test_validate_mapping_missing_required PASSED      [100%]
 
-============================= 31 passed in 3.12s ==============================
+======================== 42 passed, 1 warning in 4.15s ========================
 ```
 
 ---
 
 ## 10. Deployment Guidelines
 
-### 10.1 Streamlit Community Cloud
-1. Push this repository to GitHub.
-2. Connect your repository on [share.streamlit.io](https://share.streamlit.io).
-3. Set Main file path: `app.py`.
-4. Add environment variables if utilizing external PostgreSQL: `DATABASE_URL=postgresql://user:pass@host:5432/db`.
-5. *Persistence Note:* Default SQLite files on ephemeral hosting reset on server reboot. For permanent cloud storage, attach an external hosted PostgreSQL instance (e.g., Supabase, Neon, or AWS RDS).
+### 10.1 Vercel Serverless (Recommended)
+1. Push your repository to GitHub.
+2. Go to [vercel.com/new](https://vercel.com/new) and select `retail-forecasting-system`.
+3. Vercel automatically deploys using `vercel.json` and `@vercel/python`.
+4. *(Optional for persistence)*: In Vercel Project Settings > Environment Variables, set `DATABASE_URL=postgresql://...` to connect a permanent managed PostgreSQL database.
 
 ### 10.2 Docker Containerization
 ```dockerfile
@@ -334,8 +374,8 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-EXPOSE 8501
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+EXPOSE 8000
+CMD ["uvicorn", "api.index:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
 ---
@@ -344,7 +384,7 @@ CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0
 
 ### Limitations
 - Lead time is modeled as a deterministic integer parameter. In real-world logistics, lead times can exhibit stochastic variability.
-- The single-user prototype utilizes SQLite; high-concurrency multi-store setups should migrate to PostgreSQL.
+- The single-user prototype utilizes SQLite; high-concurrency multi-store setups should connect to managed PostgreSQL.
 - Extreme black-swan events (such as sudden supply shocks or pandemics) exceed historical lag pattern assumptions.
 
 ### Future Enhancements
