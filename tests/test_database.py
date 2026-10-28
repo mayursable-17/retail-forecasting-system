@@ -127,3 +127,77 @@ def test_forecast_and_recommendations_persistence(in_memory_repo):
     assert len(recs_df) == 1
     assert recs_df.iloc[0]["suggested_qty"] == 20.0
     assert recs_df.iloc[0]["risk_status"] == "Reorder Review"
+
+    # Test overrides
+    updated = repo.update_recommendations_overrides(run_id, {"P101": 35.0})
+    assert updated == 1
+    recs_df_after = repo.get_recommendations_df(run_id)
+    assert recs_df_after.iloc[0]["suggested_qty"] == 35.0
+
+
+def test_operational_defaults_persistence(in_memory_repo):
+    repo = in_memory_repo
+    success = repo.update_shop_operational_defaults(
+        shop_id=1,
+        lead_time_days=10,
+        review_period_days=14,
+        service_level=0.98,
+        safety_stock_method="buffer",
+        replenishment_buffer_pct=0.25
+    )
+    assert success is True
+
+    shop = repo.get_shop(1)
+    assert shop["default_lead_time_days"] == 10
+    assert shop["default_review_period_days"] == 14
+    assert shop["default_service_level"] == 0.98
+    assert shop["default_safety_stock_method"] == "buffer"
+    assert shop["default_replenishment_buffer_pct"] == 0.25
+
+
+def test_batch_update_products(in_memory_repo):
+    repo = in_memory_repo
+    repo.upsert_products(1, [{
+        "product_id": "P201",
+        "product_name": "Mustard Oil 1L",
+        "category": "Oils",
+        "unit_price": 180.0
+    }])
+
+    updated_count = repo.batch_update_products(1, [{
+        "product_id": "P201",
+        "unit_price": 195.0,
+        "lead_time_days": 12,
+        "minimum_order_quantity": 24.0,
+        "case_pack_size": 12.0
+    }])
+    assert updated_count == 1
+
+    df_p = repo.get_products_df(1)
+    p = df_p[df_p["product_id"] == "P201"].iloc[0]
+    assert p["unit_price"] == 195.0
+    assert p["lead_time_days"] == 12
+    assert p["minimum_order_quantity"] == 24.0
+    assert p["case_pack_size"] == 12.0
+
+
+def test_latest_upload_and_alerts_summary(in_memory_repo):
+    repo = in_memory_repo
+    upload_id = repo.create_upload_record(
+        shop_id=1,
+        file_name="sales_audit_test.csv",
+        file_hash="testhash123",
+        upload_type="sales",
+        row_count=50,
+        quality_summary={"accepted_rows": 50, "flagged_rows": 0}
+    )
+    assert upload_id > 0
+
+    latest = repo.get_latest_upload(shop_id=1)
+    assert latest is not None
+    assert latest["file_name"] == "sales_audit_test.csv"
+    assert latest["quality_summary"]["accepted_rows"] == 50
+
+    alerts = repo.get_stock_alerts_summary(shop_id=1)
+    assert isinstance(alerts, dict)
+    assert "stock_risk" in alerts

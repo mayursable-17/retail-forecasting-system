@@ -57,28 +57,40 @@ else:
 
         is_mode_b = "Workflow B" in mode_choice
 
-        # Mode parameters
+        # Mode parameters pre-filled from persisted shop defaults
+        cur_review = int(shop.get("default_review_period_days", 7) or 7)
+        cur_method = str(shop.get("default_safety_stock_method", "variability") or "variability")
+        cur_sl = float(shop.get("default_service_level", 0.95) or 0.95)
+        cur_buf = float(shop.get("default_replenishment_buffer_pct", 0.20) or 0.20)
+
         if is_mode_b:
             st.markdown("#### ⚙️ Workflow B Parameters (Periodic Review & Safety Stock)")
             p1, p2, p3 = st.columns(3)
             with p1:
-                review_period = st.number_input("Store Review Period (Days)", min_value=1, max_value=30, value=7,
+                review_period = st.number_input("Store Review Period (Days)", min_value=1, max_value=30, value=cur_review,
                                                 help="How often the shopkeeper places replenishment orders (e.g., weekly = 7 days).")
             with p2:
-                ss_method = st.selectbox("Safety Stock Calculation Method",
-                                         options=["variability", "buffer"],
-                                         format_func=lambda x: "Normal Variability (z * sigma * sqrt(L))" if x == "variability" else "Configurable Fixed Buffer (%)")
+                method_opts = ["variability", "buffer"]
+                idx_m = method_opts.index(cur_method) if cur_method in method_opts else 0
+                ss_method = st.selectbox(
+                    "Safety Stock Calculation Method",
+                    options=method_opts,
+                    index=idx_m,
+                    format_func=lambda x: "Normal Variability (z * sigma * sqrt(L))" if x == "variability" else "Configurable Fixed Buffer (%)"
+                )
             with p3:
                 if ss_method == "variability":
+                    sl_opts = [0.80, 0.85, 0.90, 0.95, 0.98, 0.99]
+                    idx_sl = sl_opts.index(cur_sl) if cur_sl in sl_opts else 3
                     service_level = st.selectbox(
                         "Target Cycle Service Level",
-                        options=[0.80, 0.85, 0.90, 0.95, 0.98, 0.99],
-                        index=3,
-                        format_func=lambda sl: f"{int(sl*100)}% (z = {SERVICE_LEVEL_Z_MAP[sl]})"
+                        options=sl_opts,
+                        index=idx_sl,
+                        format_func=lambda sl: f"{int(sl*100)}% (z = {SERVICE_LEVEL_Z_MAP.get(sl, 1.65)})"
                     )
-                    buffer_pct = 0.20
+                    buffer_pct = cur_buf
                 else:
-                    buffer_pct = st.slider("Replenishment Buffer %", min_value=5, max_value=50, value=20) / 100.0
+                    buffer_pct = st.slider("Replenishment Buffer %", min_value=5, max_value=50, value=int(cur_buf * 100)) / 100.0
                     service_level = 0.95
 
             if not has_inventory_data:
@@ -94,7 +106,7 @@ else:
             with p1:
                 planning_period = st.selectbox("Planning Horizon (Days)", options=[7, 15, 30], index=1)
             with p2:
-                buffer_pct = st.slider("Replenishment Buffer %", min_value=5, max_value=40, value=15) / 100.0
+                buffer_pct = st.slider("Replenishment Buffer %", min_value=5, max_value=40, value=int(cur_buf * 100)) / 100.0
 
         # Run Optimization Button
         if st.button("🚀 Calculate Replenishment Recommendations", type="primary", use_container_width=True):
@@ -122,58 +134,82 @@ else:
                 repo.save_recommendations(latest_run["run_id"], recs)
                 st.session_state["cached_recs"] = recs
                 st.success(f"Successfully calculated optimization for {len(recs)} catalog items!")
+                st.rerun()
 
         # Display stored recommendations
         recs_df = repo.get_recommendations_df(latest_run["run_id"])
 
         if not recs_df.empty:
+            cur = shop["currency_symbol"]
             st.markdown("---")
-            st.subheader("📋 Reorder & Stock Health Recommendations")
+            st.subheader("📋 Reorder & Stock Health Overview")
 
             # Status distribution cards
             status_counts = recs_df["risk_status"].value_counts().to_dict()
             sc1, sc2, sc3, sc4, sc5 = st.columns(5)
             with sc1:
-                render_metric_card("Stock Risk", f"{status_counts.get('Stock Risk', 0)}", "Depleted or imminent stockout", border_color="#E53935")
+                render_metric_card("Stock Risk", f"{status_counts.get('Stock Risk', 0)}", "Depleted / imminent stockout", border_color="#E53935", icon="🚨")
             with sc2:
-                render_metric_card("Reorder Review", f"{status_counts.get('Reorder Review', 0)}", "At or below Reorder Point", border_color="#FB8C00")
+                render_metric_card("Reorder Review", f"{status_counts.get('Reorder Review', 0)}", "At or below Reorder Point", border_color="#FB8C00", icon="⚠️")
             with sc3:
-                render_metric_card("Adequate Stock", f"{status_counts.get('Adequate Stock', 0)}", "Healthy buffer above ROP", border_color="#43A047")
+                render_metric_card("Adequate Stock", f"{status_counts.get('Adequate Stock', 0)}", "Healthy buffer above ROP", border_color="#43A047", icon="✅")
             with sc4:
-                render_metric_card("Potential Excess", f"{status_counts.get('Potential Excess Stock', 0)}", "Surplus stock risk", border_color="#8E24AA")
+                render_metric_card("Potential Excess", f"{status_counts.get('Potential Excess Stock', 0)}", "Surplus stock risk", border_color="#8E24AA", icon="📦")
             with sc5:
-                render_metric_card("Info Needed", f"{status_counts.get('Insufficient Inventory Information', 0)}", "Stock counts unknown", border_color="#757575")
+                render_metric_card("Info Needed", f"{status_counts.get('Insufficient Inventory Information', 0)}", "Stock counts unknown", border_color="#757575", icon="❓")
+
+            # Purchase Order Financial Overview
+            po_items = recs_df[recs_df["suggested_qty"] > 0]
+            total_po_units = float(po_items["suggested_qty"].sum())
+            total_po_val = float((po_items["suggested_qty"] * po_items.get("unit_price", 0.0)).sum())
+
+            f_po1, f_po2, f_po3 = st.columns(3)
+            with f_po1:
+                st.metric("Total Items to Order", f"{len(po_items)} SKU(s)")
+            with f_po2:
+                st.metric("Total Order Volume", f"{total_po_units:,.1f} Units")
+            with f_po3:
+                st.metric("Estimated PO Investment", f"{cur}{total_po_val:,.2f}")
 
             # Risk Chart
             st.plotly_chart(plot_inventory_risk_pie(recs_df), use_container_width=True)
 
-            # Interactive Table with editable order quantities
-            st.subheader("📝 Review & Edit Preliminary Order Quantities")
-            st.caption("You can review the mathematical rationale and modify suggested orders before generating purchase orders or exporting.")
+            # Interactive Table with editable order quantities and interactive filters
+            st.markdown("---")
+            st.subheader("📝 Review & Edit Purchase Order Quantities")
+            st.caption("You can modify suggested order quantities directly in the grid below, then click **Save Overrides** to persist.")
 
-            # Format table for display
-            display_recs = recs_df.copy()
-            display_recs["suggested_qty"] = display_recs["suggested_qty"].round(1)
-            if "reorder_point" in display_recs.columns:
-                display_recs["reorder_point"] = display_recs["reorder_point"].fillna("-")
-            if "current_stock" in display_recs.columns:
-                display_recs["current_stock"] = display_recs["current_stock"].fillna("-")
-            if "inventory_position" in display_recs.columns:
-                display_recs["inventory_position"] = display_recs["inventory_position"].fillna("-")
-            if "safety_stock" in display_recs.columns:
-                display_recs["safety_stock"] = display_recs["safety_stock"].fillna("-")
-            if "order_up_to_target" in display_recs.columns:
-                display_recs["order_up_to_target"] = display_recs["order_up_to_target"].fillna("-")
+            # Filter options
+            filt_col1, filt_col2 = st.columns([1, 1])
+            with filt_col1:
+                all_statuses = ["All Statuses"] + sorted(recs_df["risk_status"].unique())
+                sel_status = st.selectbox("Filter by Stock Status", all_statuses)
+            with filt_col2:
+                all_cats = ["All Categories"] + sorted(recs_df["category"].unique())
+                sel_cat = st.selectbox("Filter by Category", all_cats)
+
+            # Apply view filter
+            view_recs = recs_df.copy()
+            if sel_status != "All Statuses":
+                view_recs = view_recs[view_recs["risk_status"] == sel_status]
+            if sel_cat != "All Categories":
+                view_recs = view_recs[view_recs["category"] == sel_cat]
+
+            view_recs["suggested_qty"] = view_recs["suggested_qty"].round(1)
+            for c in ["reorder_point", "current_stock", "inventory_position", "safety_stock", "order_up_to_target"]:
+                if c in view_recs.columns:
+                    view_recs[c] = view_recs[c].fillna("-")
 
             cols_order = [
                 "product_id", "product_name", "category", "risk_status",
                 "current_stock", "inventory_position", "reorder_point",
                 "safety_stock", "order_up_to_target", "suggested_qty", "explanation"
             ]
-            existing_cols = [c for c in cols_order if c in display_recs.columns]
+            existing_cols = [c for c in cols_order if c in view_recs.columns]
 
             edited_recs = st.data_editor(
-                display_recs[existing_cols],
+                view_recs[existing_cols],
+                key="recs_data_editor",
                 column_config={
                     "suggested_qty": st.column_config.NumberColumn(
                         "Suggested Order Qty",
@@ -189,8 +225,33 @@ else:
                 use_container_width=True
             )
 
-            st.markdown("---")
-            st.page_link("pages/7_Reports.py", label="➡️ Proceed to Reports & Downloads", icon="📥")
+            # Interactive Actions Row
+            act1, act2, act3 = st.columns([2, 2, 1])
+            with act1:
+                if st.button("💾 Save Order Overrides to Database", type="primary", use_container_width=True):
+                    overrides = {}
+                    for _, row in edited_recs.iterrows():
+                        overrides[str(row["product_id"])] = float(row["suggested_qty"])
+                    saved_count = repo.update_recommendations_overrides(latest_run["run_id"], overrides)
+                    st.success(f"Successfully saved {saved_count} custom order quantities to database!")
+                    st.rerun()
+
+            with act2:
+                # Direct PO Export CSV
+                po_export = recs_df[recs_df["suggested_qty"] > 0][[
+                    "product_id", "product_name", "category", "suggested_qty", "unit_price", "explanation"
+                ]].copy()
+                po_export["total_line_cost"] = (po_export["suggested_qty"] * po_export["unit_price"]).round(2)
+                st.download_button(
+                    label="📥 Download Confirmed PO (CSV)",
+                    data=po_export.to_csv(index=False).encode("utf-8"),
+                    file_name=f"Purchase_Order_Run_{latest_run['run_id']}.csv",
+                    mime="text/csv",
+                    use_container_width=True
+                )
+
+            with act3:
+                st.page_link("pages/7_Reports.py", label="Full Reports", icon="📑")
 
         else:
             st.info("👆 Click **'Calculate Replenishment Recommendations'** to run the inventory optimization engine.")

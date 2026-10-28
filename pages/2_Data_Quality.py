@@ -29,37 +29,38 @@ cleaned_df = st.session_state.get("latest_cleaned_df")
 
 if not quality_report:
     # Try fetching latest upload from repository
-    uploads_df = repo.get_upload_history(shop["shop_id"])
-    if not uploads_df.empty:
-        # Get latest quality summary from db
-        with repo.db_url as _:
-            pass
-        # Display notice
-        st.info("Showing audit summary from current system state. Upload a new file on the Upload page to generate a fresh batch audit.")
-        quality_report = {
-            "initial_rows": int(uploads_df.iloc[0]["row_count"]),
-            "accepted_rows": int(uploads_df.iloc[0]["row_count"]),
-            "flagged_rows": 0,
-            "excluded_rows": 0,
-            "missing_dates": 0,
-            "missing_products": 0,
-            "duplicate_records": 0,
-            "negative_quantities": 0,
-            "negative_prices": 0,
-            "imputed_quantities": 0,
-            "imputed_revenues": 0,
-            "imputed_prices": 0,
-            "returns_policy": "Retained as Net Returns",
-            "cleaning_actions": [
-                "System initialized with validated historical dataset.",
-                "Zero anomalies detected in stored database sales records."
-            ]
-        }
+    latest_upload = repo.get_latest_upload(shop["shop_id"])
+    if latest_upload and latest_upload.get("quality_summary") and isinstance(latest_upload["quality_summary"], dict) and "accepted_rows" in latest_upload["quality_summary"]:
+        quality_report = latest_upload["quality_summary"]
+        st.info(f"Showing saved audit report from file: **{latest_upload.get('file_name', 'dataset')}** (Ingested: {latest_upload.get('uploaded_at')}).")
     else:
-        st.warning("⚠️ No data upload audit available yet. Please upload a dataset on the Upload Data page.")
-        st.page_link("pages/1_Upload_Data.py", label="➡️ Go to Upload Data", icon="📤")
-        st.stop()
-        quality_report = None
+        uploads_df = repo.get_upload_history(shop["shop_id"])
+        if not uploads_df.empty:
+            st.info("Showing baseline system integrity metrics. Upload a new sales file on the Upload Data page to trigger a detailed transaction-by-transaction audit.")
+            quality_report = {
+                "initial_rows": int(uploads_df.iloc[0]["row_count"]),
+                "accepted_rows": int(uploads_df.iloc[0]["row_count"]),
+                "flagged_rows": 0,
+                "excluded_rows": 0,
+                "missing_dates": 0,
+                "missing_products": 0,
+                "duplicate_records": 0,
+                "negative_quantities": 0,
+                "negative_prices": 0,
+                "imputed_quantities": 0,
+                "imputed_revenues": 0,
+                "imputed_prices": 0,
+                "returns_policy": "Retained as Net Returns",
+                "cleaning_actions": [
+                    "System initialized with validated historical dataset.",
+                    "Zero anomalies detected in stored database sales records."
+                ]
+            }
+        else:
+            st.warning("⚠️ No data upload audit available yet. Please upload a dataset on the Upload Data page.")
+            st.page_link("pages/1_Upload_Data.py", label="➡️ Go to Upload Data", icon="📤")
+            st.stop()
+            quality_report = None
 
 if quality_report:
     # 4 Key Audit Metrics Cards
@@ -127,3 +128,8 @@ if quality_report:
     if cleaned_df is not None and not cleaned_df.empty:
         st.subheader("📄 Sample Cleaned & Standardized Records")
         st.dataframe(cleaned_df.head(20), use_container_width=True)
+    else:
+        sales_preview = repo.get_daily_sales_df(shop_id=shop["shop_id"])
+        if not sales_preview.empty:
+            st.subheader("📄 Stored Cleaned Daily Records Preview (Latest 20 Days)")
+            st.dataframe(sales_preview.tail(20), use_container_width=True)

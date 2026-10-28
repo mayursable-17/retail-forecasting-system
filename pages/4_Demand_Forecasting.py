@@ -149,24 +149,53 @@ else:
         vm = train_res.get("val_metrics", {})
         m1, m2, m3, m4 = st.columns(4)
         with m1:
-            render_metric_card("MAE (Holdout)", f"{vm.get('mae', 0.0):.2f}", "Mean Absolute Error", border_color="#1E88E5")
+            render_metric_card("MAE (Holdout)", f"{vm.get('mae', 0.0):.2f}", "Mean Absolute Error", border_color="#1E88E5", icon="🎯")
         with m2:
-            render_metric_card("RMSE", f"{vm.get('rmse', 0.0):.2f}", "Root Mean Squared Error", border_color="#FB8C00")
+            render_metric_card("RMSE", f"{vm.get('rmse', 0.0):.2f}", "Root Mean Squared Error", border_color="#FB8C00", icon="📐")
         with m3:
-            render_metric_card("WAPE", f"{vm.get('wape_pct', 0.0):.1f}%", "Weighted Abs % Error", border_color="#43A047")
+            render_metric_card("WAPE", f"{vm.get('wape_pct', 0.0):.1f}%", "Weighted Abs % Error", border_color="#43A047", icon="📊")
         with m4:
             bias = vm.get("bias_pct", 0.0)
             bias_label = "Neutral" if abs(bias) < 2 else ("Over-predicting" if bias > 0 else "Under-predicting")
-            render_metric_card("Forecast Bias", f"{bias:+.1f}%", f"{bias_label}", border_color="#8E24AA")
+            render_metric_card("Forecast Bias", f"{bias:+.1f}%", f"{bias_label}", border_color="#8E24AA", icon="⚖️")
+
+        # Interactive What-If Scenario Slider
+        st.markdown("##### 🎯 Promotional & Demand Scenario Simulator (What-If Analysis)")
+        sc_col1, sc_col2 = st.columns([3, 1])
+        with sc_col1:
+            promo_lift = st.slider(
+                "Simulate Marketing Lift / Seasonal Shift (%)",
+                min_value=-50,
+                max_value=100,
+                value=0,
+                step=5,
+                help="Adjust expected demand up or down for upcoming promotions, holidays, or supplier disruptions."
+            )
+        with sc_col2:
+            scenario_factor = 1.0 + (promo_lift / 100.0)
+            st.metric("Scenario Factor", f"{scenario_factor:.2f}x", f"{promo_lift:+d}% Lift")
+
+        # Compute scenario forecast
+        sim_forecast_df = forecast_df.copy()
+        if promo_lift != 0:
+            sim_forecast_df["predicted_demand"] = (sim_forecast_df["predicted_demand"] * scenario_factor).round(2)
+            sim_forecast_df["lower_bound"] = (sim_forecast_df["lower_bound"] * scenario_factor).round(2)
+            sim_forecast_df["upper_bound"] = (sim_forecast_df["upper_bound"] * scenario_factor).round(2)
+
+        tot_units = sim_forecast_df["predicted_demand"].sum()
+        avg_units = tot_units / max(1, len(sim_forecast_df))
+
+        # Quick summary banner
+        st.info(f"🔮 **{curr_prod_name} Projected Demand:** **{tot_units:,.1f} units** across the next {len(sim_forecast_df)} days (avg **{avg_units:.1f} units/day**).")
 
         # Interactive Forecast Plot
         prod_daily = sales_df[sales_df["product_id"] == curr_prod_id].sort_values(by="sale_date").reset_index(drop=True)
         fig_fc = plot_forecast_vs_history(
             history_df=prod_daily,
-            forecast_df=forecast_df,
+            forecast_df=sim_forecast_df,
             val_dates=train_res.get("val_dates"),
             val_preds=train_res.get("val_predictions"),
-            product_name=curr_prod_name
+            product_name=f"{curr_prod_name} ({promo_lift:+d}% Promo)" if promo_lift != 0 else curr_prod_name
         )
         st.plotly_chart(fig_fc, use_container_width=True)
 
@@ -187,8 +216,8 @@ else:
                 st.dataframe(df_evals, hide_index=True, use_container_width=True)
 
         # Future Demand Table
-        st.subheader(f"📅 Daily Predicted Demand for Next {len(forecast_df)} Days")
-        display_forecast = forecast_df.copy()
+        st.subheader(f"📅 Daily Predicted Demand for Next {len(sim_forecast_df)} Days")
+        display_forecast = sim_forecast_df.copy()
         display_forecast["forecast_date"] = pd.to_datetime(display_forecast["forecast_date"]).dt.strftime("%A, %b %d, %Y")
         display_forecast.columns = ["Forecast Date", "Product ID", "Predicted Units", "Lower Bound (90%)", "Upper Bound (90%)"]
         st.dataframe(display_forecast[["Forecast Date", "Predicted Units", "Lower Bound (90%)", "Upper Bound (90%)"]], hide_index=True, use_container_width=True)

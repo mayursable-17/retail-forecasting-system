@@ -249,8 +249,8 @@ class DemandModelTrainer:
                 )
                 final_model.fit(X_full, y_full)
         else:
-            # Retrain baseline on full series
-            final_model = final_model.__class__().fit(feat_df[target_col])
+            # Retrain baseline model preserving configured parameters on full series
+            final_model = final_model.fit(feat_df[target_col])
 
         candidate_summaries = {k: v["metrics"] for k, v in candidates.items()}
 

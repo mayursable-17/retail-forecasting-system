@@ -4,7 +4,7 @@
 [![Framework](https://img.shields.io/badge/Streamlit-1.40%2B-FF4B4B.svg)](https://streamlit.io/)
 [![Database](https://img.shields.io/badge/Database-SQLite%20%2F%20SQLAlchemy-003B57.svg)](https://www.sqlalchemy.org/)
 [![Machine Learning](https://img.shields.io/badge/ML-XGBoost%20%7C%20Scikit--Learn-F7931E.svg)](https://xgboost.readthedocs.io/)
-[![Tests](https://img.shields.io/badge/Tests-31%20Passed%20%28100%25%29-brightgreen.svg)](tests/)
+[![Tests](https://img.shields.io/badge/Tests-34%20Passed%20%28100%25%29-brightgreen.svg)](tests/)
 
 ---
 

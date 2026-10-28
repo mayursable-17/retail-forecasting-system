@@ -67,8 +67,27 @@ else:
     if df.empty:
         st.warning("No sales records match the selected filter criteria.")
     else:
+        # Top summary metrics strip
+        f_rev = float(df["revenue"].sum())
+        f_units = float(df["quantity_sold"].sum())
+        f_days = int(df["sale_date"].dt.date.nunique())
+        f_asp = (f_rev / f_units) if f_units > 0 else 0.0
+
+        m1, m2, m3, m4 = st.columns(4)
+        with m1:
+            st.metric("Filtered Revenue", f"{cur}{f_rev:,.2f}", help="Total revenue inside the active filter window")
+        with m2:
+            st.metric("Units Sold", f"{f_units:,.1f}", f"Avg {(f_units/max(1, f_days)):.1f}/day")
+        with m3:
+            st.metric("Avg Selling Price (ASP)", f"{cur}{f_asp:,.2f}")
+        with m4:
+            top_cat = df.groupby("category")["revenue"].sum().idxmax() if not df.empty else "N/A"
+            st.metric("Lead Category", top_cat)
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
         # Monthly & Daily Aggregate Trends
-        tab_trends, tab_products, tab_cycles = st.tabs(["📊 Revenue & Volume Trends", "📦 Product & Category Share", "🗓️ Temporal & Day Patterns"])
+        tab_trends, tab_products, tab_cycles = st.tabs(["📊 Revenue & Volume Trends", "📦 Product & Category Share (ABC Analysis)", "🗓️ Temporal & Heatmap Patterns"])
 
         with tab_trends:
             st.subheader("Daily Sales Performance")
@@ -136,22 +155,49 @@ else:
                 st.dataframe(disp_cat, hide_index=True, use_container_width=True)
 
             st.markdown("---")
-            st.subheader("Cumulative Revenue Contribution (Pareto Analysis)")
+            st.subheader("Cumulative Revenue Contribution & ABC Inventory Classification")
             prod_agg = df.groupby(["product_id", "product_name", "category"]).agg(
                 revenue=("revenue", "sum"),
                 units=("quantity_sold", "sum")
             ).reset_index().sort_values(by="revenue", ascending=False).reset_index(drop=True)
 
+            tot_rev = max(1.0, float(prod_agg["revenue"].sum()))
             prod_agg["cum_revenue"] = prod_agg["revenue"].cumsum()
-            tot_rev = prod_agg["revenue"].sum()
             prod_agg["cum_share_pct"] = (prod_agg["cum_revenue"] / tot_rev * 100).round(2)
 
+            def get_abc_class(row):
+                if row["cum_share_pct"] <= 80.0 or row.name == 0:
+                    return "Class A (Top 80%)"
+                elif row["cum_share_pct"] <= 95.0:
+                    return "Class B (Next 15%)"
+                else:
+                    return "Class C (Bottom 5%)"
+
+            prod_agg["abc_class"] = prod_agg.apply(get_abc_class, axis=1)
+
+            # ABC Metric pills
+            abc_counts = prod_agg["abc_class"].value_counts().to_dict()
+            a_col, b_col, c_col = st.columns(3)
+            with a_col:
+                st.metric("Class A Products (Core)", f"{abc_counts.get('Class A (Top 80%)', 0)} Items", "Drives 80% of sales")
+            with b_col:
+                st.metric("Class B Products (Regular)", f"{abc_counts.get('Class B (Next 15%)', 0)} Items", "Drives 15% of sales")
+            with c_col:
+                st.metric("Class C Products (Tail)", f"{abc_counts.get('Class C (Bottom 5%)', 0)} Items", "Drives bottom 5% of sales")
+
             fig_pareto = go.Figure()
+            color_map = {
+                "Class A (Top 80%)": "#1E88E5",
+                "Class B (Next 15%)": "#FB8C00",
+                "Class C (Bottom 5%)": "#78909C"
+            }
+            bar_colors = [color_map.get(c, "#1E88E5") for c in prod_agg["abc_class"]]
+
             fig_pareto.add_trace(go.Bar(
                 x=prod_agg["product_name"],
                 y=prod_agg["revenue"],
                 name="Product Revenue",
-                marker_color="#1E88E5",
+                marker_color=bar_colors,
                 yaxis="y1"
             ))
             fig_pareto.add_trace(go.Scatter(
@@ -164,7 +210,7 @@ else:
             ))
             fig_pareto.update_layout(
                 template="plotly_white",
-                title="Product Revenue Contribution & Cumulative Pareto Curve",
+                title="Product Revenue Pareto Curve & ABC Segments",
                 xaxis_title="Product",
                 yaxis=dict(title=f"Revenue ({cur})"),
                 yaxis2=dict(title="Cumulative Share (%)", overlaying="y", side="right", range=[0, 105]),
@@ -172,6 +218,14 @@ else:
                 margin=dict(l=40, r=40, t=50, b=100)
             )
             st.plotly_chart(fig_pareto, use_container_width=True)
+
+            # Formatted ABC Table
+            disp_abc = prod_agg.copy()
+            disp_abc["revenue"] = disp_abc["revenue"].apply(lambda v: f"{cur}{v:,.2f}")
+            disp_abc["units"] = disp_abc["units"].apply(lambda v: f"{v:,.1f}")
+            disp_abc["cum_share_pct"] = disp_abc["cum_share_pct"].apply(lambda v: f"{v:.1f}%")
+            disp_abc.columns = ["Product ID", "Product Name", "Category", "Revenue", "Units Sold", "Cumulative Revenue", "Cumulative Share", "ABC Segment"]
+            st.dataframe(disp_abc[["Product ID", "Product Name", "Category", "ABC Segment", "Units Sold", "Revenue", "Cumulative Share"]], hide_index=True, use_container_width=True)
 
 
         with tab_cycles:
@@ -190,17 +244,42 @@ else:
             dow_df["avg_rev"] = (dow_df["total_rev"] / dow_df["day_count"]).round(2)
             dow_df["avg_units"] = (dow_df["total_units"] / dow_df["day_count"]).round(1)
 
-            fig_dow = go.Figure(go.Bar(
-                x=dow_df["dow_name"],
-                y=dow_df["avg_rev"],
-                marker_color="#5E35B1",
-                text=[f"{cur}{v:,.0f}" for v in dow_df["avg_rev"]],
-                textposition="auto"
-            ))
-            fig_dow.update_layout(
-                template="plotly_white",
-                title="Average Daily Revenue by Day of Week",
-                xaxis_title="Day of Week",
-                yaxis_title=f"Average Revenue ({cur})"
-            )
-            st.plotly_chart(fig_dow, use_container_width=True)
+            c_dow1, c_dow2 = st.columns([1, 1])
+            with c_dow1:
+                fig_dow = go.Figure(go.Bar(
+                    x=dow_df["dow_name"],
+                    y=dow_df["avg_rev"],
+                    marker_color="#5E35B1",
+                    text=[f"{cur}{v:,.0f}" for v in dow_df["avg_rev"]],
+                    textposition="auto"
+                ))
+                fig_dow.update_layout(
+                    template="plotly_white",
+                    title="Average Daily Revenue by Day of Week",
+                    xaxis_title="Day of Week",
+                    yaxis_title=f"Average Revenue ({cur})"
+                )
+                st.plotly_chart(fig_dow, use_container_width=True)
+
+            with c_dow2:
+                # Category × Day-of-Week Heatmap
+                heat_pivot = df.pivot_table(index="category", columns="dow_name", values="revenue", aggfunc="mean").fillna(0)
+                # Reorder columns Monday through Sunday if available
+                day_order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+                avail_days = [d for d in day_order if d in heat_pivot.columns]
+                heat_pivot = heat_pivot[avail_days]
+
+                fig_heat = go.Figure(data=go.Heatmap(
+                    z=heat_pivot.values,
+                    x=heat_pivot.columns,
+                    y=heat_pivot.index,
+                    colorscale="Blues",
+                    hovertemplate="Category: %{y}<br>Day: %{x}<br>Avg Revenue: " + cur + "%{z:,.2f}<extra></extra>"
+                ))
+                fig_heat.update_layout(
+                    template="plotly_white",
+                    title="Category Demand Heatmap Across Days of Week",
+                    xaxis_title="Day of Week",
+                    yaxis_title="Category"
+                )
+                st.plotly_chart(fig_heat, use_container_width=True)

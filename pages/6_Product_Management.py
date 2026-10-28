@@ -32,17 +32,51 @@ tab_catalog, tab_stock_update, tab_add_prod, tab_snapshots = st.tabs([
 
 # 1. Product Catalog Tab
 with tab_catalog:
-    st.subheader("Current Product Catalog")
+    st.subheader("Interactive Product Catalog")
+    st.caption("You can modify prices, supplier lead times, and packaging parameters directly in the grid below, then click **Save Changes**.")
+
     prods_df = repo.get_products_df(shop_id=shop["shop_id"])
     if not prods_df.empty:
         cur = shop["currency_symbol"]
-        disp_p = prods_df.copy()
-        disp_p["unit_price"] = disp_p["unit_price"].apply(lambda p: f"{cur}{p:,.2f}")
-        disp_p.columns = [
-            "Product ID", "Product Name", "Category", "Unit Price",
-            "Lead Time (Days)", "Min Order Qty (MOQ)", "Case Pack Size", "Active"
-        ]
-        st.dataframe(disp_p, hide_index=True, use_container_width=True)
+        f1, f2 = st.columns([2, 1])
+        with f1:
+            search_query = st.text_input("🔍 Search Catalog (Name or SKU)", placeholder="Type to filter products...")
+        with f2:
+            cats = ["All Categories"] + sorted(prods_df["category"].unique())
+            cat_choice = st.selectbox("Category Filter", cats)
+
+        view_p = prods_df.copy()
+        if search_query:
+            q = search_query.lower()
+            view_p = view_p[
+                view_p["product_name"].str.lower().str.contains(q) |
+                view_p["product_id"].str.lower().str.contains(q)
+            ]
+        if cat_choice != "All Categories":
+            view_p = view_p[view_p["category"] == cat_choice]
+
+        edited_catalog = st.data_editor(
+            view_p,
+            key="catalog_editor",
+            column_config={
+                "product_id": st.column_config.TextColumn("Product ID / SKU", disabled=True),
+                "product_name": st.column_config.TextColumn("Product Name"),
+                "category": st.column_config.TextColumn("Category"),
+                "unit_price": st.column_config.NumberColumn(f"Unit Price ({cur})", min_value=0.0, step=0.5, format=f"{cur}%.2f"),
+                "lead_time_days": st.column_config.NumberColumn("Lead Time (Days)", min_value=1, max_value=60, step=1),
+                "minimum_order_quantity": st.column_config.NumberColumn("MOQ", min_value=1.0, step=1.0),
+                "case_pack_size": st.column_config.NumberColumn("Case Pack", min_value=1.0, step=1.0),
+                "is_active": st.column_config.CheckboxColumn("Active")
+            },
+            hide_index=True,
+            use_container_width=True
+        )
+
+        if st.button("💾 Save Catalog Changes to Database", type="primary"):
+            updated_count = repo.batch_update_products(shop["shop_id"], edited_catalog.to_dict(orient="records"))
+            st.success(f"Successfully updated {updated_count} product parameter(s) in catalog database!")
+            st.rerun()
+
     else:
         st.info("No products currently in catalog.")
 
@@ -52,38 +86,91 @@ with tab_stock_update:
     st.caption("Entering new stock counts creates a new timestamped snapshot. Historical records are preserved.")
 
     if not prods_df.empty:
-        prod_map = {row["product_name"]: row["product_id"] for _, row in prods_df.iterrows()}
-        target_prod_name = st.selectbox("Select Product to Update", list(prod_map.keys()), key="stock_prod_select")
-        target_pid = prod_map[target_prod_name]
+        stock_mode = st.radio("Update Mode", ["Single Item Quick Update", "Bulk All Products Stock Grid"], horizontal=True)
 
-        # Get latest known snapshot
-        snaps = repo.get_latest_inventory_snapshots(shop_id=shop["shop_id"])
-        curr_snap = snaps[snaps["product_id"] == target_pid] if not snaps.empty else pd.DataFrame()
-        
-        curr_on_hand = float(curr_snap.iloc[0]["on_hand_qty"]) if not curr_snap.empty else 0.0
-        curr_on_order = float(curr_snap.iloc[0]["on_order_qty"]) if not curr_snap.empty else 0.0
-        curr_lead = int(curr_snap.iloc[0]["lead_time_days"]) if not curr_snap.empty else 7
+        if stock_mode == "Single Item Quick Update":
+            prod_map = {row["product_name"]: row["product_id"] for _, row in prods_df.iterrows()}
+            target_prod_name = st.selectbox("Select Product to Update", list(prod_map.keys()), key="stock_prod_select")
+            target_pid = prod_map[target_prod_name]
 
-        sc1, sc2, sc3 = st.columns(3)
-        with sc1:
-            new_on_hand = st.number_input("Physical On-Hand Stock (Units)", min_value=0.0, value=curr_on_hand, step=1.0)
-        with sc2:
-            new_on_order = st.number_input("On-Order / Pending Purchase Orders (Units)", min_value=0.0, value=curr_on_order, step=1.0)
-        with sc3:
-            new_lead = st.number_input("Supplier Lead Time (Days)", min_value=1, max_value=60, value=curr_lead, step=1)
+            # Get latest known snapshot
+            snaps = repo.get_latest_inventory_snapshots(shop_id=shop["shop_id"])
+            curr_snap = snaps[snaps["product_id"] == target_pid] if not snaps.empty else pd.DataFrame()
 
-        if st.button("💾 Record Stock Count Snapshot", type="primary"):
-            repo.save_inventory_snapshot(
-                shop_id=shop["shop_id"],
-                snapshots=[{
-                    "product_id": target_pid,
-                    "on_hand_qty": new_on_hand,
-                    "on_order_qty": new_on_order,
-                    "backorders": 0.0,
-                    "lead_time_days": new_lead
-                }]
+            curr_on_hand = float(curr_snap.iloc[0]["on_hand_qty"]) if not curr_snap.empty else 0.0
+            curr_on_order = float(curr_snap.iloc[0]["on_order_qty"]) if not curr_snap.empty else 0.0
+            curr_lead = int(curr_snap.iloc[0]["lead_time_days"]) if not curr_snap.empty else 7
+
+            sc1, sc2, sc3 = st.columns(3)
+            with sc1:
+                new_on_hand = st.number_input("Physical On-Hand Stock (Units)", min_value=0.0, value=curr_on_hand, step=1.0)
+            with sc2:
+                new_on_order = st.number_input("On-Order / Pending Purchase Orders (Units)", min_value=0.0, value=curr_on_order, step=1.0)
+            with sc3:
+                new_lead = st.number_input("Supplier Lead Time (Days)", min_value=1, max_value=60, value=curr_lead, step=1)
+
+            if st.button("💾 Record Stock Count Snapshot", type="primary"):
+                repo.save_inventory_snapshot(
+                    shop_id=shop["shop_id"],
+                    snapshots=[{
+                        "product_id": target_pid,
+                        "on_hand_qty": new_on_hand,
+                        "on_order_qty": new_on_order,
+                        "backorders": 0.0,
+                        "lead_time_days": new_lead
+                    }]
+                )
+                st.success(f"Successfully recorded new stock count for {target_prod_name} at {datetime.now().strftime('%H:%M:%S')}!")
+                st.rerun()
+
+        else:
+            st.markdown("##### Bulk Stock Take / Physical Count Grid")
+            latest_snaps = repo.get_latest_inventory_snapshots(shop_id=shop["shop_id"])
+            snap_map = {r["product_id"]: r for _, r in latest_snaps.iterrows()} if not latest_snaps.empty else {}
+
+            bulk_rows = []
+            for _, p in prods_df.iterrows():
+                pid = p["product_id"]
+                s_data = snap_map.get(pid, {})
+                bulk_rows.append({
+                    "product_id": pid,
+                    "product_name": p["product_name"],
+                    "category": p["category"],
+                    "on_hand_qty": float(s_data.get("on_hand_qty", 0.0)),
+                    "on_order_qty": float(s_data.get("on_order_qty", 0.0)),
+                    "lead_time_days": int(s_data.get("lead_time_days", p.get("lead_time_days", 7)))
+                })
+
+            df_bulk = pd.DataFrame(bulk_rows)
+            edited_bulk = st.data_editor(
+                df_bulk,
+                key="bulk_stock_editor",
+                column_config={
+                    "product_id": st.column_config.TextColumn("Product ID", disabled=True),
+                    "product_name": st.column_config.TextColumn("Product Name", disabled=True),
+                    "category": st.column_config.TextColumn("Category", disabled=True),
+                    "on_hand_qty": st.column_config.NumberColumn("Physical On-Hand (Units)", min_value=0.0, step=1.0),
+                    "on_order_qty": st.column_config.NumberColumn("On-Order Pending (Units)", min_value=0.0, step=1.0),
+                    "lead_time_days": st.column_config.NumberColumn("Lead Time (Days)", min_value=1, max_value=60, step=1)
+                },
+                hide_index=True,
+                use_container_width=True
             )
-            st.success(f"Successfully recorded new stock count for {target_prod_name} at {datetime.now().strftime('%H:%M:%S')}!")
+
+            if st.button("💾 Record Complete Inventory Snapshot for All Items", type="primary"):
+                snaps_to_save = []
+                for _, r in edited_bulk.iterrows():
+                    snaps_to_save.append({
+                        "product_id": str(r["product_id"]),
+                        "on_hand_qty": float(r["on_hand_qty"]),
+                        "on_order_qty": float(r["on_order_qty"]),
+                        "backorders": 0.0,
+                        "lead_time_days": int(r["lead_time_days"])
+                    })
+                repo.save_inventory_snapshot(shop["shop_id"], snaps_to_save)
+                st.success(f"Recorded new complete stock count snapshot for {len(snaps_to_save)} products at {datetime.now().strftime('%H:%M:%S')}!")
+                st.rerun()
+
     else:
         st.warning("Please add or upload products before updating stock.")
 

@@ -31,6 +31,11 @@ class Repository:
                 "shop_type": shop.shop_type,
                 "currency_symbol": shop.currency_symbol,
                 "currency_code": shop.currency_code,
+                "default_lead_time_days": getattr(shop, "default_lead_time_days", 7) or 7,
+                "default_review_period_days": getattr(shop, "default_review_period_days", 7) or 7,
+                "default_service_level": getattr(shop, "default_service_level", 0.95) or 0.95,
+                "default_safety_stock_method": getattr(shop, "default_safety_stock_method", "variability") or "variability",
+                "default_replenishment_buffer_pct": getattr(shop, "default_replenishment_buffer_pct", 0.20) or 0.20,
                 "created_at": shop.created_at
             }
 
@@ -45,25 +50,55 @@ class Repository:
                 return True
             return False
 
-    def upsert_products(self, shop_id: int, products_data: List[Dict[str, Any]]):
-        """Insert or update products."""
+    def update_shop_operational_defaults(
+        self,
+        shop_id: int,
+        lead_time_days: int,
+        review_period_days: int,
+        service_level: float,
+        safety_stock_method: str,
+        replenishment_buffer_pct: float
+    ) -> bool:
+        """Persist default operational & replenishment assumptions for this store."""
         with get_db_context(self.db_url) as session:
+            shop = session.query(Shop).filter(Shop.shop_id == shop_id).first()
+            if shop:
+                shop.default_lead_time_days = int(lead_time_days)
+                shop.default_review_period_days = int(review_period_days)
+                shop.default_service_level = float(service_level)
+                shop.default_safety_stock_method = str(safety_stock_method)
+                shop.default_replenishment_buffer_pct = float(replenishment_buffer_pct)
+                return True
+            return False
+
+    def upsert_products(self, shop_id: int, products_data: List[Dict[str, Any]]):
+        """Insert or update products with high performance batch lookup."""
+        if not products_data:
+            return
+        with get_db_context(self.db_url) as session:
+            pids = [str(item["product_id"]) for item in products_data]
+            existing_records = session.query(Product).filter(
+                Product.shop_id == shop_id,
+                Product.product_id.in_(pids)
+            ).all()
+            existing_map = {p.product_id: p for p in existing_records}
+
             for item in products_data:
                 pid = str(item["product_id"])
-                existing = session.query(Product).filter(
-                    Product.shop_id == shop_id,
-                    Product.product_id == pid
-                ).first()
-                if existing:
+                if pid in existing_map:
+                    existing = existing_map[pid]
                     existing.product_name = item.get("product_name", existing.product_name)
                     existing.category = item.get("category", existing.category)
-                    existing.unit_price = float(item.get("unit_price", existing.unit_price))
+                    if "unit_price" in item and item["unit_price"] is not None and float(item["unit_price"]) > 0:
+                        existing.unit_price = float(item["unit_price"])
                     if "lead_time_days" in item and item["lead_time_days"] is not None:
                         existing.lead_time_days = int(item["lead_time_days"])
                     if "minimum_order_quantity" in item and item["minimum_order_quantity"] is not None:
                         existing.minimum_order_quantity = float(item["minimum_order_quantity"])
                     if "case_pack_size" in item and item["case_pack_size"] is not None:
                         existing.case_pack_size = float(item["case_pack_size"])
+                    if "is_active" in item and item["is_active"] is not None:
+                        existing.is_active = bool(item["is_active"])
                 else:
                     new_prod = Product(
                         product_id=pid,
@@ -75,9 +110,44 @@ class Repository:
                         lead_time_days=int(item.get("lead_time_days", 7)),
                         minimum_order_quantity=float(item.get("minimum_order_quantity", 1.0)),
                         case_pack_size=float(item.get("case_pack_size", 1.0)),
-                        is_active=True
+                        is_active=bool(item.get("is_active", True))
                     )
                     session.add(new_prod)
+                    existing_map[pid] = new_prod
+
+    def batch_update_products(self, shop_id: int, products_list: List[Dict[str, Any]]) -> int:
+        """Batch update catalog products from editable data grid."""
+        if not products_list:
+            return 0
+        updated = 0
+        with get_db_context(self.db_url) as session:
+            pids = [str(p["product_id"]) for p in products_list]
+            existing_records = session.query(Product).filter(
+                Product.shop_id == shop_id,
+                Product.product_id.in_(pids)
+            ).all()
+            existing_map = {p.product_id: p for p in existing_records}
+
+            for p in products_list:
+                pid = str(p["product_id"])
+                if pid in existing_map:
+                    rec = existing_map[pid]
+                    if "product_name" in p:
+                        rec.product_name = str(p["product_name"])
+                    if "category" in p:
+                        rec.category = str(p["category"])
+                    if "unit_price" in p:
+                        rec.unit_price = float(p["unit_price"])
+                    if "lead_time_days" in p:
+                        rec.lead_time_days = int(p["lead_time_days"])
+                    if "minimum_order_quantity" in p:
+                        rec.minimum_order_quantity = float(p["minimum_order_quantity"])
+                    if "case_pack_size" in p:
+                        rec.case_pack_size = float(p["case_pack_size"])
+                    if "is_active" in p:
+                        rec.is_active = bool(p["is_active"])
+                    updated += 1
+        return updated
 
     def get_products_df(self, shop_id: int = 1) -> pd.DataFrame:
         with get_db_context(self.db_url) as session:
@@ -131,32 +201,58 @@ class Repository:
                 for u in uploads
             ])
 
-    def save_daily_sales(self, shop_id: int, upload_id: int, df_daily: pd.DataFrame):
+    def get_latest_upload(self, shop_id: int = 1) -> Optional[Dict[str, Any]]:
+        """Retrieve the most recent upload record including quality summary."""
+        with get_db_context(self.db_url) as session:
+            u = session.query(Upload).filter(Upload.shop_id == shop_id).order_by(desc(Upload.uploaded_at)).first()
+            if not u:
+                return None
+            return {
+                "upload_id": u.upload_id,
+                "file_name": u.file_name,
+                "file_hash": u.file_hash,
+                "upload_type": u.upload_type,
+                "uploaded_at": u.uploaded_at.strftime("%Y-%m-%d %H:%M:%S"),
+                "row_count": u.row_count,
+                "status": u.status,
+                "quality_summary": u.quality_summary
+            }
+
+    def save_daily_sales(self, shop_id: int, upload_id: int, df_daily: pd.DataFrame) -> int:
         """
-        Upsert daily sales records.
-        df_daily must have columns: product_id, sale_date, quantity_sold, revenue
+        High-performance batch upsert for daily sales records.
+        Minimizes database roundtrips by querying existing entries in a single pass.
         """
         if df_daily.empty:
             return 0
 
         with get_db_context(self.db_url) as session:
+            min_dt = pd.to_datetime(df_daily["sale_date"]).min().date()
+            max_dt = pd.to_datetime(df_daily["sale_date"]).max().date()
+            pids = [str(x) for x in df_daily["product_id"].unique()]
+
+            existing_records = session.query(SaleDaily).filter(
+                SaleDaily.shop_id == shop_id,
+                SaleDaily.product_id.in_(pids),
+                SaleDaily.sale_date >= min_dt,
+                SaleDaily.sale_date <= max_dt
+            ).all()
+
+            existing_map = {(r.product_id, r.sale_date): r for r in existing_records}
             count = 0
+
             for _, row in df_daily.iterrows():
                 dt = pd.to_datetime(row["sale_date"]).date()
                 pid = str(row["product_id"])
                 qty = float(row["quantity_sold"])
                 rev = float(row["revenue"])
+                key = (pid, dt)
 
-                existing = session.query(SaleDaily).filter(
-                    SaleDaily.shop_id == shop_id,
-                    SaleDaily.product_id == pid,
-                    SaleDaily.sale_date == dt
-                ).first()
-
-                if existing:
-                    existing.quantity_sold = qty
-                    existing.revenue = rev
-                    existing.upload_id = upload_id
+                if key in existing_map:
+                    rec = existing_map[key]
+                    rec.quantity_sold = qty
+                    rec.revenue = rev
+                    rec.upload_id = upload_id
                 else:
                     new_sale = SaleDaily(
                         shop_id=shop_id,
@@ -167,7 +263,9 @@ class Repository:
                         upload_id=upload_id
                     )
                     session.add(new_sale)
+                    existing_map[key] = new_sale
                 count += 1
+
             return count
 
     def get_daily_sales_df(self, shop_id: int = 1, product_ids: List[str] = None,
@@ -331,7 +429,7 @@ class Repository:
                 ForecastResult.predicted_demand,
                 ForecastResult.lower_bound,
                 ForecastResult.upper_bound
-            ).join(
+            ).outerjoin(
                 Product,
                 ForecastResult.product_id == Product.product_id
             ).filter(ForecastResult.run_id == run_id).order_by(ForecastResult.forecast_date.asc()).all()
@@ -343,8 +441,8 @@ class Repository:
                 {
                     "forecast_date": pd.to_datetime(r[0]),
                     "product_id": r[1],
-                    "product_name": r[2],
-                    "category": r[3],
+                    "product_name": r[2] or r[1],
+                    "category": r[3] or "General",
                     "predicted_demand": r[4],
                     "lower_bound": r[5],
                     "upper_bound": r[6]
@@ -374,6 +472,19 @@ class Repository:
                 )
                 session.add(r)
 
+    def update_recommendations_overrides(self, run_id: int, overrides: Dict[str, float]) -> int:
+        """Update user-edited suggested order quantities in the database."""
+        if not overrides:
+            return 0
+        updated = 0
+        with get_db_context(self.db_url) as session:
+            recs = session.query(ReorderRecommendation).filter(ReorderRecommendation.run_id == run_id).all()
+            for r in recs:
+                if r.product_id in overrides:
+                    r.suggested_qty = max(0.0, float(overrides[r.product_id]))
+                    updated += 1
+        return updated
+
     def get_recommendations_df(self, run_id: int) -> pd.DataFrame:
         with get_db_context(self.db_url) as session:
             rows = session.query(
@@ -391,8 +502,9 @@ class Repository:
                 ReorderRecommendation.risk_status,
                 ReorderRecommendation.inventory_mode,
                 ReorderRecommendation.explanation,
-                ReorderRecommendation.created_at
-            ).join(
+                ReorderRecommendation.created_at,
+                Product.unit_price
+            ).outerjoin(
                 Product,
                 ReorderRecommendation.product_id == Product.product_id
             ).filter(ReorderRecommendation.run_id == run_id).all()
@@ -404,8 +516,8 @@ class Repository:
                 {
                     "recommendation_id": r[0],
                     "product_id": r[1],
-                    "product_name": r[2],
-                    "category": r[3],
+                    "product_name": r[2] or r[1],
+                    "category": r[3] or "General",
                     "current_stock": r[4],
                     "inventory_position": r[5],
                     "reorder_point": r[6],
@@ -416,10 +528,35 @@ class Repository:
                     "risk_status": r[11],
                     "inventory_mode": r[12],
                     "explanation": r[13],
-                    "created_at": r[14]
+                    "created_at": r[14],
+                    "unit_price": r[15] if len(r) > 15 and r[15] is not None else 0.0
                 }
                 for r in rows
             ])
+
+    def get_stock_alerts_summary(self, shop_id: int = 1) -> Dict[str, Any]:
+        """Get summary of inventory risks and products needing immediate replenishment."""
+        latest_run = self.get_latest_forecast_run(shop_id=shop_id)
+        if not latest_run:
+            return {"has_forecast": False, "stock_risk": 0, "reorder_review": 0, "adequate": 0, "total_items": 0}
+
+        recs_df = self.get_recommendations_df(latest_run["run_id"])
+        if recs_df.empty:
+            return {"has_forecast": True, "stock_risk": 0, "reorder_review": 0, "adequate": 0, "total_items": 0}
+
+        counts = recs_df["risk_status"].value_counts().to_dict()
+        critical_items = recs_df[recs_df["risk_status"].isin(["Stock Risk", "Reorder Review"])][["product_name", "risk_status", "suggested_qty"]].to_dict(orient="records")
+
+        return {
+            "has_forecast": True,
+            "stock_risk": counts.get("Stock Risk", 0),
+            "reorder_review": counts.get("Reorder Review", 0),
+            "adequate": counts.get("Adequate Stock", 0),
+            "excess": counts.get("Potential Excess Stock", 0),
+            "info_needed": counts.get("Insufficient Inventory Information", 0),
+            "total_items": len(recs_df),
+            "critical_items": critical_items
+        }
 
     def clear_all_data(self, shop_id: int = 1):
         with get_db_context(self.db_url) as session:

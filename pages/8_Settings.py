@@ -14,7 +14,7 @@ import streamlit as st
 import pandas as pd
 
 from src.ui_helpers import load_custom_css, get_shared_repo, get_active_shop
-from src.config import DEFAULT_SQLITE_PATH, SAMPLE_DIR
+from src.config import DEFAULT_SQLITE_PATH, SAMPLE_DIR, SERVICE_LEVEL_Z_MAP
 from src.generate_samples import generate_all_samples
 
 st.set_page_config(page_title="Settings - Retail System", page_icon="⚙️", layout="wide")
@@ -74,23 +74,48 @@ with tab_store:
 
 with tab_defaults:
     st.subheader("Default Replenishment Assumptions")
+    st.caption("These defaults automatically pre-fill operational parameters in the Inventory Optimization engine.")
     with st.form("defaults_form"):
         d1, d2 = st.columns(2)
         with d1:
-            def_lead = st.number_input("Standard Supplier Lead Time (Days)", min_value=1, max_value=60, value=7)
-            def_review = st.number_input("Standard Store Review Period (Days)", min_value=1, max_value=30, value=7)
+            cur_lead = int(shop.get("default_lead_time_days", 7) or 7)
+            cur_review = int(shop.get("default_review_period_days", 7) or 7)
+            def_lead = st.number_input("Standard Supplier Lead Time (Days)", min_value=1, max_value=60, value=cur_lead)
+            def_review = st.number_input("Standard Store Review Period (Days)", min_value=1, max_value=30, value=cur_review)
         with d2:
+            cur_sl = float(shop.get("default_service_level", 0.95) or 0.95)
+            sl_options = [0.80, 0.85, 0.90, 0.95, 0.98, 0.99]
+            idx_sl = sl_options.index(cur_sl) if cur_sl in sl_options else 3
             def_sl = st.selectbox(
                 "Target Cycle Service Level",
-                options=[0.80, 0.85, 0.90, 0.95, 0.98, 0.99],
-                index=3,
-                format_func=lambda sl: f"{int(sl*100)}% (z = {sl})"
+                options=sl_options,
+                index=idx_sl,
+                format_func=lambda sl: f"{int(sl*100)}% (z = {SERVICE_LEVEL_Z_MAP.get(sl, 1.65)})"
             )
-            def_method = st.selectbox("Preferred Safety Stock Model", ["Variability Method (z * sigma * sqrt(L))", "Fixed Buffer Method (%)"])
+            cur_method = str(shop.get("default_safety_stock_method", "variability") or "variability")
+            method_opts = ["variability", "buffer"]
+            idx_m = method_opts.index(cur_method) if cur_method in method_opts else 0
+            def_method = st.selectbox(
+                "Preferred Safety Stock Model",
+                options=method_opts,
+                index=idx_m,
+                format_func=lambda m: "Normal Demand Variability (z * sigma * sqrt(L))" if m == "variability" else "Configurable Fixed Buffer (%)"
+            )
+            cur_buf = float(shop.get("default_replenishment_buffer_pct", 0.20) or 0.20)
+            def_buf = st.slider("Default Replenishment Buffer %", min_value=5, max_value=50, value=int(cur_buf * 100)) / 100.0
 
-        save_defaults = st.form_submit_button("💾 Save Operational Defaults")
+        save_defaults = st.form_submit_button("💾 Save Operational Defaults", type="primary")
         if save_defaults:
-            st.success("Operational defaults recorded for future optimization runs!")
+            repo.update_shop_operational_defaults(
+                shop_id=shop["shop_id"],
+                lead_time_days=def_lead,
+                review_period_days=def_review,
+                service_level=def_sl,
+                safety_stock_method=def_method,
+                replenishment_buffer_pct=def_buf
+            )
+            st.success("Operational defaults recorded and persisted to database!")
+            st.rerun()
 
 
 with tab_data:

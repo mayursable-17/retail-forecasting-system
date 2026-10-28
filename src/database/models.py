@@ -24,6 +24,11 @@ class Shop(Base):
     shop_type = Column(String(80), nullable=False, default="General Store / Supermarket")
     currency_symbol = Column(String(10), nullable=False, default="₹")
     currency_code = Column(String(10), nullable=False, default="INR")
+    default_lead_time_days = Column(Integer, nullable=False, default=7)
+    default_review_period_days = Column(Integer, nullable=False, default=7)
+    default_service_level = Column(Float, nullable=False, default=0.95)
+    default_safety_stock_method = Column(String(50), nullable=False, default="variability")
+    default_replenishment_buffer_pct = Column(Float, nullable=False, default=0.20)
     created_at = Column(DateTime, default=utc_now, nullable=False)
 
     products = relationship("Product", back_populates="shop", cascade="all, delete-orphan")
