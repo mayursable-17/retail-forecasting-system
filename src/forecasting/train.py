@@ -13,7 +13,11 @@ try:
 except ImportError:
     HAS_XGBOOST = False
 
-from sklearn.ensemble import RandomForestRegressor
+try:
+    from sklearn.ensemble import RandomForestRegressor
+    HAS_SKLEARN = True
+except ImportError:
+    HAS_SKLEARN = False
 
 from src.forecasting.baseline import (
     NaiveForecaster, SeasonalNaiveForecaster,
@@ -21,6 +25,37 @@ from src.forecasting.baseline import (
 )
 from src.forecasting.features import create_time_series_features, FEATURE_COLUMNS
 from src.forecasting.evaluate import evaluate_forecast
+
+
+class NumpyRidgeRegressor:
+    """
+    Lightweight, robust L2-regularized Ridge Autoregressive Regressor implemented in pure NumPy.
+    Zero external ML dependencies required; fits in milliseconds and guarantees non-negative predictions.
+    """
+    def __init__(self, alpha: float = 1.0):
+        self.alpha = alpha
+        self.weights = None
+        self.bias = 0.0
+
+    def fit(self, X: np.ndarray, y: np.ndarray):
+        X = np.asarray(X, dtype=float)
+        y = np.asarray(y, dtype=float)
+        n, p = X.shape
+        X_b = np.column_stack([np.ones(n), X])
+        reg = self.alpha * np.eye(p + 1)
+        reg[0, 0] = 0.0
+        try:
+            w = np.linalg.solve(X_b.T @ X_b + reg, X_b.T @ y)
+        except np.linalg.LinAlgError:
+            w, _, _, _ = np.linalg.lstsq(X_b, y, rcond=None)
+        self.bias = float(w[0])
+        self.weights = w[1:]
+        return self
+
+    def predict(self, X: np.ndarray) -> np.ndarray:
+        X = np.asarray(X, dtype=float)
+        preds = self.bias + X @ self.weights
+        return np.maximum(preds, 0.0)
 
 
 def chronological_split(
@@ -78,7 +113,6 @@ class DemandModelTrainer:
           }
         """
         n_obs = len(df_product_daily)
-        total_sales = df_product_daily[target_col].sum()
         non_zero_days = (df_product_daily[target_col] > 0).sum()
 
         data_notes = []
@@ -162,13 +196,27 @@ class DemandModelTrainer:
             "metrics": evaluate_forecast(val_actual, pred_es)
         }
 
-        # 5. ML Models (XGBoost / Random Forest) if sufficient training data (>= 21 days)
+        # 5. ML Models (Ridge ML / XGBoost / Random Forest) if sufficient training data (>= 21 days)
         if len(train_feat) >= 21:
             X_train = train_feat[FEATURE_COLUMNS].values
             y_train = train_feat[target_col].values
             X_val = val_feat[FEATURE_COLUMNS].values
 
-            # XGBoost
+            # Pure NumPy Ridge ML Regressor (always available, ultra-lightweight)
+            try:
+                ridge_model = NumpyRidgeRegressor(alpha=1.0)
+                ridge_model.fit(X_train, y_train)
+                pred_ridge = ridge_model.predict(X_val)
+                candidates["Ridge Autoregressive ML"] = {
+                    "model": ridge_model,
+                    "type": "ml",
+                    "preds": pred_ridge,
+                    "metrics": evaluate_forecast(val_actual, pred_ridge)
+                }
+            except Exception as e:
+                data_notes.append(f"Ridge ML fitting failed ({str(e)}), skipped.")
+
+            # XGBoost (if available)
             if HAS_XGBOOST:
                 try:
                     xgb_model = xgb.XGBRegressor(
@@ -191,25 +239,26 @@ class DemandModelTrainer:
                 except Exception as e:
                     data_notes.append(f"XGBoost fitting failed ({str(e)}), skipped.")
 
-            # Random Forest Regressor
-            try:
-                rf_model = RandomForestRegressor(
-                    n_estimators=50,
-                    max_depth=4,
-                    min_samples_split=3,
-                    random_state=42,
-                    n_jobs=1
-                )
-                rf_model.fit(X_train, y_train)
-                pred_rf = np.maximum(rf_model.predict(X_val), 0.0)
-                candidates["Random Forest Regressor"] = {
-                    "model": rf_model,
-                    "type": "ml",
-                    "preds": pred_rf,
-                    "metrics": evaluate_forecast(val_actual, pred_rf)
-                }
-            except Exception as e:
-                data_notes.append(f"Random Forest fitting failed ({str(e)}), skipped.")
+            # Random Forest Regressor (if available)
+            if HAS_SKLEARN:
+                try:
+                    rf_model = RandomForestRegressor(
+                        n_estimators=50,
+                        max_depth=4,
+                        min_samples_split=3,
+                        random_state=42,
+                        n_jobs=1
+                    )
+                    rf_model.fit(X_train, y_train)
+                    pred_rf = np.maximum(rf_model.predict(X_val), 0.0)
+                    candidates["Random Forest Regressor"] = {
+                        "model": rf_model,
+                        "type": "ml",
+                        "preds": pred_rf,
+                        "metrics": evaluate_forecast(val_actual, pred_rf)
+                    }
+                except Exception as e:
+                    data_notes.append(f"Random Forest fitting failed ({str(e)}), skipped.")
 
         # Selection logic
         if model_preference != "Best Model (Auto-select)" and model_preference in candidates:
@@ -228,7 +277,10 @@ class DemandModelTrainer:
         if chosen_entry["type"] == "ml":
             X_full = feat_df[FEATURE_COLUMNS].values
             y_full = feat_df[target_col].values
-            if chosen_name == "XGBoost Regressor" and HAS_XGBOOST:
+            if chosen_name == "Ridge Autoregressive ML":
+                final_model = NumpyRidgeRegressor(alpha=1.0)
+                final_model.fit(X_full, y_full)
+            elif chosen_name == "XGBoost Regressor" and HAS_XGBOOST:
                 final_model = xgb.XGBRegressor(
                     n_estimators=50,
                     max_depth=3,
@@ -239,7 +291,7 @@ class DemandModelTrainer:
                     n_jobs=1
                 )
                 final_model.fit(X_full, y_full)
-            elif chosen_name == "Random Forest Regressor":
+            elif chosen_name == "Random Forest Regressor" and HAS_SKLEARN:
                 final_model = RandomForestRegressor(
                     n_estimators=50,
                     max_depth=4,

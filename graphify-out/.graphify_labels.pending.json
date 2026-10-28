@@ -3,7 +3,7 @@
   "1": "Repository",
   "2": "charts.py",
   "3": "test_integration.py",
-  "4": "read_uploaded_file",
+  "4": "2. Comprehensive Test Execution Matrix",
   "5": "test_inventory.py",
   "6": "Retail Sales Forecasting & Inventory Optimization System Using Machine Learning",
   "7": "1. Database Schema Specifications",
@@ -22,9 +22,5 @@
   "20": "preprocessing/__init__.py",
   "21": "tests/__init__.py",
   "22": "test_api.py",
-  "23": "aggregate_daily_sales",
-  "24": "2. Comprehensive Test Execution Matrix",
-  "25": "column_mapper.py",
-  "26": "Retail Sales Forecasting & Inventory Optimization System",
   "27": "vercel.json"
 }

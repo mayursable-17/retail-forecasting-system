@@ -1,0 +1,13 @@
+.git
+.agents
+.devcontainer
+.pytest_cache
+tests
+docs
+graphify-out
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.venv
+requirements-dev.txt
