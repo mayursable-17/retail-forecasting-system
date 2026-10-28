@@ -17,6 +17,18 @@ def test_root_serves_html(client):
     assert "text/html" in response.headers.get("content-type", "")
     assert "Retail Sales Forecasting" in response.text
 
+def test_vercel_rewrite_paths_serve_html(client):
+    for path in ["/api/index.py", "/api/index", "/index.html", "/inventory"]:
+        resp = client.get(path)
+        assert resp.status_code == 200
+        assert "text/html" in resp.headers.get("content-type", "")
+        assert "Retail Sales Forecasting" in resp.text
+
+def test_unknown_api_endpoint_returns_404(client):
+    resp = client.get("/api/unknown_route_123")
+    assert resp.status_code == 404
+    assert "not found" in resp.text.lower()
+
 def test_api_health(client):
     response = client.get("/api/health")
     assert response.status_code == 200

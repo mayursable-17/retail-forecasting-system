@@ -270,15 +270,15 @@
     "semantic_hash": ""
   },
   "api/index.py": {
-    "mtime": 1793200509.1964877,
-    "seen": 1793201029.8448737,
-    "ast_hash": "283bce1fbc3b5493ff7aa1cb4add1456",
+    "mtime": 1793204778.3550396,
+    "seen": 1793204860.446235,
+    "ast_hash": "f15fa25f41f0b9848277744a9241d7a2",
     "semantic_hash": ""
   },
   "tests/test_api.py": {
-    "mtime": 1793200849.47692,
-    "seen": 1793201029.8449507,
-    "ast_hash": "57779045349034f6f1b2a42fd903daf7",
+    "mtime": 1793204809.8877153,
+    "seen": 1793204860.4463062,
+    "ast_hash": "bbdd07c8bca235efb1c18eef446e4742",
     "semantic_hash": ""
   },
   "vercel.json": {
@@ -297,6 +297,12 @@
     "mtime": 1793202299.2523572,
     "seen": 1793202358.6600196,
     "ast_hash": "5db5e108761c0cf450f254f76cd76865",
+    "semantic_hash": ""
+  },
+  "api/templates/index.html": {
+    "mtime": 1793202096.9829755,
+    "seen": 1793204860.4463234,
+    "ast_hash": "a2d5b99c4890ce2f61a7842220865cad",
     "semantic_hash": ""
   }
 }

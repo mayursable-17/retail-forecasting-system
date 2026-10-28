@@ -949,14 +949,44 @@ def download_csv_report(report_type: str):
 
 # ---------------- SPA FRONTEND ROUTE ----------------
 
+def get_index_html() -> str:
+    """Resolve and read the SPA index.html across local and Vercel serverless environments."""
+    candidate_paths = [
+        Path(__file__).resolve().parent / "templates" / "index.html",
+        PROJECT_ROOT / "templates" / "index.html",
+        Path("templates/index.html"),
+        Path("api/templates/index.html"),
+        Path("/var/task/templates/index.html"),
+        Path("/var/task/api/templates/index.html"),
+    ]
+    for p in candidate_paths:
+        if p.exists():
+            try:
+                with open(p, "r", encoding="utf-8") as f:
+                    return f.read()
+            except Exception:
+                pass
+    return "<h1>Retail Pulse AI System Running</h1><p>FastAPI serverless backend is live.</p>"
+
+
+@app.get("/", response_class=HTMLResponse)
+@app.get("/index.html", response_class=HTMLResponse)
+@app.get("/api/index", response_class=HTMLResponse)
+@app.get("/api/index.py", response_class=HTMLResponse)
+def serve_root():
+    return HTMLResponse(content=get_index_html())
+
+
 @app.get("/{full_path:path}", response_class=HTMLResponse)
 async def serve_spa(request: Request, full_path: str):
-    # Don't intercept API routes
-    if full_path.startswith("api/"):
-        raise HTTPException(status_code=404, detail="Endpoint not found.")
+    clean_path = full_path.strip("/")
 
-    html_file = PROJECT_ROOT / "templates" / "index.html"
-    if not html_file.exists():
-        return HTMLResponse("<h1>Retail Forecasting System API Active</h1><p>FastAPI backend running.</p>")
-    with open(html_file, "r", encoding="utf-8") as f:
-        return HTMLResponse(content=f.read())
+    # If root, index, or Vercel serverless rewrite entrypoint, return HTML SPA
+    if clean_path in ("", "index.py", "index", "api/index", "api/index.py", "index.html"):
+        return serve_root()
+
+    # Don't intercept unrecognized /api/* calls (let client see 404 for bad API calls)
+    if clean_path.startswith("api/"):
+        raise HTTPException(status_code=404, detail=f"API endpoint '/{clean_path}' not found.")
+
+    return serve_root()

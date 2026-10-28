@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retail Sales Forecasting & Inventory Optimization System</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Plotly.js CDN -->
+    <script src="https://cdn.plot.ly/plotly-2.29.1.min.js"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#1e88e5',
+                            600: '#1976d2',
+                            700: '#1565c0',
+                            800: '#0d47a1',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .metric-card {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 bg-slate-900 text-slate-200 flex flex-col fixed inset-y-0 z-30 transition-all duration-300 shadow-xl">
+        <!-- Brand Header -->
+        <div class="p-5 border-b border-slate-800 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                <i class="fa-solid fa-cart-shopping text-lg"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-sm tracking-wide text-white leading-tight" id="sidebar-shop-name">Kirana & Retail Hub</h1>
+                <p class="text-xs text-slate-400" id="sidebar-shop-type">Grocery & FMCG Retail</p>
+            </div>
+        </div>
+
+        <!-- Store Currency Badge -->
+        <div class="px-5 py-2.5 bg-slate-800/50 flex items-center justify-between text-xs text-slate-400 border-b border-slate-800">
+            <span>Currency: <strong class="text-slate-200" id="sidebar-curr-code">INR (₹)</strong></span>
+            <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Active</span>
+        </div>
+
+        <!-- Nav Links -->
+        <nav class="flex-1 overflow-y-auto p-4 space-y-1.5 text-sm" id="nav-container">
+            <button onclick="navigate('dashboard')" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition font-medium text-left bg-blue-600 text-white shadow-sm" data-tab="dashboard">
+                <i class="fa-solid fa-chart-pie w-5 text-center"></i> Overview Dashboard
+            </button>
+            <button onclick="navigate('upload')" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition font-medium text-left" data-tab="upload">
+                <i class="fa-solid fa-cloud-arrow-up w-5 text-center"></i> Upload Data
+            </button>
+            <button onclick="navigate('quality')" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition font-medium text-left" data-tab="quality">
+                <i class="fa-solid fa-clipboard-check w-5 text-center"></i> Data Quality Audit
+            </button>
+            <button onclick="navigate('analytics')" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition font-medium text-left" data-tab="analytics">
+                <i class="fa-solid fa-chart-line w-5 text-center"></i> Sales Analytics & ABC
+            </button>
+            <button onclick="navigate('forecasting')" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition font-medium text-left" data-tab="forecasting">
+                <i class="fa-solid fa-wand-magic-sparkles w-5 text-center"></i> ML Demand Forecasting
+            </button>
+            <button onclick="navigate('inventory')" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition font-medium text-left" data-tab="inventory">
+                <i class="fa-solid fa-boxes-stacked w-5 text-center"></i> Inventory & Reorder
+            </button>
+            <button onclick="navigate('products')" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition font-medium text-left" data-tab="products">
+                <i class="fa-solid fa-tags w-5 text-center"></i> Catalog & Stock Take
+            </button>
+            <button onclick="navigate('reports')" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition font-medium text-left" data-tab="reports">
+                <i class="fa-solid fa-file-excel w-5 text-center"></i> Reports & Downloads
+            </button>
+            <button onclick="navigate('settings')" class="nav-item w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition font-medium text-left" data-tab="settings">
+                <i class="fa-solid fa-gear w-5 text-center"></i> Store Settings
+            </button>
+        </nav>
+
+        <!-- Sidebar Footer -->
+        <div class="p-4 border-t border-slate-800 text-xs text-slate-500 flex flex-col gap-1">
+            <div class="flex items-center justify-between">
+                <span>Vercel Serverless</span>
+                <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+            </div>
+            <p>Version 2.0 • ML-Driven</p>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 ml-64 p-8 overflow-y-auto min-h-screen">
+
+        <!-- Top Header Status Bar -->
+        <header class="flex items-center justify-between pb-6 mb-6 border-b border-slate-200">
+            <div>
+                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight" id="page-title">Performance Overview</h2>
+                <p class="text-sm text-slate-500" id="page-subtitle">Real-time demand velocity, revenue indicators, and replenishment intelligence</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="loadKiranaDemo()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg shadow-sm border border-slate-300 transition flex items-center gap-2">
+                    <i class="fa-solid fa-rotate text-blue-600"></i> Seed Demo Data
+                </button>
+                <a href="/api/reports/excel" download class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow-sm shadow-emerald-600/20 transition flex items-center gap-2">
+                    <i class="fa-solid fa-file-excel"></i> Export Excel
+                </a>
+            </div>
+        </header>
+
+        <!-- Dynamic Stock Risk Alert Banner -->
+        <div id="stock-alert-banner" class="hidden mb-6 p-4 rounded-xl border border-rose-200 bg-gradient-to-r from-rose-50 to-orange-50 flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-rose-500 text-white flex items-center justify-center text-lg shadow-md shadow-rose-500/20">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-rose-900 text-sm leading-tight" id="alert-title">Stockout Alert: Items Require Immediate Replenishment</h4>
+                    <p class="text-xs text-rose-700" id="alert-desc">Products are depleted or below the statistical safety reorder point.</p>
+                </div>
+            </div>
+            <button onclick="navigate('inventory')" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-lg transition shadow-sm">
+                Review & Order Stock &rarr;
+            </button>
+        </div>
+
+        <!-- TAB: 1. OVERVIEW DASHBOARD -->
+        <section id="tab-dashboard" class="space-y-6">
+            <!-- Filter Bar -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold uppercase text-slate-400 tracking-wider">Quick Presets:</span>
+                    <button onclick="applyDatePreset(0)" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">All Time</button>
+                    <button onclick="applyDatePreset(90)" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-100">Last 90D</button>
+                    <button onclick="applyDatePreset(30)" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-100">Last 30D</button>
+                    <button onclick="applyDatePreset(7)" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-100">Last 7D</button>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2">
+                        <label class="text-xs text-slate-500 font-medium">Category:</label>
+                        <select id="dash-category-filter" onchange="fetchDashboardData()" class="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">All Categories</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 Modern Metric Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Total Revenue -->
+                <div class="metric-card bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm border-l-4 border-l-blue-600">
+                    <div class="flex items-center justify-between text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">
+                        <span>Total Revenue</span>
+                        <span class="p-2 bg-blue-50 text-blue-600 rounded-lg"><i class="fa-solid fa-coins"></i></span>
+                    </div>
+                    <div class="text-2xl font-black text-slate-900" id="dash-total-revenue">₹0.00</div>
+                    <div class="mt-2 text-xs flex items-center gap-1.5" id="dash-rev-sub">
+                        <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700" id="dash-growth">+0.0%</span>
+                        <span class="text-slate-500" id="dash-days">Active period</span>
+                    </div>
+                </div>
+
+                <!-- Total Units Sold -->
+                <div class="metric-card bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm border-l-4 border-l-emerald-600">
+                    <div class="flex items-center justify-between text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">
+                        <span>Total Units Demanded</span>
+                        <span class="p-2 bg-emerald-50 text-emerald-600 rounded-lg"><i class="fa-solid fa-box-open"></i></span>
+                    </div>
+                    <div class="text-2xl font-black text-slate-900" id="dash-total-units">0</div>
+                    <div class="mt-2 text-xs text-slate-500 flex items-center gap-1.5">
+                        <span id="dash-units-runrate">Avg 0.0 units / day run-rate</span>
+                    </div>
+                </div>
+
+                <!-- Active Catalog -->
+                <div class="metric-card bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm border-l-4 border-l-amber-500">
+                    <div class="flex items-center justify-between text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">
+                        <span>Active Catalog</span>
+                        <span class="p-2 bg-amber-50 text-amber-600 rounded-lg"><i class="fa-solid fa-tag"></i></span>
+                    </div>
+                    <div class="text-2xl font-black text-slate-900" id="dash-total-prods">0</div>
+                    <div class="mt-2 text-xs text-slate-500 flex items-center gap-1.5">
+                        <span id="dash-active-cats">Across retail departments</span>
+                    </div>
+                </div>
+
+                <!-- Daily Average Revenue -->
+                <div class="metric-card bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm border-l-4 border-l-purple-600">
+                    <div class="flex items-center justify-between text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">
+                        <span>Avg Daily Revenue</span>
+                        <span class="p-2 bg-purple-50 text-purple-600 rounded-lg"><i class="fa-solid fa-chart-simple"></i></span>
+                    </div>
+                    <div class="text-2xl font-black text-slate-900" id="dash-avg-daily">₹0.00</div>
+                    <div class="mt-2 text-xs text-slate-500 flex items-center gap-1.5">
+                        <span id="dash-date-range">From historical sales</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section Row 1 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Daily Trend Plot (2 Cols) -->
+                <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-base">Daily Demand Velocity</h3>
+                            <p class="text-xs text-slate-500">Actual sales volume and 7-day smoothing trendline</p>
+                        </div>
+                        <div class="inline-flex p-1 bg-slate-100 rounded-lg text-xs">
+                            <button onclick="toggleTrendMetric('revenue')" id="btn-metric-rev" class="px-2.5 py-1 rounded-md font-semibold bg-white text-slate-800 shadow-sm">Revenue (₹)</button>
+                            <button onclick="toggleTrendMetric('units')" id="btn-metric-units" class="px-2.5 py-1 rounded-md font-medium text-slate-500 hover:text-slate-800">Units Demanded</button>
+                        </div>
+                    </div>
+                    <div id="plot-revenue-trend" style="height: 340px;"></div>
+                </div>
+
+                <!-- Category Breakdown Donut (1 Col) -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
+                    <h3 class="font-bold text-slate-900 text-base mb-1">Category Contribution</h3>
+                    <p class="text-xs text-slate-500 mb-4">Proportion of gross revenue by department</p>
+                    <div id="plot-category-donut" class="flex-1" style="height: 320px;"></div>
+                </div>
+            </div>
+
+            <!-- Product Highlights Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Top 5 Products -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Top 5 Best-Selling Products
+                        </h4>
+                        <span class="text-xs font-semibold text-slate-400">Share %</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="text-slate-400 uppercase font-semibold border-b border-slate-100">
+                                <tr>
+                                    <th class="pb-2.5">Product</th>
+                                    <th class="pb-2.5">Category</th>
+                                    <th class="pb-2.5 text-right">Units</th>
+                                    <th class="pb-2.5 text-right">Revenue</th>
+                                    <th class="pb-2.5 text-right">Share</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dash-top-products-body" class="divide-y divide-slate-100">
+                                <tr><td colspan="5" class="py-4 text-center text-slate-400">Loading top products...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Bottom 5 Products -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> 5 Slowest-Moving Products
+                        </h4>
+                        <span class="text-xs font-semibold text-slate-400">Action</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="text-slate-400 uppercase font-semibold border-b border-slate-100">
+                                <tr>
+                                    <th class="pb-2.5">Product</th>
+                                    <th class="pb-2.5">Category</th>
+                                    <th class="pb-2.5 text-right">Units</th>
+                                    <th class="pb-2.5 text-right">Revenue</th>
+                                    <th class="pb-2.5 text-right">Share</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dash-bottom-products-body" class="divide-y divide-slate-100">
+                                <tr><td colspan="5" class="py-4 text-center text-slate-400">Loading products...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: 2. UPLOAD DATA -->
+        <section id="tab-upload" class="hidden space-y-6">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h3 class="text-lg font-bold text-slate-900 mb-1">Upload Retail Spreadsheets</h3>
+                <p class="text-xs text-slate-500 mb-6">Upload customer transaction receipts, invoice logs, or stock counts in CSV or Excel format.</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 space-y-4">
+                        <!-- Dropzone -->
+                        <div id="drop-zone" class="border-2 border-dashed border-slate-300 hover:border-blue-500 bg-slate-50 hover:bg-blue-50/40 rounded-2xl p-8 text-center transition cursor-pointer" onclick="document.getElementById('file-input').click()">
+                            <input type="file" id="file-input" class="hidden" accept=".csv, .xlsx, .xls" onchange="handleFileSelected(event)">
+                            <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-2xl">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-800 text-sm" id="upload-file-label">Click to select or drag & drop spreadsheet</h4>
+                            <p class="text-xs text-slate-400 mt-1">Supports CSV, XLSX, and XLS files up to 25MB.</p>
+                        </div>
+
+                        <!-- Dataset Options -->
+                        <div class="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+                            <div class="flex items-center gap-4">
+                                <span class="font-semibold text-slate-700">Type:</span>
+                                <label class="flex items-center gap-1.5 cursor-pointer">
+                                    <input type="radio" name="upload-type" value="sales" checked class="text-blue-600"> Sales Records
+                                </label>
+                                <label class="flex items-center gap-1.5 cursor-pointer">
+                                    <input type="radio" name="upload-type" value="inventory" class="text-blue-600"> Inventory Snapshot
+                                </label>
+                            </div>
+                            <label class="flex items-center gap-1.5 cursor-pointer text-slate-600">
+                                <input type="checkbox" id="allow-returns-check" checked class="text-blue-600 rounded"> Retain negative quantities as returns
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Instant Demo Dataset Card -->
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200/80 p-5 rounded-2xl flex flex-col justify-between">
+                        <div>
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-600 text-white uppercase tracking-wider mb-2">Instant Demo</span>
+                            <h4 class="font-bold text-slate-900 text-sm">Need Sample Retail Data?</h4>
+                            <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">
+                                Instantly seed 12 realistic Indian retail items with 90 days of transactions, customer returns, and inventory levels.
+                            </p>
+                        </div>
+                        <button onclick="loadKiranaDemo()" class="mt-4 w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-md shadow-blue-600/20 transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-bolt"></i> Load Built-in Demo Dataset
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Column Mapping Preview Section -->
+                <div id="mapping-container" class="hidden mt-8 pt-6 border-t border-slate-200">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">🗺️ Automated Column Mapping</h4>
+                            <p class="text-xs text-slate-500">Confirm auto-detected column matches before importing.</p>
+                        </div>
+                        <button onclick="processUploadedDataset()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md shadow-emerald-600/20 transition flex items-center gap-2">
+                            <i class="fa-solid fa-check"></i> Process, Clean & Save
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="mapping-fields-grid">
+                        <!-- Dynamic fields injected here -->
+                    </div>
+
+                    <div class="mt-6">
+                        <h5 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Sample File Records (First 5 Rows)</h5>
+                        <div class="overflow-x-auto bg-slate-50 rounded-xl border border-slate-200 p-2">
+                            <table class="w-full text-xs text-left" id="preview-table">
+                                <!-- Dynamic headers and rows -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: 3. DATA QUALITY AUDIT -->
+        <section id="tab-quality" class="hidden space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 border-l-4 border-l-blue-600 shadow-sm">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Raw Records</span>
+                    <div class="text-2xl font-black text-slate-900 mt-1" id="qual-initial">0</div>
+                    <span class="text-xs text-slate-500">Ingested transactions</span>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 border-l-4 border-l-emerald-600 shadow-sm">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Accepted Clean</span>
+                    <div class="text-2xl font-black text-slate-900 mt-1" id="qual-accepted">0</div>
+                    <span class="text-xs text-slate-500">Passed schema integrity</span>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 border-l-4 border-l-amber-500 shadow-sm">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Flagged & Treated</span>
+                    <div class="text-2xl font-black text-slate-900 mt-1" id="qual-flagged">0</div>
+                    <span class="text-xs text-slate-500">Returns & price derivations</span>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 border-l-4 border-l-rose-600 shadow-sm">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Excluded Rows</span>
+                    <div class="text-2xl font-black text-slate-900 mt-1" id="qual-excluded">0</div>
+                    <span class="text-xs text-slate-500">Unparseable or missing keys</span>
+                </div>
+            </div>
+
+            <!-- Breakdown Charts and Issues -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h4 class="font-bold text-slate-900 text-sm mb-1">Integrity Distribution</h4>
+                    <p class="text-xs text-slate-500 mb-4">Proportion of accepted, flagged, and excluded entries</p>
+                    <div id="plot-quality-pie" style="height: 280px;"></div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-sm mb-1">Cleaning Actions Audit Log</h4>
+                        <p class="text-xs text-slate-500 mb-4">Transparent audit trail of automated transformations</p>
+                        <ul class="space-y-2 text-xs text-slate-600" id="qual-actions-list">
+                            <li class="p-2 bg-slate-50 rounded-lg border border-slate-100">System running with validated historical baseline.</li>
+                        </ul>
+                    </div>
+                    <div class="mt-4 p-3 bg-blue-50 rounded-xl text-[11px] text-blue-700">
+                        <strong>Policy Note:</strong> Customer returns (negative quantities) are retained as net deductions to prevent artificial demand inflation.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: 4. SALES ANALYTICS -->
+        <section id="tab-analytics" class="hidden space-y-6">
+            <!-- Filter Bar -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div class="flex items-center gap-4 text-xs">
+                    <div class="flex items-center gap-2">
+                        <span class="font-semibold text-slate-600">Department:</span>
+                        <select id="analytics-cat-select" onchange="fetchAnalyticsData()" class="bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5">
+                            <option value="">All Departments</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="text-xs text-slate-500">
+                    <span id="analytics-date-span">Displaying comprehensive historical trends</span>
+                </div>
+            </div>
+
+            <!-- Analytics Metric Strip -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="text-xs text-slate-400 font-semibold uppercase">Total Revenue</span>
+                    <div class="text-xl font-bold text-slate-900 mt-1" id="an-rev">₹0.00</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="text-xs text-slate-400 font-semibold uppercase">Units Demanded</span>
+                    <div class="text-xl font-bold text-slate-900 mt-1" id="an-units">0</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="text-xs text-slate-400 font-semibold uppercase">Avg Selling Price</span>
+                    <div class="text-xl font-bold text-slate-900 mt-1" id="an-asp">₹0.00</div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <span class="text-xs text-slate-400 font-semibold uppercase">Active Span</span>
+                    <div class="text-xl font-bold text-slate-900 mt-1" id="an-days">0 Days</div>
+                </div>
+            </div>
+
+            <!-- Pareto ABC Section -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-sm">Product Revenue Contribution (Pareto 80/20 & ABC Analysis)</h4>
+                        <p class="text-xs text-slate-500">Identifies core revenue drivers (Class A), regular items (Class B), and tail products (Class C)</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200">Class A (Top 80%)</span>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Class B (15%)</span>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 text-slate-600 border border-slate-200">Class C (5%)</span>
+                    </div>
+                </div>
+                <div id="plot-pareto" style="height: 380px;"></div>
+            </div>
+
+            <!-- Day of Week & Heatmap -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h4 class="font-bold text-slate-900 text-sm mb-1">Average Daily Sales by Day of Week</h4>
+                    <p class="text-xs text-slate-500 mb-4">Identifies weekday versus weekend spikes</p>
+                    <div id="plot-dow-bar" style="height: 300px;"></div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h4 class="font-bold text-slate-900 text-sm mb-1">Category & Day of Week Heatmap</h4>
+                    <p class="text-xs text-slate-500 mb-4">Cross-tabulation of department revenue</p>
+                    <div id="plot-heatmap" style="height: 300px;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: 5. DEMAND FORECASTING -->
+        <section id="tab-forecasting" class="space-y-6 hidden">
+            <!-- Forecast Configuration Panel -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h3 class="text-base font-bold text-slate-900 mb-1">Machine Learning Demand Forecasting</h3>
+                <p class="text-xs text-slate-500 mb-6">Chronological out-of-sample validation comparing XGBoost, Random Forest, and statistical baselines.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">Target Product:</label>
+                        <select id="forecast-prod-select" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <!-- Injected products -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">Forecast Horizon:</label>
+                        <select id="forecast-horizon-select" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5">
+                            <option value="7">7 Days (Weekly)</option>
+                            <option value="15" selected>15 Days (Fortnightly)</option>
+                            <option value="30">30 Days (Monthly)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">Algorithm Selection:</label>
+                        <select id="forecast-model-select" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5">
+                            <option value="Best Model (Auto-select)" selected>🏆 Best Model (Auto-select)</option>
+                            <option value="Ridge Autoregressive ML">Ridge Autoregressive ML (Fast & Lean)</option>
+                            <option value="Random Forest Regressor">Random Forest Regressor</option>
+                            <option value="XGBoost Regressor">XGBoost Regressor</option>
+                            <option value="Exponential Smoothing">Exponential Smoothing</option>
+                            <option value="Moving Average (7-day)">Moving Average (7-day)</option>
+                            <option value="Seasonal Naive (7-day)">Seasonal Naive (7-day)</option>
+                        </select>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="runForecast(false)" class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-md shadow-blue-600/20 transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-play"></i> Run Forecast
+                        </button>
+                        <button onclick="runForecast(true)" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-300 transition" title="Batch forecast all catalog products">
+                            <i class="fa-solid fa-layer-group"></i> Batch
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What-If Promotional Simulator Slider -->
+            <div id="promo-simulator" class="bg-gradient-to-r from-indigo-50 to-purple-50 p-5 rounded-2xl border border-indigo-200/80 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex-1">
+                    <div class="flex items-center gap-2">
+                        <span class="p-1.5 bg-indigo-600 text-white rounded-lg text-xs"><i class="fa-solid fa-bullhorn"></i></span>
+                        <h4 class="font-bold text-slate-900 text-sm">Promotional Lift & Demand Scenario Simulator (What-If Analysis)</h4>
+                    </div>
+                    <p class="text-xs text-slate-600 mt-1">Adjust expected demand up or down for upcoming marketing campaigns, holiday peaks, or supply cuts.</p>
+                </div>
+                <div class="flex items-center gap-3 w-full md:w-auto">
+                    <input type="range" id="promo-lift-slider" min="-50" max="100" value="0" step="5" oninput="updatePromotionalScenario(this.value)" class="w-48 cursor-pointer accent-indigo-600">
+                    <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow-sm" id="promo-lift-badge">0% Lift</span>
+                </div>
+            </div>
+
+            <!-- Out-of-sample Validation Metrics Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="forecast-metrics-strip">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-blue-600">
+                    <span class="text-xs font-bold text-slate-400 uppercase">MAE (Holdout)</span>
+                    <div class="text-xl font-bold text-slate-900 mt-1" id="fc-mae">0.00</div>
+                    <span class="text-xs text-slate-500">Mean Absolute Error</span>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-amber-500">
+                    <span class="text-xs font-bold text-slate-400 uppercase">RMSE</span>
+                    <div class="text-xl font-bold text-slate-900 mt-1" id="fc-rmse">0.00</div>
+                    <span class="text-xs text-slate-500">Root Mean Squared</span>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-emerald-600">
+                    <span class="text-xs font-bold text-slate-400 uppercase">WAPE (%)</span>
+                    <div class="text-xl font-bold text-slate-900 mt-1" id="fc-wape">0.0%</div>
+                    <span class="text-xs text-slate-500">Weighted Abs Error</span>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm border-l-4 border-l-purple-600">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Forecast Bias</span>
+                    <div class="text-xl font-bold text-slate-900 mt-1" id="fc-bias">0.0%</div>
+                    <span class="text-xs text-slate-500" id="fc-bias-label">Neutral</span>
+                </div>
+            </div>
+
+            <!-- Interactive Plotly Forecast Chart -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-sm" id="fc-chart-title">Demand History & Future Forecast</h4>
+                        <p class="text-xs text-slate-500">Chronological out-of-sample predictions and 90% confidence envelope</p>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200" id="fc-selected-algo">Model: Best</span>
+                </div>
+                <div id="plot-forecast" style="height: 380px;"></div>
+            </div>
+
+            <!-- Projected Demand Table -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h4 class="font-bold text-slate-900 text-sm mb-4">Daily Predicted Demand Units</h4>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="text-slate-400 uppercase font-semibold border-b border-slate-100">
+                            <tr>
+                                <th class="pb-2.5">Forecast Date</th>
+                                <th class="pb-2.5 text-right">Base Predicted Units</th>
+                                <th class="pb-2.5 text-right">Scenario Adjusted Units</th>
+                                <th class="pb-2.5 text-right">Lower Bound (90%)</th>
+                                <th class="pb-2.5 text-right">Upper Bound (90%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="forecast-table-body" class="divide-y divide-slate-100">
+                            <!-- Injected rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: 6. INVENTORY OPTIMIZATION & REORDER -->
+        <section id="tab-inventory" class="space-y-6 hidden">
+            <!-- Optimization Controls -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h3 class="text-base font-bold text-slate-900 mb-1">Inventory Replenishment & Reorder Optimization</h3>
+                <p class="text-xs text-slate-500 mb-6">Calculates Safety Stock, Reorder Points (ROP), Order-up-to Targets (S), and supplier packaging adjustments.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">Workflow Mode:</label>
+                        <select id="inv-mode-select" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5">
+                            <option value="Workflow B" selected>Workflow B (Sales + Inventory Counts)</option>
+                            <option value="Workflow A">Workflow A (Sales Only - Gross Estimates)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">Store Review Period:</label>
+                        <input type="number" id="inv-review-input" min="1" max="30" value="7" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">Target Service Level:</label>
+                        <select id="inv-sl-select" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5">
+                            <option value="0.80">80% (z = 0.84)</option>
+                            <option value="0.85">85% (z = 1.04)</option>
+                            <option value="0.90">90% (z = 1.28)</option>
+                            <option value="0.95" selected>95% (z = 1.65)</option>
+                            <option value="0.98">98% (z = 2.05)</option>
+                            <option value="0.99">99% (z = 2.33)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button onclick="runInventoryOptimization()" class="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-md shadow-blue-600/20 transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-calculator"></i> Calculate Replenishment
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial PO Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 border-l-4 border-l-blue-600 shadow-sm">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Items Requiring Reorder</span>
+                    <div class="text-2xl font-black text-slate-900 mt-1" id="po-items-count">0 SKU(s)</div>
+                    <span class="text-xs text-slate-500">At or below Reorder Point</span>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 border-l-4 border-l-emerald-600 shadow-sm">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Total Order Volume</span>
+                    <div class="text-2xl font-black text-slate-900 mt-1" id="po-units-count">0.0 Units</div>
+                    <span class="text-xs text-slate-500">MOQ & case-pack constrained</span>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 border-l-4 border-l-purple-600 shadow-sm">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Estimated PO Cost</span>
+                    <div class="text-2xl font-black text-slate-900 mt-1" id="po-cost-val">₹0.00</div>
+                    <span class="text-xs text-slate-500">Supplier capital investment</span>
+                </div>
+            </div>
+
+            <!-- Interactive Editable Recommendations Table -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-sm">Review & Edit Confirmed Purchase Orders</h4>
+                        <p class="text-xs text-slate-500">You can adjust suggested quantities directly in the input boxes below.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="saveOrderOverrides()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md shadow-emerald-600/20 transition flex items-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i> Save Overrides
+                        </button>
+                        <a href="/api/reports/csv/purchase_order" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl border border-slate-300 transition flex items-center gap-2">
+                            <i class="fa-solid fa-download"></i> Download PO CSV
+                        </a>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="text-slate-400 uppercase font-semibold border-b border-slate-100">
+                            <tr>
+                                <th class="pb-2.5">SKU</th>
+                                <th class="pb-2.5">Product Name</th>
+                                <th class="pb-2.5">Status</th>
+                                <th class="pb-2.5 text-right">On-Hand</th>
+                                <th class="pb-2.5 text-right">ROP</th>
+                                <th class="pb-2.5 text-right">Safety Stock</th>
+                                <th class="pb-2.5 text-right">Target (S)</th>
+                                <th class="pb-2.5 text-center w-32">Suggested Order</th>
+                                <th class="pb-2.5">Rationale</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recs-table-body" class="divide-y divide-slate-100">
+                            <!-- Injected rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: 7. PRODUCT MANAGEMENT & STOCK TAKE -->
+        <section id="tab-products" class="space-y-6 hidden">
+            <!-- Catalog Search & Grid Editor -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900 mb-1">Product Catalog & Supplier Parameters</h3>
+                        <p class="text-xs text-slate-500">Edit selling prices, supplier lead times, and case pack sizes directly in the table.</p>
+                    </div>
+                    <button onclick="saveCatalogEdits()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-md shadow-blue-600/20 transition flex items-center gap-2">
+                        <i class="fa-solid fa-floppy-disk"></i> Save Catalog Changes
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="text-slate-400 uppercase font-semibold border-b border-slate-100">
+                            <tr>
+                                <th class="pb-2.5">Product ID</th>
+                                <th class="pb-2.5">Product Name</th>
+                                <th class="pb-2.5">Category</th>
+                                <th class="pb-2.5 text-right">Price (₹)</th>
+                                <th class="pb-2.5 text-right">Lead Time (Days)</th>
+                                <th class="pb-2.5 text-right">MOQ</th>
+                                <th class="pb-2.5 text-right">Case Pack</th>
+                            </tr>
+                        </thead>
+                        <tbody id="catalog-table-body" class="divide-y divide-slate-100">
+                            <!-- Injected editable rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Bulk Physical Stock Count Take -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-sm">Physical Stock Count / Inventory Take</h4>
+                        <p class="text-xs text-slate-500">Record current shelf stock and incoming orders across all catalog items.</p>
+                    </div>
+                    <button onclick="saveBulkStockTake()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-md shadow-emerald-600/20 transition flex items-center gap-2">
+                        <i class="fa-solid fa-clipboard-list"></i> Save Stock Snapshot
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="text-slate-400 uppercase font-semibold border-b border-slate-100">
+                            <tr>
+                                <th class="pb-2.5">Product</th>
+                                <th class="pb-2.5">Category</th>
+                                <th class="pb-2.5 text-center w-36">Physical Stock On-Hand</th>
+                                <th class="pb-2.5 text-center w-36">Pending On-Order</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stock-take-body" class="divide-y divide-slate-100">
+                            <!-- Injected rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: 8. REPORTS & EXPORTS -->
+        <section id="tab-reports" class="space-y-6 hidden">
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h3 class="text-base font-bold text-slate-900 mb-1">Export Reports & Audits</h3>
+                <p class="text-xs text-slate-500 mb-6">Download professional multi-tab Excel workbooks or individual section CSVs.</p>
+
+                <!-- Master Excel Card -->
+                <div class="p-6 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-2xl mb-6 flex items-center justify-between">
+                    <div>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-600 text-white uppercase tracking-wider mb-2">Master Workbook</span>
+                        <h4 class="font-bold text-emerald-950 text-base">Complete Retail System Excel Report (.xlsx)</h4>
+                        <p class="text-xs text-emerald-800 mt-1">Contains Executive Summary, Cleaned Sales Data, Quality Audit Log, Catalog Analytics, Forecasts, and POs.</p>
+                    </div>
+                    <a href="/api/reports/excel" download class="px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-600/20 transition flex items-center gap-2">
+                        <i class="fa-solid fa-file-excel text-base"></i> Download Master Workbook
+                    </a>
+                </div>
+
+                <!-- Section CSVs -->
+                <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3">Individual Section CSV Files</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <a href="/api/reports/csv/sales" class="p-4 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-between text-xs transition">
+                        <div>
+                            <span class="font-bold text-slate-800 block">Cleaned Daily Sales History</span>
+                            <span class="text-slate-500">Aggregated daily revenue and units</span>
+                        </div>
+                        <i class="fa-solid fa-download text-slate-400"></i>
+                    </a>
+                    <a href="/api/reports/csv/products" class="p-4 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-between text-xs transition">
+                        <div>
+                            <span class="font-bold text-slate-800 block">Product Catalog & Supplier Parameters</span>
+                            <span class="text-slate-500">Prices, lead times, and MOQs</span>
+                        </div>
+                        <i class="fa-solid fa-download text-slate-400"></i>
+                    </a>
+                    <a href="/api/reports/csv/forecast" class="p-4 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-between text-xs transition">
+                        <div>
+                            <span class="font-bold text-slate-800 block">Demand Forecast Predictions</span>
+                            <span class="text-slate-500">Out-of-sample predictions & confidence bounds</span>
+                        </div>
+                        <i class="fa-solid fa-download text-slate-400"></i>
+                    </a>
+                    <a href="/api/reports/csv/purchase_order" class="p-4 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl flex items-center justify-between text-xs transition">
+                        <div>
+                            <span class="font-bold text-slate-800 block">Confirmed Purchase Order File</span>
+                            <span class="text-slate-500">Replenishment items with costs and units</span>
+                        </div>
+                        <i class="fa-solid fa-download text-slate-400"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: 9. STORE SETTINGS -->
+        <section id="tab-settings" class="space-y-6 hidden">
+            <!-- Profile Settings -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h3 class="text-base font-bold text-slate-900 mb-1">Store Profile Settings</h3>
+                <p class="text-xs text-slate-500 mb-6">Manage business identity, store department categorization, and currency format.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">Store Name:</label>
+                        <input type="text" id="set-shop-name" value="Kirana & Retail Hub" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">Retail Business Type:</label>
+                        <input type="text" id="set-shop-type" value="Grocery & FMCG Retail" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">Currency Symbol:</label>
+                        <input type="text" id="set-curr-symbol" value="₹" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">Currency ISO Code:</label>
+                        <input type="text" id="set-curr-code" value="INR" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5">
+                    </div>
+                </div>
+                <button onclick="saveStoreProfile()" class="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-md shadow-blue-600/20 transition">
+                    Save Profile
+                </button>
+            </div>
+
+            <!-- Database & Demo Data Controls -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <h4 class="font-bold text-slate-900 text-sm mb-1">Database & Data Management</h4>
+                <p class="text-xs text-slate-500 mb-4">Reset records, re-seed realistic sample data, or wipe database storage.</p>
+
+                <div class="flex items-center gap-3">
+                    <button onclick="loadKiranaDemo()" class="px-4 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-xs rounded-xl border border-blue-200 transition flex items-center gap-2">
+                        <i class="fa-solid fa-rotate text-blue-600"></i> Reload Demo Kirana Dataset
+                    </button>
+                    <button onclick="clearAllData()" class="px-4 py-2.5 bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs rounded-xl border border-rose-200 transition flex items-center gap-2">
+                        <i class="fa-solid fa-trash-can text-rose-600"></i> Purge All Stored Records
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Client-side SPA Application Logic -->
+    <script>
+        let currentTab = 'dashboard';
+        let shopData = {};
+        let dashboardData = {};
+        let forecastData = {};
+        let activeTrendMetric = 'revenue';
+        let promoLiftValue = 0;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initApp();
+        });
+
+        async function initApp() {
+            await fetchShopInfo();
+            await fetchDashboardData();
+        }
+
+        async function fetchShopInfo() {
+            try {
+                const res = await fetch('/api/shop');
+                shopData = await res.json();
+                document.getElementById('sidebar-shop-name').innerText = shopData.shop_name;
+                document.getElementById('sidebar-shop-type').innerText = shopData.shop_type;
+                document.getElementById('sidebar-curr-code').innerText = `${shopData.currency_code} (${shopData.currency_symbol})`;
+                document.getElementById('set-shop-name').value = shopData.shop_name;
+                document.getElementById('set-shop-type').value = shopData.shop_type;
+                document.getElementById('set-curr-symbol').value = shopData.currency_symbol;
+                document.getElementById('set-curr-code').value = shopData.currency_code;
+            } catch (err) {
+                console.error('Error fetching shop info:', err);
+            }
+        }
+
+        function navigate(tabId) {
+            currentTab = tabId;
+            document.querySelectorAll('section[id^="tab-"]').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`tab-${tabId}`);
+            if (target) target.classList.remove('hidden');
+
+            // Update nav active states
+            document.querySelectorAll('#nav-container button').forEach(btn => {
+                if (btn.getAttribute('data-tab') === tabId) {
+                    btn.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
+                    btn.classList.remove('text-slate-300', 'hover:bg-slate-800');
+                } else {
+                    btn.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
+                    btn.classList.add('text-slate-300', 'hover:bg-slate-800');
+                }
+            });
+
+            // Update header title
+            const titles = {
+                dashboard: 'Performance Overview',
+                upload: 'Data Ingestion & Column Mapping',
+                quality: 'Data Quality & Cleaning Audit',
+                analytics: 'Retail Sales Analytics & ABC Pareto',
+                forecasting: 'Machine Learning Demand Forecasting',
+                inventory: 'Inventory Replenishment & Reorder Optimization',
+                products: 'Product Catalog & Physical Stock Take',
+                reports: 'Reports & Data Downloads',
+                settings: 'Store & Operational Settings'
+            };
+            document.getElementById('page-title').innerText = titles[tabId] || 'Dashboard';
+
+            // Lazy fetch for tabs
+            if (tabId === 'analytics') fetchAnalyticsData();
+            if (tabId === 'forecasting') fetchForecastingOptions();
+            if (tabId === 'inventory') fetchRecommendations();
+            if (tabId === 'products') fetchProductsCatalog();
+            if (tabId === 'quality') fetchQualityReport();
+        }
+
+        async function fetchDashboardData(startDate = '', endDate = '') {
+            try {
+                const cat = document.getElementById('dash-category-filter')?.value || '';
+                let url = `/api/dashboard?categories=${encodeURIComponent(cat)}`;
+                if (startDate) url += `&start_date=${startDate}`;
+                if (endDate) url += `&end_date=${endDate}`;
+
+                const res = await fetch(url);
+                const data = await res.json();
+                dashboardData = data;
+
+                if (!data.has_data) return;
+
+                const cur = data.shop.currency_symbol || '₹';
+                document.getElementById('dash-total-revenue').innerText = `${cur}${Number(data.kpis.total_revenue).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                document.getElementById('dash-total-units').innerText = Number(data.kpis.total_units_sold).toLocaleString();
+                document.getElementById('dash-total-prods').innerText = data.kpis.total_products;
+                document.getElementById('dash-avg-daily').innerText = `${cur}${Number(data.kpis.avg_daily_revenue).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+                document.getElementById('dash-growth').innerText = `${data.growth_pct >= 0 ? '+' : ''}${data.growth_pct}%`;
+                document.getElementById('dash-days').innerText = `${data.kpis.total_days} active days`;
+                document.getElementById('dash-date-range').innerText = `${data.kpis.start_date} to ${data.kpis.end_date}`;
+
+                // Stock Alert Banner
+                if (data.alerts && (data.alerts.stock_risk > 0 || data.alerts.reorder_review > 0)) {
+                    document.getElementById('stock-alert-banner').classList.remove('hidden');
+                    document.getElementById('alert-desc').innerText = `${data.alerts.stock_risk} item(s) are at immediate stockout risk and ${data.alerts.reorder_review} item(s) are below safety reorder threshold.`;
+                } else {
+                    document.getElementById('stock-alert-banner').classList.add('hidden');
+                }
+
+                // Populate categories dropdown if not already populated
+                const catSelect = document.getElementById('dash-category-filter');
+                if (catSelect && catSelect.children.length <= 1 && data.all_categories) {
+                    data.all_categories.forEach(c => {
+                        const opt = document.createElement('option');
+                        opt.value = c;
+                        opt.innerText = c;
+                        catSelect.appendChild(opt);
+                    });
+                }
+
+                // Render Plots
+                renderDashboardPlots(data, cur);
+                renderProductTables(data, cur);
+            } catch (err) {
+                console.error('Error loading dashboard data:', err);
+            }
+        }
+
+        function renderDashboardPlots(data, cur) {
+            // 1. Trend Plot
+            const dates = data.daily_trend.map(d => d.date_str);
+            const revVals = data.daily_trend.map(d => d.revenue);
+            const rollRev = data.daily_trend.map(d => d.rolling_7_rev);
+            const unitVals = data.daily_trend.map(d => d.units);
+            const rollUnits = data.daily_trend.map(d => d.rolling_7_units);
+
+            const isRev = activeTrendMetric === 'revenue';
+            const traceBar = {
+                x: dates,
+                y: isRev ? revVals : unitVals,
+                type: 'bar',
+                name: isRev ? 'Daily Revenue' : 'Units Demanded',
+                marker: { color: isRev ? 'rgba(30, 136, 229, 0.4)' : 'rgba(67, 160, 71, 0.4)' }
+            };
+            const traceLine = {
+                x: dates,
+                y: isRev ? rollRev : rollUnits,
+                type: 'scatter',
+                mode: 'lines',
+                name: '7-Day Moving Avg',
+                line: { color: isRev ? '#1565C0' : '#2E7D32', width: 2.5 }
+            };
+
+            Plotly.newPlot('plot-revenue-trend', [traceBar, traceLine], {
+                margin: { l: 45, r: 20, t: 20, b: 40 },
+                template: 'plotly_white',
+                hovermode: 'x unified',
+                legend: { orientation: 'h', y: 1.1, x: 1, xanchor: 'right' }
+            }, { responsive: true, displayModeBar: false });
+
+            // 2. Category Donut
+            const catLabels = data.category_breakdown.map(c => c.category);
+            const catValues = data.category_breakdown.map(c => c.revenue);
+            Plotly.newPlot('plot-category-donut', [{
+                labels: catLabels,
+                values: catValues,
+                type: 'pie',
+                hole: 0.5,
+                textinfo: 'label+percent',
+                hoverinfo: 'label+value+percent'
+            }], {
+                margin: { l: 10, r: 10, t: 10, b: 10 },
+                template: 'plotly_white',
+                showlegend: false
+            }, { responsive: true, displayModeBar: false });
+        }
+
+        function toggleTrendMetric(metric) {
+            activeTrendMetric = metric;
+            document.getElementById('btn-metric-rev').className = metric === 'revenue' ? 'px-2.5 py-1 rounded-md font-semibold bg-white text-slate-800 shadow-sm' : 'px-2.5 py-1 rounded-md font-medium text-slate-500 hover:text-slate-800';
+            document.getElementById('btn-metric-units').className = metric === 'units' ? 'px-2.5 py-1 rounded-md font-semibold bg-white text-slate-800 shadow-sm' : 'px-2.5 py-1 rounded-md font-medium text-slate-500 hover:text-slate-800';
+            if (dashboardData.has_data) renderDashboardPlots(dashboardData, dashboardData.shop.currency_symbol || '₹');
+        }
+
+        function renderProductTables(data, cur) {
+            const topBody = document.getElementById('dash-top-products-body');
+            topBody.innerHTML = '';
+            data.top_products.forEach(p => {
+                topBody.innerHTML += `
+                    <tr class="hover:bg-slate-50">
+                        <td class="py-2.5 font-bold text-slate-800">${p.product_name}</td>
+                        <td class="py-2.5 text-slate-500">${p.category}</td>
+                        <td class="py-2.5 text-right font-medium">${Number(p.quantity_sold).toFixed(1)}</td>
+                        <td class="py-2.5 text-right font-bold text-slate-900">${cur}${Number(p.revenue).toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+                        <td class="py-2.5 text-right text-emerald-600 font-bold">${p.share_pct}%</td>
+                    </tr>
+                `;
+            });
+
+            const botBody = document.getElementById('dash-bottom-products-body');
+            botBody.innerHTML = '';
+            data.bottom_products.forEach(p => {
+                botBody.innerHTML += `
+                    <tr class="hover:bg-slate-50">
+                        <td class="py-2.5 font-bold text-slate-800">${p.product_name}</td>
+                        <td class="py-2.5 text-slate-500">${p.category}</td>
+                        <td class="py-2.5 text-right font-medium">${Number(p.quantity_sold).toFixed(1)}</td>
+                        <td class="py-2.5 text-right font-bold text-slate-900">${cur}${Number(p.revenue).toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
+                        <td class="py-2.5 text-right text-slate-500">${p.share_pct}%</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function applyDatePreset(days) {
+            document.querySelectorAll('.preset-btn').forEach(b => {
+                b.className = 'preset-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 hover:bg-slate-100';
+            });
+            event.target.className = 'preset-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200';
+
+            if (days === 0) {
+                fetchDashboardData('', '');
+            } else {
+                const maxD = new Date(dashboardData.date_bounds?.max_date || new Date());
+                const startD = new Date(maxD);
+                startD.setDate(startD.getDate() - days);
+                fetchDashboardData(startD.toISOString().split('T')[0], maxD.toISOString().split('T')[0]);
+            }
+        }
+
+        // ---------------- SALES ANALYTICS TAB ----------------
+        async function fetchAnalyticsData() {
+            try {
+                const cat = document.getElementById('analytics-cat-select')?.value || '';
+                const res = await fetch(`/api/analytics?categories=${encodeURIComponent(cat)}`);
+                const data = await res.json();
+                if (!data.has_data || data.is_empty) return;
+
+                const cur = shopData.currency_symbol || '₹';
+                document.getElementById('an-rev').innerText = `${cur}${Number(data.summary.revenue).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+                document.getElementById('an-units').innerText = Number(data.summary.units).toLocaleString();
+                document.getElementById('an-asp').innerText = `${cur}${Number(data.summary.asp).toFixed(2)}`;
+                document.getElementById('an-days').innerText = `${data.summary.active_days} Days`;
+
+                // Populate category filter if empty
+                const sel = document.getElementById('analytics-cat-select');
+                if (sel && sel.children.length <= 1 && dashboardData.all_categories) {
+                    dashboardData.all_categories.forEach(c => {
+                        const opt = document.createElement('option');
+                        opt.value = c;
+                        opt.innerText = c;
+                        sel.appendChild(opt);
+                    });
+                }
+
+                // Pareto Bar + Cumulative line
+                const pNames = data.pareto_products.map(p => p.product_name);
+                const pRev = data.pareto_products.map(p => p.revenue);
+                const pCum = data.pareto_products.map(p => p.cum_share_pct);
+                const pColors = data.pareto_products.map(p => p.abc_class.includes('Class A') ? '#1E88E5' : (p.abc_class.includes('Class B') ? '#FB8C00' : '#94A3B8'));
+
+                Plotly.newPlot('plot-pareto', [
+                    { x: pNames, y: pRev, type: 'bar', name: 'Product Revenue', marker: { color: pColors }, yaxis: 'y1' },
+                    { x: pNames, y: pCum, type: 'scatter', mode: 'lines+markers', name: 'Cumulative Share %', line: { color: '#D81B60', width: 2.5 }, yaxis: 'y2' }
+                ], {
+                    margin: { l: 50, r: 50, t: 20, b: 100 },
+                    template: 'plotly_white',
+                    yaxis: { title: `Revenue (${cur})` },
+                    yaxis2: { title: 'Cumulative Share (%)', overlaying: 'y', side: 'right', range: [0, 105] },
+                    legend: { orientation: 'h', y: 1.1, x: 1, xanchor: 'right' }
+                }, { responsive: true, displayModeBar: false });
+
+                // DOW Bar
+                Plotly.newPlot('plot-dow-bar', [{
+                    x: data.dow_stats.map(d => d.dow_name),
+                    y: data.dow_stats.map(d => d.avg_rev),
+                    type: 'bar',
+                    marker: { color: '#5E35B1' }
+                }], {
+                    margin: { l: 45, r: 20, t: 20, b: 40 },
+                    template: 'plotly_white',
+                    yaxis: { title: `Avg Revenue (${cur})` }
+                }, { responsive: true, displayModeBar: false });
+
+                // Heatmap
+                Plotly.newPlot('plot-heatmap', [{
+                    z: data.heatmap.values,
+                    x: data.heatmap.days,
+                    y: data.heatmap.categories,
+                    type: 'heatmap',
+                    colorscale: 'Blues'
+                }], {
+                    margin: { l: 120, r: 20, t: 20, b: 40 },
+                    template: 'plotly_white'
+                }, { responsive: true, displayModeBar: false });
+
+            } catch (err) {
+                console.error('Error fetching analytics:', err);
+            }
+        }
+
+        // ---------------- FORECASTING TAB ----------------
+        async function fetchForecastingOptions() {
+            try {
+                const res = await fetch('/api/products');
+                const prods = await res.json();
+                const sel = document.getElementById('forecast-prod-select');
+                sel.innerHTML = '';
+                prods.forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.product_id;
+                    opt.innerText = p.product_name;
+                    sel.appendChild(opt);
+                });
+                if (prods.length > 0) runForecast(false);
+            } catch (err) {
+                console.error('Error loading forecast options:', err);
+            }
+        }
+
+        async function runForecast(isBatch = false) {
+            try {
+                const pid = document.getElementById('forecast-prod-select')?.value;
+                const horizon = parseInt(document.getElementById('forecast-horizon-select')?.value || '15');
+                const model = document.getElementById('forecast-model-select')?.value || 'Best Model (Auto-select)';
+
+                const res = await fetch('/api/forecast/run', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ product_id: pid, horizon_days: horizon, model_preference: model, is_batch: isBatch })
+                });
+                const data = await res.json();
+                if (isBatch) {
+                    alert(`Batch forecasting complete for ${data.total_products} products!`);
+                    return;
+                }
+
+                forecastData = data;
+                renderForecastResults(data);
+            } catch (err) {
+                console.error('Error running forecast:', err);
+            }
+        }
+
+        function renderForecastResults(data) {
+            document.getElementById('fc-selected-algo').innerText = `Model: ${data.selected_model}`;
+            document.getElementById('fc-chart-title').innerText = `Demand History & Future Forecast: ${data.product_name}`;
+            document.getElementById('fc-mae').innerText = data.val_metrics?.mae?.toFixed(2) || '0.00';
+            document.getElementById('fc-rmse').innerText = data.val_metrics?.rmse?.toFixed(2) || '0.00';
+            document.getElementById('fc-wape').innerText = `${data.val_metrics?.wape_pct?.toFixed(1) || '0.0'}%`;
+            document.getElementById('fc-bias').innerText = `${data.val_metrics?.bias_pct >= 0 ? '+' : ''}${data.val_metrics?.bias_pct?.toFixed(1) || '0.0'}%`;
+
+            // Plotly Chart
+            const histX = data.history.map(h => h.date_str);
+            const histY = data.history.map(h => h.quantity_sold);
+
+            const mult = 1.0 + (promoLiftValue / 100.0);
+            const fcX = data.forecast.map(f => f.forecast_date.split('T')[0]);
+            const fcY = data.forecast.map(f => (f.predicted_demand * mult).toFixed(2));
+            const fcUpper = data.forecast.map(f => (f.upper_bound * mult).toFixed(2));
+            const fcLower = data.forecast.map(f => (f.lower_bound * mult).toFixed(2));
+
+            const traceHist = { x: histX, y: histY, type: 'scatter', mode: 'lines+markers', name: 'Actual Demand', line: { color: '#37474F' } };
+            const traceUpper = { x: fcX, y: fcUpper, type: 'scatter', mode: 'lines', line: { width: 0 }, showlegend: false, hoverinfo: 'skip' };
+            const traceLower = { x: fcX, y: fcLower, type: 'scatter', mode: 'lines', line: { width: 0 }, fill: 'tonexty', fillcolor: 'rgba(30, 136, 229, 0.15)', name: '90% Interval', hoverinfo: 'skip' };
+            const traceFc = { x: fcX, y: fcY, type: 'scatter', mode: 'lines+markers', name: 'Future Forecast', line: { color: '#1E88E5', width: 2.5 } };
+
+            Plotly.newPlot('plot-forecast', [traceHist, traceUpper, traceLower, traceFc], {
+                margin: { l: 45, r: 20, t: 20, b: 40 },
+                template: 'plotly_white',
+                yaxis: { title: 'Units Demanded' },
+                hovermode: 'x unified',
+                legend: { orientation: 'h', y: 1.1, x: 1, xanchor: 'right' }
+            }, { responsive: true, displayModeBar: false });
+
+            // Table
+            const tbody = document.getElementById('forecast-table-body');
+            tbody.innerHTML = '';
+            data.forecast.forEach(f => {
+                const simVal = (f.predicted_demand * mult).toFixed(1);
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50">
+                        <td class="py-2.5 font-medium">${f.forecast_date_str || f.forecast_date.split('T')[0]}</td>
+                        <td class="py-2.5 text-right font-bold text-slate-800">${Number(f.predicted_demand).toFixed(1)}</td>
+                        <td class="py-2.5 text-right font-black text-indigo-600">${simVal}</td>
+                        <td class="py-2.5 text-right text-slate-500">${Number(f.lower_bound).toFixed(1)}</td>
+                        <td class="py-2.5 text-right text-slate-500">${Number(f.upper_bound).toFixed(1)}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function updatePromotionalScenario(val) {
+            promoLiftValue = parseInt(val);
+            document.getElementById('promo-lift-badge').innerText = `${promoLiftValue >= 0 ? '+' : ''}${promoLiftValue}% Lift`;
+            if (forecastData.forecast) renderForecastResults(forecastData);
+        }
+
+        // ---------------- INVENTORY TAB ----------------
+        async function fetchRecommendations() {
+            try {
+                const res = await fetch('/api/inventory/recommendations');
+                const data = await res.json();
+                if (!data.has_recommendations) return;
+
+                renderRecommendations(data);
+            } catch (err) {
+                console.error('Error fetching inventory recs:', err);
+            }
+        }
+
+        async function runInventoryOptimization() {
+            try {
+                const mode = document.getElementById('inv-mode-select').value;
+                const review = parseInt(document.getElementById('inv-review-input').value || '7');
+                const sl = parseFloat(document.getElementById('inv-sl-select').value || '0.95');
+
+                const res = await fetch('/api/inventory/optimize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mode: mode, review_period_days: review, service_level: sl })
+                });
+                const data = await res.json();
+                renderRecommendations(data);
+                alert('Replenishment recommendations computed successfully!');
+            } catch (err) {
+                alert('Failed to run optimization: ' + err.message);
+            }
+        }
+
+        function renderRecommendations(data) {
+            const cur = shopData.currency_symbol || '₹';
+            document.getElementById('po-items-count').innerText = `${data.po_summary.order_items} SKU(s)`;
+            document.getElementById('po-units-count').innerText = `${Number(data.po_summary.total_units).toFixed(1)} Units`;
+            document.getElementById('po-cost-val').innerText = `${cur}${Number(data.po_summary.total_cost).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+
+            const tbody = document.getElementById('recs-table-body');
+            tbody.innerHTML = '';
+            data.recommendations.forEach(r => {
+                const isRisk = r.risk_status === 'Stock Risk';
+                const isReview = r.risk_status === 'Reorder Review';
+                const badgeColor = isRisk ? 'bg-rose-50 text-rose-700 border-rose-200' : (isReview ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200');
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50" data-pid="${r.product_id}">
+                        <td class="py-2.5 font-bold text-slate-700">${r.product_id}</td>
+                        <td class="py-2.5 font-medium text-slate-900">${r.product_name}</td>
+                        <td class="py-2.5"><span class="inline-flex px-2 py-0.5 rounded text-[11px] font-bold border ${badgeColor}">${r.risk_status}</span></td>
+                        <td class="py-2.5 text-right font-medium">${r.current_stock !== null ? Number(r.current_stock).toFixed(1) : '-'}</td>
+                        <td class="py-2.5 text-right text-slate-500">${r.reorder_point !== null ? Number(r.reorder_point).toFixed(1) : '-'}</td>
+                        <td class="py-2.5 text-right text-slate-500">${r.safety_stock !== null ? Number(r.safety_stock).toFixed(1) : '-'}</td>
+                        <td class="py-2.5 text-right text-slate-500">${r.order_up_to_target !== null ? Number(r.order_up_to_target).toFixed(1) : '-'}</td>
+                        <td class="py-2.5 text-center">
+                            <input type="number" min="0" step="1" value="${Number(r.suggested_qty).toFixed(0)}" class="po-qty-input w-20 text-center text-xs font-bold bg-white border border-slate-300 rounded-lg p-1.5 focus:border-blue-500">
+                        </td>
+                        <td class="py-2.5 text-slate-500 text-[11px] max-w-xs truncate" title="${r.explanation}">${r.explanation}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function saveOrderOverrides() {
+            const overrides = {};
+            document.querySelectorAll('#recs-table-body tr').forEach(tr => {
+                const pid = tr.getAttribute('data-pid');
+                const val = parseFloat(tr.querySelector('.po-qty-input')?.value || '0');
+                if (pid) overrides[pid] = val;
+            });
+
+            try {
+                const res = await fetch('/api/inventory/overrides', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ overrides: overrides })
+                });
+                const data = await res.json();
+                alert(`Saved ${data.saved} order quantity override(s) successfully!`);
+                fetchRecommendations();
+            } catch (err) {
+                alert('Failed to save overrides: ' + err.message);
+            }
+        }
+
+        // ---------------- PRODUCTS TAB ----------------
+        async function fetchProductsCatalog() {
+            try {
+                const res = await fetch('/api/products');
+                const prods = await res.json();
+
+                // 1. Catalog Editor Table
+                const catBody = document.getElementById('catalog-table-body');
+                catBody.innerHTML = '';
+                prods.forEach(p => {
+                    catBody.innerHTML += `
+                        <tr class="hover:bg-slate-50" data-pid="${p.product_id}">
+                            <td class="py-2.5 font-bold text-slate-700">${p.product_id}</td>
+                            <td class="py-2.5 font-medium text-slate-900">${p.product_name}</td>
+                            <td class="py-2.5 text-slate-500">${p.category}</td>
+                            <td class="py-2.5 text-right"><input type="number" step="0.5" value="${p.unit_price}" class="cat-price w-24 text-right text-xs p-1 border rounded"></td>
+                            <td class="py-2.5 text-right"><input type="number" step="1" value="${p.lead_time_days}" class="cat-lead w-20 text-right text-xs p-1 border rounded"></td>
+                            <td class="py-2.5 text-right"><input type="number" step="1" value="${p.minimum_order_quantity}" class="cat-moq w-20 text-right text-xs p-1 border rounded"></td>
+                            <td class="py-2.5 text-right"><input type="number" step="1" value="${p.case_pack_size}" class="cat-pack w-20 text-right text-xs p-1 border rounded"></td>
+                        </tr>
+                    `;
+                });
+
+                // 2. Physical Stock Take Table
+                const snapsRes = await fetch('/api/inventory/snapshots');
+                const snaps = await snapsRes.json();
+                const snapMap = {};
+                snaps.forEach(s => snapMap[s.product_id] = s);
+
+                const stockBody = document.getElementById('stock-take-body');
+                stockBody.innerHTML = '';
+                prods.forEach(p => {
+                    const s = snapMap[p.product_id] || { on_hand_qty: 0, on_order_qty: 0 };
+                    stockBody.innerHTML += `
+                        <tr class="hover:bg-slate-50" data-pid="${p.product_id}">
+                            <td class="py-2.5 font-bold text-slate-800">${p.product_name} (${p.product_id})</td>
+                            <td class="py-2.5 text-slate-500">${p.category}</td>
+                            <td class="py-2.5 text-center"><input type="number" step="1" min="0" value="${s.on_hand_qty}" class="stk-onhand w-24 text-center text-xs p-1 border rounded font-bold"></td>
+                            <td class="py-2.5 text-center"><input type="number" step="1" min="0" value="${s.on_order_qty}" class="stk-onorder w-24 text-center text-xs p-1 border rounded font-medium"></td>
+                        </tr>
+                    `;
+                });
+            } catch (err) {
+                console.error('Error fetching catalog:', err);
+            }
+        }
+
+        async function saveCatalogEdits() {
+            const updates = [];
+            document.querySelectorAll('#catalog-table-body tr').forEach(tr => {
+                updates.push({
+                    product_id: tr.getAttribute('data-pid'),
+                    unit_price: parseFloat(tr.querySelector('.cat-price')?.value || '0'),
+                    lead_time_days: parseInt(tr.querySelector('.cat-lead')?.value || '7'),
+                    minimum_order_quantity: parseFloat(tr.querySelector('.cat-moq')?.value || '1'),
+                    case_pack_size: parseFloat(tr.querySelector('.cat-pack')?.value || '1')
+                });
+            });
+
+            try {
+                const res = await fetch('/api/products/batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ products: updates })
+                });
+                const data = await res.json();
+                alert(`Catalog updated successfully (${data.updated} products)!`);
+                fetchProductsCatalog();
+            } catch (err) {
+                alert('Failed to save catalog: ' + err.message);
+            }
+        }
+
+        async function saveBulkStockTake() {
+            const snaps = [];
+            document.querySelectorAll('#stock-take-body tr').forEach(tr => {
+                snaps.push({
+                    product_id: tr.getAttribute('data-pid'),
+                    on_hand_qty: parseFloat(tr.querySelector('.stk-onhand')?.value || '0'),
+                    on_order_qty: parseFloat(tr.querySelector('.stk-onorder')?.value || '0'),
+                    backorders: 0.0,
+                    lead_time_days: 7
+                });
+            });
+
+            try {
+                const res = await fetch('/api/inventory/snapshot', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ snapshots: snaps })
+                });
+                alert(`Stock count snapshot recorded for ${snaps.length} items!`);
+                fetchDashboardData();
+            } catch (err) {
+                alert('Failed to save stock take: ' + err.message);
+            }
+        }
+
+        // ---------------- QUALITY TAB ----------------
+        async function fetchQualityReport() {
+            try {
+                const res = await fetch('/api/quality/latest');
+                const data = await res.json();
+                if (!data.has_report) return;
+
+                const q = data.quality_report;
+                document.getElementById('qual-initial').innerText = Number(q.initial_rows || 0).toLocaleString();
+                document.getElementById('qual-accepted').innerText = Number(q.accepted_rows || 0).toLocaleString();
+                document.getElementById('qual-flagged').innerText = Number(q.flagged_rows || 0).toLocaleString();
+                document.getElementById('qual-excluded').innerText = Number(q.excluded_rows || 0).toLocaleString();
+
+                Plotly.newPlot('plot-quality-pie', [{
+                    labels: ['Accepted Clean', 'Flagged & Adjusted', 'Excluded'],
+                    values: [q.accepted_rows || 0, q.flagged_rows || 0, q.excluded_rows || 0],
+                    type: 'pie',
+                    hole: 0.45,
+                    marker: { colors: ['#43A047', '#FB8C00', '#E53935'] }
+                }], {
+                    margin: { l: 10, r: 10, t: 10, b: 10 },
+                    template: 'plotly_white'
+                }, { responsive: true, displayModeBar: false });
+
+                const list = document.getElementById('qual-actions-list');
+                list.innerHTML = '';
+                (q.cleaning_actions || []).forEach(act => {
+                    list.innerHTML += `<li class="p-2 bg-slate-50 rounded-lg border border-slate-100 flex items-center gap-2"><i class="fa-solid fa-check text-emerald-500"></i> ${act}</li>`;
+                });
+            } catch (err) {
+                console.error('Error loading quality report:', err);
+            }
+        }
+
+        // ---------------- UPLOAD & FILE INGESTION ----------------
+        let uploadedFile = null;
+        function handleFileSelected(event) {
+            uploadedFile = event.target.files[0];
+            if (!uploadedFile) return;
+            document.getElementById('upload-file-label').innerText = `Selected: ${uploadedFile.name} (${(uploadedFile.size / 1024).toFixed(1)} KB)`;
+            uploadPreview();
+        }
+
+        async function uploadPreview() {
+            if (!uploadedFile) return;
+            const formData = new FormData();
+            formData.append('file', uploadedFile);
+
+            try {
+                const res = await fetch('/api/upload/preview', { method: 'POST', body: formData });
+                const data = await res.json();
+
+                const grid = document.getElementById('mapping-fields-grid');
+                grid.innerHTML = '';
+                const cols = ['-- None / Not Present --', ...data.all_columns];
+
+                for (const [target, detected] of Object.entries(data.detected_mapping)) {
+                    grid.innerHTML += `
+                        <div class="bg-white p-3 rounded-xl border border-slate-200">
+                            <label class="block text-xs font-bold text-slate-700 capitalize mb-1">${target.replace('_', ' ')}:</label>
+                            <select class="mapping-select w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2" data-target="${target}">
+                                ${cols.map(c => `<option value="${c}" ${c === detected ? 'selected' : ''}>${c}</option>`).join('')}
+                            </select>
+                        </div>
+                    `;
+                }
+
+                document.getElementById('mapping-container').classList.remove('hidden');
+            } catch (err) {
+                alert('Failed to preview file: ' + err.message);
+            }
+        }
+
+        async function processUploadedDataset() {
+            if (!uploadedFile) return;
+            const mapping = {};
+            document.querySelectorAll('.mapping-select').forEach(sel => {
+                mapping[sel.getAttribute('data-target')] = sel.value;
+            });
+
+            const formData = new FormData();
+            formData.append('file', uploadedFile);
+            formData.append('dataset_type', document.querySelector('input[name="upload-type"]:checked').value);
+            formData.append('allow_returns', document.getElementById('allow-returns-check').checked);
+            formData.append('mapping_json', JSON.stringify(mapping));
+
+            try {
+                const res = await fetch('/api/upload/process', { method: 'POST', body: formData });
+                const data = await res.json();
+                alert(`Upload complete! Processed ${data.rows_cleaned || data.products_count} records.`);
+                navigate('quality');
+            } catch (err) {
+                alert('Upload processing failed: ' + err.message);
+            }
+        }
+
+        // ---------------- SETTINGS & DEMO SEEDING ----------------
+        async function loadKiranaDemo() {
+            if (!confirm('Populate the built-in Kirana Store demo dataset (12 products, 90 days of transactions)?')) return;
+            try {
+                const res = await fetch('/api/demo/seed', { method: 'POST' });
+                const data = await res.json();
+                alert(data.message);
+                window.location.reload();
+            } catch (err) {
+                alert('Failed to seed demo data: ' + err.message);
+            }
+        }
+
+        async function clearAllData() {
+            if (!confirm('Are you sure you want to permanently purge all sales, forecast, and inventory records?')) return;
+            try {
+                const res = await fetch('/api/data/clear', { method: 'POST' });
+                alert('All data has been cleared.');
+                window.location.reload();
+            } catch (err) {
+                alert('Failed to clear data: ' + err.message);
+            }
+        }
+
+        async function saveStoreProfile() {
+            try {
+                const res = await fetch('/api/shop', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        shop_name: document.getElementById('set-shop-name').value,
+                        shop_type: document.getElementById('set-shop-type').value,
+                        currency_symbol: document.getElementById('set-curr-symbol').value,
+                        currency_code: document.getElementById('set-curr-code').value
+                    })
+                });
+                alert('Store profile updated!');
+                initApp();
+            } catch (err) {
+                alert('Failed to update store profile: ' + err.message);
+            }
+        }
+    </script>
+</body>
+</html>
