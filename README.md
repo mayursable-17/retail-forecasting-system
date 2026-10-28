@@ -1,10 +1,25 @@
 # Retail Sales Forecasting & Inventory Optimization System Using Machine Learning
 
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=mayursable-17/retail-forecasting-system&branch=main&mainModule=app.py)
+[![Live Demo](https://img.shields.io/badge/Live%20App-Streamlit%20Community%20Cloud-FF4B4B?logo=streamlit&logoColor=white)](https://share.streamlit.io/deploy?repository=mayursable-17/retail-forecasting-system&branch=main&mainModule=app.py)
 [![Python Version](https://img.shields.io/badge/Python-3.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org/)
 [![Framework](https://img.shields.io/badge/Streamlit-1.40%2B-FF4B4B.svg)](https://streamlit.io/)
 [![Database](https://img.shields.io/badge/Database-SQLite%20%2F%20SQLAlchemy-003B57.svg)](https://www.sqlalchemy.org/)
 [![Machine Learning](https://img.shields.io/badge/ML-XGBoost%20%7C%20Scikit--Learn-F7931E.svg)](https://xgboost.readthedocs.io/)
 [![Tests](https://img.shields.io/badge/Tests-34%20Passed%20%28100%25%29-brightgreen.svg)](tests/)
+
+---
+
+## 🌐 Live Application & 1-Click Launch
+
+Access and run the live application directly on the web:
+
+* **1-Click Streamlit Cloud Deployment:** Click the badge below to immediately launch or connect this repository to Streamlit Community Cloud for free:
+
+  [![Deploy with Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=mayursable-17/retail-forecasting-system&branch=main&mainModule=app.py)
+
+* **Direct App URL:** [https://share.streamlit.io/mayursable-17/retail-forecasting-system/main/app.py](https://share.streamlit.io/mayursable-17/retail-forecasting-system/main/app.py)
+* **Custom Domain (When Hosted):** https://retail-forecasting-system.streamlit.app
 
 ---
 
