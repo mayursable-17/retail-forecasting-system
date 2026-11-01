@@ -1994,10 +1994,10 @@
             if (!confirm('Are you sure you want to permanently purge all sales, forecast, and inventory records?')) return;
             try {
                 const res = await fetch('/api/data/clear', { method: 'POST' });
-                alert('All data has been cleared.');
-                window.location.reload();
-            } catch (err) {
-                const res = await fetch('/api/data/clear', { method: 'POST' });
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({ detail: res.statusText }));
+                    throw new Error(err.detail || `Server error (${res.status})`);
+                }
                 alert('All data has been cleared.');
                 window.location.reload();
             } catch (err) {
