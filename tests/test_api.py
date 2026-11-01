@@ -70,10 +70,51 @@ def test_api_inventory_recommendations_endpoint(client):
     assert "has_recommendations" in data
 
 def test_api_csv_export(client):
-    response = client.get("/api/reports/csv/sales")
+    for rtype in ["sales", "products", "forecast", "purchase_order"]:
+        response = client.get(f"/api/reports/csv/{rtype}")
+        assert response.status_code == 200
+        assert "text/csv" in response.headers.get("content-type", "")
+
+def test_api_excel_export(client):
+    response = client.get("/api/reports/excel")
     assert response.status_code == 200
-    assert "text/csv" in response.headers.get("content-type", "")
-    assert len(response.text) > 0
+    assert "openxmlformats" in response.headers.get("content-type", "")
+    assert len(response.content) > 0
+
+def test_api_products_add_and_batch(client):
+    add_payload = {
+        "product_id": "TEST-SKU-99",
+        "product_name": "Test SKU Item",
+        "category": "Snacks",
+        "unit_price": 50.0,
+        "lead_time_days": 5,
+        "minimum_order_quantity": 10.0,
+        "case_pack_size": 2.0,
+        "initial_stock": 25.0
+    }
+    res = client.post("/api/products/add", json=add_payload)
+    assert res.status_code == 200
+    assert res.json()["success"] is True
+
+    # Check that product is present
+    prods = client.get("/api/products").json()
+    assert any(p["product_id"] == "TEST-SKU-99" for p in prods)
+
+    # Batch update
+    batch_payload = {
+        "products": [
+            {
+                "product_id": "TEST-SKU-99",
+                "unit_price": 55.0,
+                "lead_time_days": 6,
+                "minimum_order_quantity": 12.0,
+                "case_pack_size": 3.0
+            }
+        ]
+    }
+    b_res = client.post("/api/products/batch", json=batch_payload)
+    assert b_res.status_code == 200
+    assert b_res.json()["updated"] >= 1
 
 def test_api_shop_defaults_update(client):
     payload = {

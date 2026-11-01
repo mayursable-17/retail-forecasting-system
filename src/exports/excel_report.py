@@ -103,12 +103,17 @@ def generate_retail_master_excel(
         ]
 
         if validation_metrics:
-            summary_rows.extend([
-                ("Forecasting Validation Model", validation_metrics.get("model_name", "N/A")),
-                ("Mean Absolute Error (MAE)", f"{validation_metrics.get('mae', 0.0):.3f}"),
-                ("Weighted Abs % Error (WAPE)", f"{validation_metrics.get('wape_pct', 0.0):.2f}%"),
-                ("Forecast Bias", f"{validation_metrics.get('bias_pct', 0.0):.2f}%")
-            ])
+            if "mae" in validation_metrics and validation_metrics["mae"] is not None:
+                summary_rows.extend([
+                    ("Forecasting Validation Model", validation_metrics.get("model_name", "N/A")),
+                    ("Mean Absolute Error (MAE)", f"{float(validation_metrics.get('mae', 0.0)):.3f}"),
+                    ("Weighted Abs % Error (WAPE)", f"{float(validation_metrics.get('wape_pct', 0.0)):.2f}%"),
+                    ("Forecast Bias", f"{float(validation_metrics.get('bias_pct', 0.0)):.2f}%")
+                ])
+            elif "models_used" in validation_metrics:
+                models_dict = validation_metrics.get("models_used", {})
+                models_summary = ", ".join(f"{k}: {v}" for k, v in models_dict.items()) if isinstance(models_dict, dict) else str(models_dict)
+                summary_rows.append(("Batch Portfolio Models", models_summary or "Batch Portfolio"))
 
         for r_idx, (label, val) in enumerate(summary_rows, start=5):
             c1 = ws_summary.cell(row=r_idx, column=1, value=label)

@@ -1,17 +1,17 @@
 # Graph Report - retail-forecasting-system  (2026-11-01)
 
 ## Corpus Check
-- 47 files · ~39,732 words
+- 47 files · ~41,937 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 9 file(s) not represented in the graph (top: .csv 6, (none) 3)
 
 ## Summary
-- 492 nodes · 1075 edges · 28 communities (14 shown, 14 thin omitted)
+- 494 nodes · 1077 edges · 27 communities (13 shown, 14 thin omitted)
 - Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 77 edges (avg confidence: 0.91)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e9f7d6c4`
+- Built from commit: `4b43cf69`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,7 +19,6 @@
 - baseline.py
 - Repository
 - charts.py
-- excel_report.py
 - 2. Comprehensive Test Execution Matrix
 - test_inventory.py
 - Retail Sales Forecasting & Inventory Optimization System Using Machine Learning
@@ -63,7 +62,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (28 total, 14 thin omitted)
+## Communities (27 total, 14 thin omitted)
 
 ### Community 0 - "baseline.py"
 Cohesion: 0.09
@@ -77,17 +76,13 @@ Nodes (19): seed_kirana_demo(), _ensure_schema_migrations(), get_db_context(), g
 Cohesion: 0.22
 Nodes (6): plot_category_distribution(), plot_forecast_vs_history(), plot_inventory_risk_pie(), plot_revenue_trend(), plot_top_products_bar(), plot_weekday_vs_weekend()
 
-### Community 3 - "excel_report.py"
-Cohesion: 0.20
-Nodes (3): convert_df_to_csv_bytes(), format_excel_sheet(), generate_retail_master_excel()
-
 ### Community 4 - "2. Comprehensive Test Execution Matrix"
 Cohesion: 0.07
 Nodes (23): 1. Test Strategy & Objectives, 2. Comprehensive Test Execution Matrix, 3. Execution Verification Record, Retail Sales Forecasting & Inventory Optimization System, Software Test Plan & Verification Matrix, auto_detect_columns(), normalize_col_name(), validate_mapping() (+15 more)
 
 ### Community 5 - "test_inventory.py"
-Cohesion: 0.10
-Nodes (18): generate_mode_a_recommendations(), generate_mode_b_recommendations(), apply_order_constraints(), calculate_inventory_position(), calculate_order_up_to_target(), calculate_preliminary_order_quantity(), calculate_reorder_point(), calculate_safety_stock_buffer() (+10 more)
+Cohesion: 0.11
+Nodes (17): generate_mode_a_recommendations(), generate_mode_b_recommendations(), apply_order_constraints(), calculate_inventory_position(), calculate_order_up_to_target(), calculate_preliminary_order_quantity(), calculate_reorder_point(), calculate_safety_stock_buffer() (+9 more)
 
 ### Community 6 - "Retail Sales Forecasting & Inventory Optimization System Using Machine Learning"
 Cohesion: 0.06
@@ -103,15 +98,15 @@ Nodes (12): 1. Introduction, 2. Navigating the Application, 3. Step-by-Step Walk
 
 ### Community 9 - "index.py"
 Cohesion: 0.07
-Nodes (38): add_product(), batch_update_products(), clear_all_data(), download_csv_report(), download_excel_report(), ForecastRequest, get_analytics_data(), get_dashboard_data() (+30 more)
+Nodes (39): add_product(), batch_update_products(), clear_all_data(), download_csv_report(), download_excel_report(), ForecastRequest, get_analytics_data(), get_dashboard_data() (+31 more)
 
 ### Community 10 - "Retail Sales Forecasting & Inventory Optimization System"
 Cohesion: 0.22
 Nodes (8): 1. Architectural Overview, 2. Dual Inventory Workflow Architecture, 3. Database Entity Relationship (ER) Model, 4. Machine Learning & Forecasting Pipeline Details, 5. Inventory Optimization & Periodic Review Formulation, 6. Security & Safe Data Handling, Retail Sales Forecasting & Inventory Optimization System, System Architecture & Technical Design
 
 ### Community 12 - "pandas"
-Cohesion: 0.12
-Nodes (12): preview_upload(), process_upload(), _sanitize_for_json(), aggregate_daily_sales(), DataCleaner, test_aggregate_daily_sales_basic(), test_gap_filling_creates_zero_sales(), test_net_demand_non_negativity_with_excess_returns() (+4 more)
+Cohesion: 0.08
+Nodes (15): process_upload(), _sanitize_for_json(), convert_df_to_csv_bytes(), format_excel_sheet(), generate_retail_master_excel(), aggregate_daily_sales(), DataCleaner, test_aggregate_daily_sales_basic() (+7 more)
 
 ### Community 23 - "test_forecasting.py"
 Cohesion: 0.24
