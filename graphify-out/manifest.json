@@ -288,9 +288,9 @@
     "semantic_hash": ""
   },
   "templates/index.html": {
-    "mtime": 1793553920.021089,
-    "seen": 1793554009.7197087,
-    "ast_hash": "36f68ca66a480f568b54025bc0875a34",
+    "mtime": 1793554263.1901836,
+    "seen": 1793554355.9490438,
+    "ast_hash": "7e26626e8839878db2848e0e69db44d6",
     "semantic_hash": ""
   },
   "requirements-dev.txt": {
@@ -300,9 +300,9 @@
     "semantic_hash": ""
   },
   "api/templates/index.html": {
-    "mtime": 1793553920.021089,
-    "seen": 1793554009.7196887,
-    "ast_hash": "36f68ca66a480f568b54025bc0875a34",
+    "mtime": 1793554263.1901836,
+    "seen": 1793554355.9490225,
+    "ast_hash": "7e26626e8839878db2848e0e69db44d6",
     "semantic_hash": ""
   }
 }
