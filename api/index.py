@@ -1079,7 +1079,14 @@ def get_index_html() -> str:
 @app.get("/index.html", response_class=HTMLResponse)
 @app.get("/api/index", response_class=HTMLResponse)
 @app.get("/api/index.py", response_class=HTMLResponse)
-def serve_root():
+def serve_root(request: Request):
+    if "debug" in request.query_params or request.headers.get("x-debug"):
+        return JSONResponse({
+            "path": request.url.path,
+            "scope_path": request.scope.get("path"),
+            "headers": dict(request.headers),
+            "query_params": dict(request.query_params)
+        })
     return HTMLResponse(content=get_index_html())
 
 
