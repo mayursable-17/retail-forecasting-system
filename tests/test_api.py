@@ -228,7 +228,16 @@ def test_api_upload_process_inventory(client):
 
 
 def test_vercel_rewrite_middleware(client):
-    # Simulate Vercel rewrite where scope['path'] is /api/index.py but x-matched-path is set
+    # 1. Test via query parameter __vercel_path__ (configured in vercel.json)
+    res_qp_get = client.get("/api/index.py?__vercel_path__=/api/health")
+    assert res_qp_get.status_code == 200
+    assert res_qp_get.json()["status"] == "healthy"
+
+    res_qp_post = client.post("/api/index.py?__vercel_path__=/api/demo/seed")
+    assert res_qp_post.status_code == 200
+    assert res_qp_post.json()["success"] is True
+
+    # 2. Test via x-matched-path header fallback
     res_get = client.get("/api/index.py", headers={"x-matched-path": "/api/health"})
     assert res_get.status_code == 200
     assert res_get.json()["status"] == "healthy"

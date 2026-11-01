@@ -1,17 +1,17 @@
 # Graph Report - retail-forecasting-system  (2026-11-01)
 
 ## Corpus Check
-- 47 files · ~42,154 words
+- 47 files · ~42,211 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 9 file(s) not represented in the graph (top: .csv 6, (none) 3)
 
 ## Summary
-- 500 nodes · 1083 edges · 33 communities (18 shown, 15 thin omitted)
+- 500 nodes · 1084 edges · 32 communities (17 shown, 15 thin omitted)
 - Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 77 edges (avg confidence: 0.91)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c516fee2`
+- Built from commit: `22d9384e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -20,7 +20,7 @@
 - Repository
 - charts.py
 - test_integration.py
-- read_uploaded_file
+- 2. Comprehensive Test Execution Matrix
 - test_inventory.py
 - Retail Sales Forecasting & Inventory Optimization System Using Machine Learning
 - 1. Database Schema Specifications
@@ -35,7 +35,6 @@
 - train.py
 - .train_and_evaluate
 - vercel.json
-- 2. Comprehensive Test Execution Matrix
 - DemandModelTrainer
 - pandas
 - Retail Sales Forecasting & Inventory Optimization System
@@ -54,8 +53,6 @@
 10. `generate_future_forecast()` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `2. Comprehensive Test Execution Matrix` --references--> `FileReadError`  [INFERRED]
-  docs/test_plan.md → src/ingestion/file_reader.py
 - `2. Comprehensive Test Execution Matrix` --references--> `test_aggregate_daily_sales_basic()`  [INFERRED]
   docs/test_plan.md → tests/test_aggregation.py
 - `2. Comprehensive Test Execution Matrix` --references--> `test_net_demand_non_negativity_with_excess_returns()`  [INFERRED]
@@ -64,11 +61,13 @@
   docs/test_plan.md → tests/test_aggregation.py
 - `2. Comprehensive Test Execution Matrix` --references--> `test_clean_missing_and_unparseable_dates()`  [INFERRED]
   docs/test_plan.md → tests/test_cleaning.py
+- `2. Comprehensive Test Execution Matrix` --references--> `test_clean_negative_quantities_as_returns()`  [INFERRED]
+  docs/test_plan.md → tests/test_cleaning.py
 
 ## Import Cycles
 - None detected.
 
-## Communities (33 total, 15 thin omitted)
+## Communities (32 total, 15 thin omitted)
 
 ### Community 0 - "baseline.py"
 Cohesion: 0.10
@@ -83,12 +82,12 @@ Cohesion: 0.22
 Nodes (6): plot_category_distribution(), plot_forecast_vs_history(), plot_inventory_risk_pie(), plot_revenue_trend(), plot_top_products_bar(), plot_weekday_vs_weekend()
 
 ### Community 3 - "test_integration.py"
-Cohesion: 0.12
-Nodes (7): compute_category_breakdown(), compute_overview_kpis(), get_top_and_bottom_products(), format_excel_sheet(), generate_retail_master_excel(), get_excel_sheet_names(), test_full_pipeline_integration()
+Cohesion: 0.13
+Nodes (7): download_excel_report(), compute_overview_kpis(), format_excel_sheet(), generate_retail_master_excel(), compute_file_hash(), get_excel_sheet_names(), test_full_pipeline_integration()
 
-### Community 4 - "read_uploaded_file"
-Cohesion: 0.16
-Nodes (7): compute_file_hash(), FileReadError, read_uploaded_file(), test_read_empty_csv(), test_read_valid_csv(), test_read_valid_xlsx(), test_unsupported_file_extension()
+### Community 4 - "2. Comprehensive Test Execution Matrix"
+Cohesion: 0.12
+Nodes (13): 2. Comprehensive Test Execution Matrix, FileReadError, read_uploaded_file(), test_forecast_and_recommendations_persistence(), test_inventory_snapshot_latest_query(), test_sales_daily_operations(), test_shop_and_products_operations(), test_baseline_forecasters() (+5 more)
 
 ### Community 5 - "test_inventory.py"
 Cohesion: 0.12
@@ -107,8 +106,8 @@ Cohesion: 0.15
 Nodes (12): 1. Introduction, 2. Navigating the Application, 3. Step-by-Step Walkthrough, Retail Sales Forecasting & Inventory Optimization System, Step 1: Loading Initial Data, Step 2: Uploading Your Own Spreadsheet, Step 3: Understanding Customer Returns & Data Health, Step 4: Generating Demand Forecasts (+4 more)
 
 ### Community 9 - "index.py"
-Cohesion: 0.07
-Nodes (39): add_product(), batch_update_products(), clear_all_data(), download_csv_report(), download_excel_report(), ForecastRequest, get_analytics_data(), get_dashboard_data() (+31 more)
+Cohesion: 0.06
+Nodes (40): add_product(), batch_update_products(), clear_all_data(), download_csv_report(), ForecastRequest, get_analytics_data(), get_dashboard_data(), get_index_html() (+32 more)
 
 ### Community 10 - "Retail Sales Forecasting & Inventory Optimization System"
 Cohesion: 0.22
@@ -129,10 +128,6 @@ Nodes (6): auto_detect_columns(), normalize_col_name(), validate_mapping(), test
 ### Community 26 - ".train_and_evaluate"
 Cohesion: 0.14
 Nodes (5): MovingAverageForecaster, chronological_split(), DemandModelTrainer, NumpyRidgeRegressor, test_demand_model_trainer_and_predict()
-
-### Community 28 - "2. Comprehensive Test Execution Matrix"
-Cohesion: 0.21
-Nodes (7): 2. Comprehensive Test Execution Matrix, test_forecast_and_recommendations_persistence(), test_inventory_snapshot_latest_query(), test_sales_daily_operations(), test_shop_and_products_operations(), test_baseline_forecasters(), test_mode_a_recommendations_sales_only()
 
 ### Community 30 - "pandas"
 Cohesion: 0.35
@@ -160,5 +155,5 @@ _Questions this graph is uniquely positioned to answer:_
   _`2. Comprehensive Test Execution Matrix` has 32 INFERRED edges - model-reasoned connections that need verification._
 - **Should `Repository` be split into smaller, more focused modules?**
   _Cohesion score 0.060833902939166094 - nodes in this community are weakly interconnected._
-- **Why does `2. Comprehensive Test Execution Matrix` connect `2. Comprehensive Test Execution Matrix` to `test_integration.py`, `read_uploaded_file`, `test_inventory.py`, `DataCleaner`, `test_forecasting.py`, `test_upload.py`, `train.py`, `.train_and_evaluate`, `pandas`, `Retail Sales Forecasting & Inventory Optimization System`?**
+- **Why does `2. Comprehensive Test Execution Matrix` connect `2. Comprehensive Test Execution Matrix` to `test_integration.py`, `test_inventory.py`, `DataCleaner`, `test_forecasting.py`, `test_upload.py`, `train.py`, `.train_and_evaluate`, `pandas`, `Retail Sales Forecasting & Inventory Optimization System`?**
   _High betweenness centrality (0.033) - this node is a cross-community bridge._

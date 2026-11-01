@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 from datetime import datetime, date, timedelta, timezone
 from typing import List, Dict, Any, Optional
-from urllib.parse import unquote, parse_qs
+from urllib.parse import unquote, parse_qs, urlencode
 
 # Ensure project root is in sys.path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -63,19 +63,31 @@ def _sanitize_for_json(obj):
 
 class VercelPathRewriteMiddleware:
     """
-    On Vercel, a rewrite in vercel.json ({'source': '/(.*)', 'destination': '/api/index.py'})
-    causes Vercel to invoke FastAPI with scope['path'] set to '/api/index.py'.
-    The actual requested client path is forwarded by Vercel in the 'x-matched-path' header.
-    This middleware detects when scope['path'] was rewritten to '/api/index.py' (or '/api/index')
-    and restores the real client path so that FastAPI's router matches the intended endpoint.
+    On Vercel, a rewrite in vercel.json ({'source': '/(.*)', 'destination': '/api/index.py?__vercel_path__=/$1'})
+    passes the actual requested client path in the '__vercel_path__' query parameter.
+    This middleware detects '__vercel_path__', restores the real client path into scope['path'],
+    and removes '__vercel_path__' from scope['query_string'] so application endpoints work cleanly.
     """
     def __init__(self, app):
         self.app = app
 
     async def __call__(self, scope, receive, send):
         if scope["type"] == "http":
-            raw_path = scope.get("path", "")
-            if raw_path in ("/api/index.py", "/api/index", "api/index.py", "api/index"):
+            query_bytes = scope.get("query_string", b"")
+            if b"__vercel_path__" in query_bytes:
+                qs = parse_qs(query_bytes.decode("latin1", errors="replace"), keep_blank_values=True)
+                if "__vercel_path__" in qs and qs["__vercel_path__"]:
+                    real_path = qs["__vercel_path__"][0].split("?")[0]
+                    if not real_path.startswith("/"):
+                        real_path = "/" + real_path
+                    while real_path.startswith("//"):
+                        real_path = real_path[1:]
+                    if real_path and real_path not in ("/api/index.py", "/api/index"):
+                        scope["path"] = real_path
+                        scope["raw_path"] = real_path.encode("latin1")
+                    del qs["__vercel_path__"]
+                    scope["query_string"] = urlencode(qs, doseq=True).encode("latin1")
+            elif scope.get("path") in ("/api/index.py", "/api/index", "api/index.py", "api/index"):
                 headers = dict(scope.get("headers", []))
                 matched_header = (
                     headers.get(b"x-matched-path")
@@ -83,21 +95,13 @@ class VercelPathRewriteMiddleware:
                     or headers.get(b"x-invoke-path")
                     or headers.get(b"x-original-uri")
                 )
-                real_path = None
                 if matched_header:
                     real_path = unquote(matched_header.decode("latin1", errors="replace")).split("?")[0]
-                elif scope.get("query_string"):
-                    qs = parse_qs(scope["query_string"].decode("latin1", errors="replace"))
-                    for key in ("1", "path", "match", "url"):
-                        if key in qs and qs[key]:
-                            candidate = qs[key][0]
-                            if candidate.startswith("/"):
-                                real_path = candidate
-                                break
-                if real_path:
                     if not real_path.startswith("/"):
                         real_path = "/" + real_path
-                    if real_path not in ("/api/index.py", "/api/index"):
+                    while real_path.startswith("//"):
+                        real_path = real_path[1:]
+                    if real_path and real_path not in ("/api/index.py", "/api/index"):
                         scope["path"] = real_path
                         scope["raw_path"] = real_path.encode("latin1")
         await self.app(scope, receive, send)
@@ -1080,7 +1084,7 @@ def get_index_html() -> str:
 @app.get("/api/index", response_class=HTMLResponse)
 @app.get("/api/index.py", response_class=HTMLResponse)
 def serve_root(request: Request):
-    if "debug" in request.query_params or request.headers.get("x-debug"):
+    if request and ("debug" in request.query_params or request.headers.get("x-debug")):
         return JSONResponse({
             "path": request.url.path,
             "scope_path": request.scope.get("path"),
@@ -1096,10 +1100,10 @@ async def serve_spa(request: Request, full_path: str):
 
     # If root, index, or Vercel serverless rewrite entrypoint, return HTML SPA
     if clean_path in ("", "index.py", "index", "api/index", "api/index.py", "index.html"):
-        return serve_root()
+        return serve_root(request)
 
     # Don't intercept unrecognized /api/* calls (let client see 404 for bad API calls)
     if clean_path.startswith("api/"):
         raise HTTPException(status_code=404, detail=f"API endpoint '/{clean_path}' not found.")
 
-    return serve_root()
+    return serve_root(request)
