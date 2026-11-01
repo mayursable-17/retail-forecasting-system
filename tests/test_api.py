@@ -91,3 +91,96 @@ def test_api_shop_defaults_update(client):
     # Verify updated values in get_shop
     shop_resp = client.get("/api/shop")
     assert shop_resp.json()["default_lead_time_days"] == 4
+
+
+def test_api_demo_seed(client):
+    response = client.post("/api/demo/seed")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["success"] is True
+    assert "demo dataset" in data["message"].lower()
+
+    # Verify dashboard and alerts are populated after demo seed
+    dash_resp = client.get("/api/dashboard")
+    assert dash_resp.status_code == 200
+    dash_data = dash_resp.json()
+    assert dash_data["has_data"] is True
+    assert dash_data["kpis"]["total_products"] > 0
+    assert dash_data["alerts"]["has_forecast"] is True
+
+
+def test_api_upload_preview_with_nan(client):
+    # CSV with missing values which causes NaN in pandas
+    csv_content = b"Date,Product_ID,Quantity,Revenue\n2026-10-01,P1,,500.0\n2026-10-02,P2,10,\n"
+    response = client.post(
+        "/api/upload/preview",
+        files={"file": ("test_nan.csv", csv_content, "text/csv")}
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["success"] is True
+    assert "detected_mapping" in data
+    assert "sample_rows" in data
+    assert len(data["sample_rows"]) == 2
+    # Ensure NaN values are serialized cleanly as None / null in JSON
+    assert data["sample_rows"][0]["Quantity"] is None
+    assert data["sample_rows"][1]["Revenue"] is None
+
+
+def test_api_upload_process_sales(client):
+    import json
+    csv_content = (
+        b"Date,Product_ID,Product_Name,Category,Quantity,Unit_Price,Revenue\n"
+        b"2026-10-01,SKU-1,Item 1,Groceries,10,50,500\n"
+        b"2026-10-02,SKU-1,Item 1,Groceries,12,50,600\n"
+    )
+    mapping = {
+        "date": "Date",
+        "product_id": "Product_ID",
+        "product_name": "Product_Name",
+        "category": "Category",
+        "quantity": "Quantity",
+        "unit_price": "Unit_Price",
+        "revenue": "Revenue"
+    }
+    response = client.post(
+        "/api/upload/process",
+        files={"file": ("sales_test.csv", csv_content, "text/csv")},
+        data={
+            "dataset_type": "sales",
+            "allow_returns": "true",
+            "mapping_json": json.dumps(mapping)
+        }
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["success"] is True
+    assert data["rows_cleaned"] == 2
+
+
+def test_api_upload_process_inventory(client):
+    import json
+    csv_content = (
+        b"Product_ID,Product_Name,Stock,On_Order,Lead_Time\n"
+        b"SKU-1,Item 1,50,10,5\n"
+    )
+    mapping = {
+        "product_id": "Product_ID",
+        "product_name": "Product_Name",
+        "stock": "Stock",
+        "on_order": "On_Order",
+        "lead_time": "Lead_Time"
+    }
+    response = client.post(
+        "/api/upload/process",
+        files={"file": ("inventory_test.csv", csv_content, "text/csv")},
+        data={
+            "dataset_type": "inventory",
+            "allow_returns": "true",
+            "mapping_json": json.dumps(mapping)
+        }
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert data["success"] is True
+    assert data["products_count"] == 1

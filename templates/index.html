@@ -328,15 +328,25 @@
                             <div class="flex items-center gap-4">
                                 <span class="font-semibold text-slate-700">Type:</span>
                                 <label class="flex items-center gap-1.5 cursor-pointer">
-                                    <input type="radio" name="upload-type" value="sales" checked class="text-blue-600"> Sales Records
+                                    <input type="radio" name="upload-type" value="sales" checked onchange="handleDatasetTypeChange()" class="text-blue-600"> Sales Records
                                 </label>
                                 <label class="flex items-center gap-1.5 cursor-pointer">
-                                    <input type="radio" name="upload-type" value="inventory" class="text-blue-600"> Inventory Snapshot
+                                    <input type="radio" name="upload-type" value="inventory" onchange="handleDatasetTypeChange()" class="text-blue-600"> Inventory Snapshot
                                 </label>
                             </div>
                             <label class="flex items-center gap-1.5 cursor-pointer text-slate-600">
                                 <input type="checkbox" id="allow-returns-check" checked class="text-blue-600 rounded"> Retain negative quantities as returns
                             </label>
+                        </div>
+
+                        <!-- Optional Excel Worksheet Selector -->
+                        <div id="sheet-select-container" class="hidden flex items-center justify-between p-3 bg-blue-50/70 rounded-xl border border-blue-200 text-xs">
+                            <span class="font-bold text-blue-900 flex items-center gap-2">
+                                <i class="fa-solid fa-file-excel text-emerald-600 text-sm"></i>
+                                Workbook has multiple sheets. Select Sheet to Ingest:
+                            </span>
+                            <select id="sheet-select" onchange="handleSheetChange()" class="text-xs bg-white border border-blue-300 rounded-lg px-3 py-1.5 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </select>
                         </div>
                     </div>
 
@@ -893,8 +903,40 @@
         });
 
         async function initApp() {
+            setupDropZone();
             await fetchShopInfo();
             await fetchDashboardData();
+        }
+
+        function setupDropZone() {
+            const dropZone = document.getElementById('drop-zone');
+            if (!dropZone || dropZone.dataset.initialized) return;
+            dropZone.dataset.initialized = 'true';
+
+            ['dragenter', 'dragover'].forEach(name => {
+                dropZone.addEventListener(name, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.classList.add('border-blue-500', 'bg-blue-100/50');
+                });
+            });
+
+            ['dragleave', 'drop'].forEach(name => {
+                dropZone.addEventListener(name, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.classList.remove('border-blue-500', 'bg-blue-100/50');
+                });
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                    uploadedFile = e.dataTransfer.files[0];
+                    selectedSheet = null;
+                    document.getElementById('upload-file-label').innerText = `Selected: ${uploadedFile.name} (${(uploadedFile.size / 1024).toFixed(1)} KB)`;
+                    uploadPreview();
+                }
+            });
         }
 
         async function fetchShopInfo() {
@@ -945,6 +987,7 @@
             document.getElementById('page-title').innerText = titles[tabId] || 'Dashboard';
 
             // Lazy fetch for tabs
+            if (tabId === 'dashboard') fetchDashboardData();
             if (tabId === 'analytics') fetchAnalyticsData();
             if (tabId === 'forecasting') fetchForecastingOptions();
             if (tabId === 'inventory') fetchRecommendations();
@@ -1490,75 +1533,216 @@
 
         // ---------------- UPLOAD & FILE INGESTION ----------------
         let uploadedFile = null;
+        let selectedSheet = null;
+        let lastPreviewData = null;
+
         function handleFileSelected(event) {
-            uploadedFile = event.target.files[0];
-            if (!uploadedFile) return;
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+            uploadedFile = file;
+            selectedSheet = null;
+            event.target.value = ''; // Reset input so re-selecting same file triggers change
             document.getElementById('upload-file-label').innerText = `Selected: ${uploadedFile.name} (${(uploadedFile.size / 1024).toFixed(1)} KB)`;
             uploadPreview();
         }
 
-        async function uploadPreview() {
+        function handleSheetChange() {
+            const sel = document.getElementById('sheet-select');
+            if (sel && sel.value) {
+                selectedSheet = sel.value;
+                uploadPreview(selectedSheet);
+            }
+        }
+
+        function handleDatasetTypeChange() {
+            if (lastPreviewData) {
+                renderMappingGrid(lastPreviewData);
+            }
+        }
+
+        function renderMappingGrid(data) {
+            const grid = document.getElementById('mapping-fields-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+            const cols = ['-- None / Not Present --', ...data.all_columns];
+            const datasetType = document.querySelector('input[name="upload-type"]:checked')?.value || 'sales';
+
+            // Define priority / required targets for each dataset type
+            const salesTargets = ['date', 'product_id', 'product_name', 'quantity', 'revenue', 'unit_price', 'category'];
+            const invTargets = ['product_id', 'product_name', 'stock', 'on_order', 'lead_time', 'min_order_qty', 'case_pack', 'category'];
+
+            const relevantTargets = datasetType === 'sales' ? salesTargets : invTargets;
+            const otherTargets = Object.keys(data.detected_mapping).filter(t => !relevantTargets.includes(t));
+            const orderedTargets = [...relevantTargets, ...otherTargets];
+
+            for (const target of orderedTargets) {
+                const detected = data.detected_mapping[target];
+                const isRelevant = relevantTargets.includes(target);
+                const isRequired = (datasetType === 'sales' && (target === 'date' || target === 'product_id' || target === 'quantity')) ||
+                                   (datasetType === 'inventory' && (target === 'product_id' || target === 'stock'));
+
+                const badge = isRequired
+                    ? `<span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-700 uppercase">Required</span>`
+                    : isRelevant
+                        ? `<span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-600">Expected</span>`
+                        : `<span class="px-1.5 py-0.5 rounded text-[10px] text-slate-400">Optional</span>`;
+
+                grid.innerHTML += `
+                    <div class="bg-white p-3 rounded-xl border ${isRelevant ? 'border-slate-300 shadow-xs' : 'border-slate-200 opacity-80'}">
+                        <div class="flex items-center justify-between mb-1">
+                            <label class="text-xs font-bold text-slate-700 capitalize">${target.replaceAll('_', ' ')}:</label>
+                            ${badge}
+                        </div>
+                        <select class="mapping-select w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" data-target="${target}">
+                            ${cols.map(c => `<option value="${c}" ${c === detected ? 'selected' : ''}>${c}</option>`).join('')}
+                        </select>
+                    </div>
+                `;
+            }
+        }
+
+        async function uploadPreview(sheetName = null) {
             if (!uploadedFile) return;
+            const labelEl = document.getElementById('upload-file-label');
+            const origLabel = labelEl.innerText;
+            labelEl.innerText = `Analyzing ${uploadedFile.name}...`;
+
             const formData = new FormData();
             formData.append('file', uploadedFile);
+            if (sheetName) {
+                formData.append('sheet_name', sheetName);
+            }
 
             try {
                 const res = await fetch('/api/upload/preview', { method: 'POST', body: formData });
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({ detail: res.statusText }));
+                    throw new Error(err.detail || `Server error (${res.status})`);
+                }
                 const data = await res.json();
+                lastPreviewData = data;
+                labelEl.innerText = origLabel;
 
-                const grid = document.getElementById('mapping-fields-grid');
-                grid.innerHTML = '';
-                const cols = ['-- None / Not Present --', ...data.all_columns];
+                // Handle multi-sheet Excel files
+                const sheetContainer = document.getElementById('sheet-select-container');
+                const sheetSelect = document.getElementById('sheet-select');
+                if (sheetContainer && sheetSelect) {
+                    if (data.meta && data.meta.sheet_names && data.meta.sheet_names.length > 1) {
+                        const activeSheet = sheetName || data.meta.selected_sheet || data.meta.sheet_names[0];
+                        sheetSelect.innerHTML = data.meta.sheet_names.map(s => `
+                            <option value="${s}" ${s === activeSheet ? 'selected' : ''}>${s}</option>
+                        `).join('');
+                        sheetContainer.classList.remove('hidden');
+                        selectedSheet = activeSheet;
+                    } else {
+                        sheetContainer.classList.add('hidden');
+                        selectedSheet = null;
+                    }
+                }
 
-                for (const [target, detected] of Object.entries(data.detected_mapping)) {
-                    grid.innerHTML += `
-                        <div class="bg-white p-3 rounded-xl border border-slate-200">
-                            <label class="block text-xs font-bold text-slate-700 capitalize mb-1">${target.replace('_', ' ')}:</label>
-                            <select class="mapping-select w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2" data-target="${target}">
-                                ${cols.map(c => `<option value="${c}" ${c === detected ? 'selected' : ''}>${c}</option>`).join('')}
-                            </select>
-                        </div>
+                // Render dynamic mapping selects
+                renderMappingGrid(data);
+
+                // Populate sample records preview table
+                const tbl = document.getElementById('preview-table');
+                if (tbl && data.sample_rows && data.sample_rows.length > 0) {
+                    const headers = Object.keys(data.sample_rows[0]);
+                    tbl.innerHTML = `
+                        <thead>
+                            <tr class="border-b border-slate-200 text-slate-500 font-semibold uppercase">
+                                ${headers.map(h => `<th class="p-2 whitespace-nowrap">${h}</th>`).join('')}
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            ${data.sample_rows.slice(0, 5).map(row => `
+                                <tr class="hover:bg-slate-100/60">
+                                    ${headers.map(h => `<td class="p-2 whitespace-nowrap text-slate-700">${row[h] !== null && row[h] !== undefined ? row[h] : '<span class="text-slate-400 italic">null</span>'}</td>`).join('')}
+                                </tr>
+                            `).join('')}
+                        </tbody>
                     `;
                 }
 
                 document.getElementById('mapping-container').classList.remove('hidden');
             } catch (err) {
+                labelEl.innerText = origLabel;
                 alert('Failed to preview file: ' + err.message);
             }
         }
 
-        async function processUploadedDataset() {
-            if (!uploadedFile) return;
+        async function processUploadedDataset(btnElement = null) {
+            if (!uploadedFile) {
+                alert('Please select a CSV or Excel file to upload first.');
+                return;
+            }
             const mapping = {};
             document.querySelectorAll('.mapping-select').forEach(sel => {
                 mapping[sel.getAttribute('data-target')] = sel.value;
             });
 
+            const datasetType = document.querySelector('input[name="upload-type"]:checked').value;
             const formData = new FormData();
             formData.append('file', uploadedFile);
-            formData.append('dataset_type', document.querySelector('input[name="upload-type"]:checked').value);
+            formData.append('dataset_type', datasetType);
             formData.append('allow_returns', document.getElementById('allow-returns-check').checked);
             formData.append('mapping_json', JSON.stringify(mapping));
+            if (selectedSheet) {
+                formData.append('sheet_name', selectedSheet);
+            }
+
+            const btn = btnElement || document.querySelector('button[onclick*="processUploadedDataset"]');
+            const origHtml = btn ? btn.innerHTML : null;
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing & Cleaning...';
+            }
 
             try {
                 const res = await fetch('/api/upload/process', { method: 'POST', body: formData });
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({ detail: res.statusText }));
+                    throw new Error(err.detail || `Server error (${res.status})`);
+                }
                 const data = await res.json();
-                alert(`Upload complete! Processed ${data.rows_cleaned || data.products_count} records.`);
+                alert(`Upload complete! Ingested and cleaned ${data.rows_cleaned || data.products_count} records.`);
+                if (btn && origHtml) {
+                    btn.disabled = false;
+                    btn.innerHTML = origHtml;
+                }
+                fetchDashboardData();
                 navigate('quality');
             } catch (err) {
+                if (btn && origHtml) {
+                    btn.disabled = false;
+                    btn.innerHTML = origHtml;
+                }
                 alert('Upload processing failed: ' + err.message);
             }
         }
 
         // ---------------- SETTINGS & DEMO SEEDING ----------------
-        async function loadKiranaDemo() {
-            if (!confirm('Populate the built-in Kirana Store demo dataset (12 products, 90 days of transactions)?')) return;
+        async function loadKiranaDemo(btnElement = null) {
+            if (!confirm('Populate the built-in Kirana Store demo dataset (12 staple products, 90 days of transactions, inventory snapshot)?')) return;
+            const btn = btnElement || event?.currentTarget;
+            const origHtml = btn ? btn.innerHTML : null;
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading Demo...';
+            }
             try {
                 const res = await fetch('/api/demo/seed', { method: 'POST' });
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({ detail: res.statusText }));
+                    throw new Error(err.detail || `Server error (${res.status})`);
+                }
                 const data = await res.json();
                 alert(data.message);
                 window.location.reload();
             } catch (err) {
+                if (btn && origHtml) {
+                    btn.disabled = false;
+                    btn.innerHTML = origHtml;
+                }
                 alert('Failed to seed demo data: ' + err.message);
             }
         }
@@ -1566,6 +1750,10 @@
         async function clearAllData() {
             if (!confirm('Are you sure you want to permanently purge all sales, forecast, and inventory records?')) return;
             try {
+                const res = await fetch('/api/data/clear', { method: 'POST' });
+                alert('All data has been cleared.');
+                window.location.reload();
+            } catch (err) {
                 const res = await fetch('/api/data/clear', { method: 'POST' });
                 alert('All data has been cleared.');
                 window.location.reload();

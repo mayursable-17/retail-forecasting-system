@@ -242,11 +242,30 @@ class DataCleaner:
         df["product_name"] = df["product_name"].astype(str).str.strip()
 
         # Numerics
-        df["stock"] = pd.to_numeric(df.get("stock", 0.0), errors="coerce").fillna(0.0)
-        df["on_order"] = pd.to_numeric(df.get("on_order", 0.0), errors="coerce").fillna(0.0)
-        df["lead_time"] = pd.to_numeric(df.get("lead_time", 7), errors="coerce").fillna(7).astype(int)
-        df["min_order_qty"] = pd.to_numeric(df.get("min_order_qty", 1.0), errors="coerce").fillna(1.0)
-        df["case_pack"] = pd.to_numeric(df.get("case_pack", 1.0), errors="coerce").fillna(1.0)
+        if "stock" in df.columns:
+            df["stock"] = pd.to_numeric(df["stock"], errors="coerce").fillna(0.0)
+        else:
+            df["stock"] = 0.0
+
+        if "on_order" in df.columns:
+            df["on_order"] = pd.to_numeric(df["on_order"], errors="coerce").fillna(0.0)
+        else:
+            df["on_order"] = 0.0
+
+        if "lead_time" in df.columns:
+            df["lead_time"] = pd.to_numeric(df["lead_time"], errors="coerce").fillna(7).astype(int)
+        else:
+            df["lead_time"] = 7
+
+        if "min_order_qty" in df.columns:
+            df["min_order_qty"] = pd.to_numeric(df["min_order_qty"], errors="coerce").fillna(1.0)
+        else:
+            df["min_order_qty"] = 1.0
+
+        if "case_pack" in df.columns:
+            df["case_pack"] = pd.to_numeric(df["case_pack"], errors="coerce").fillna(1.0)
+        else:
+            df["case_pack"] = 1.0
 
         # Flag negative stock
         neg_stock = int((df["stock"] < 0).sum())
@@ -260,9 +279,11 @@ class DataCleaner:
         report = {
             "initial_rows": initial_count,
             "accepted_rows": len(cleaned_df),
+            "flagged_rows": neg_stock,
             "excluded_rows": initial_count - len(cleaned_df),
             "negative_stock_fixed": neg_stock,
-            "actions": actions
+            "actions": actions,
+            "cleaning_actions": actions if actions else ["All inventory snapshot records validated."]
         }
 
         return cleaned_df, report

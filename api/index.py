@@ -46,6 +46,20 @@ from src.exports.excel_report import generate_retail_master_excel, convert_df_to
 import pandas as pd
 import numpy as np
 
+
+def _sanitize_for_json(obj):
+    """Recursively replace NaN/Infinity floats with None so json.dumps never crashes."""
+    if isinstance(obj, float):
+        if pd.isna(obj) or np.isinf(obj):
+            return None
+        return obj
+    if isinstance(obj, dict):
+        return {k: _sanitize_for_json(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_sanitize_for_json(v) for v in obj]
+    return obj
+
+
 app = FastAPI(
     title="Retail Sales Forecasting & Inventory System",
     description="Intelligent Demand Prediction & Supply Chain Optimization for Small Retailers",
@@ -136,6 +150,49 @@ def seed_kirana_demo(repo: Repository, shop_id: int = 1):
             "lead_time_days": int(r["lead_time_days"])
         })
     repo.save_inventory_snapshot(shop_id, inv_snapshots)
+
+    # Automatically generate baseline forecast and replenishment recommendations for out-of-the-box demo
+    try:
+        sales_df = repo.get_daily_sales_df(shop_id)
+        if not sales_df.empty:
+            trainer = DemandModelTrainer(val_days=10)
+            products_list = sales_df[["product_id", "product_name"]].drop_duplicates()
+            all_rows = []
+            batch_models = {}
+
+            for _, r in products_list.iterrows():
+                pid = r["product_id"]
+                p_daily = sales_df[sales_df["product_id"] == pid].sort_values(by="sale_date").reset_index(drop=True)
+                res = trainer.train_and_evaluate(p_daily, model_preference="Best Model (Auto-select)")
+                f_df = generate_future_forecast(res, product_id=pid, horizon_days=15)
+                all_rows.extend(f_df.to_dict(orient="records"))
+                m = res["selected_model_name"]
+                batch_models[m] = batch_models.get(m, 0) + 1
+
+            run_id = repo.save_forecast_run(
+                shop_id=shop_id,
+                model_name=f"Batch Portfolio ({len(products_list)} Products)",
+                horizon_days=15,
+                validation_metrics={"models_used": batch_models},
+                config={"model_preference": "Best Model (Auto-select)", "batch": True},
+                forecast_rows=all_rows
+            )
+
+            # Generate mode B recommendations
+            f_results_df = repo.get_forecast_results_df(run_id)
+            snaps_df = repo.get_latest_inventory_snapshots(shop_id)
+            recs = generate_mode_b_recommendations(
+                forecast_results_df=f_results_df,
+                inventory_snapshots_df=snaps_df,
+                historical_daily_sales_df=sales_df,
+                review_period_days=7,
+                safety_stock_method="variability",
+                service_level=0.95,
+                buffer_percentage=0.20
+            )
+            repo.save_recommendations(run_id, recs)
+    except Exception:
+        pass
 
 
 # ---------------- API ROUTES ----------------
@@ -733,18 +790,22 @@ def update_recommendations_overrides(data: OverridesUpdate):
 # ---------------- UPLOADS & FILE INGESTION ----------------
 
 @app.post("/api/upload/preview")
-async def preview_upload(file: UploadFile = File(...)):
+async def preview_upload(
+    file: UploadFile = File(...),
+    sheet_name: Optional[str] = Form(None)
+):
     contents = await file.read()
     try:
-        raw_df, meta = read_uploaded_file(contents, file.filename)
+        raw_df, meta = read_uploaded_file(contents, file.filename, sheet_name=sheet_name)
         detected_map = auto_detect_columns(list(raw_df.columns))
-        return {
+        sample_rows = raw_df.head(10).where(raw_df.head(10).notna(), None).to_dict(orient="records")
+        return _sanitize_for_json({
             "success": True,
             "meta": meta,
             "detected_mapping": detected_map,
-            "sample_rows": raw_df.head(10).to_dict(orient="records"),
+            "sample_rows": sample_rows,
             "all_columns": list(raw_df.columns)
-        }
+        })
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -754,14 +815,15 @@ async def process_upload(
     file: UploadFile = File(...),
     dataset_type: str = Form("sales"),
     allow_returns: bool = Form(True),
-    mapping_json: str = Form(...)
+    mapping_json: str = Form(...),
+    sheet_name: Optional[str] = Form(None)
 ):
     repo = get_repo()
     shop = repo.get_shop(1) or {}
     contents = await file.read()
 
     try:
-        raw_df, meta = read_uploaded_file(contents, file.filename)
+        raw_df, meta = read_uploaded_file(contents, file.filename, sheet_name=sheet_name)
         confirmed_mapping = json.loads(mapping_json)
 
         clean_mapping = {
@@ -808,14 +870,14 @@ async def process_upload(
             )
             rows_saved = repo.save_daily_sales(1, upload_id, df_daily)
 
-            return {
+            return _sanitize_for_json({
                 "success": True,
                 "upload_id": upload_id,
                 "rows_cleaned": len(cleaned_df),
                 "daily_records_saved": rows_saved,
                 "products_count": len(prods_to_upsert),
                 "quality_report": quality_report
-            }
+            })
         else:
             cleaned_inv, inv_report = cleaner.clean_inventory_data(raw_df)
             prods_to_upsert = []
@@ -855,12 +917,12 @@ async def process_upload(
                 row_count=len(raw_df),
                 quality_summary=inv_report
             )
-            return {
+            return _sanitize_for_json({
                 "success": True,
                 "upload_id": upload_id,
                 "products_count": len(snapshots),
                 "quality_report": inv_report
-            }
+            })
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

@@ -14,6 +14,8 @@ from src.config import SAMPLE_DIR, TEMPLATE_DIR
 
 
 def generate_all_samples():
+    SAMPLE_DIR.mkdir(parents=True, exist_ok=True)
+    TEMPLATE_DIR.mkdir(parents=True, exist_ok=True)
     random.seed(42)
     np.random.seed(42)
 
