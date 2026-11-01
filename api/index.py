@@ -10,6 +10,7 @@ import json
 from pathlib import Path
 from datetime import datetime, date, timedelta, timezone
 from typing import List, Dict, Any, Optional
+from urllib.parse import unquote, parse_qs
 
 # Ensure project root is in sys.path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -60,6 +61,48 @@ def _sanitize_for_json(obj):
     return obj
 
 
+class VercelPathRewriteMiddleware:
+    """
+    On Vercel, a rewrite in vercel.json ({'source': '/(.*)', 'destination': '/api/index.py'})
+    causes Vercel to invoke FastAPI with scope['path'] set to '/api/index.py'.
+    The actual requested client path is forwarded by Vercel in the 'x-matched-path' header.
+    This middleware detects when scope['path'] was rewritten to '/api/index.py' (or '/api/index')
+    and restores the real client path so that FastAPI's router matches the intended endpoint.
+    """
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] == "http":
+            raw_path = scope.get("path", "")
+            if raw_path in ("/api/index.py", "/api/index", "api/index.py", "api/index"):
+                headers = dict(scope.get("headers", []))
+                matched_header = (
+                    headers.get(b"x-matched-path")
+                    or headers.get(b"x-forwarded-uri")
+                    or headers.get(b"x-invoke-path")
+                    or headers.get(b"x-original-uri")
+                )
+                real_path = None
+                if matched_header:
+                    real_path = unquote(matched_header.decode("latin1", errors="replace")).split("?")[0]
+                elif scope.get("query_string"):
+                    qs = parse_qs(scope["query_string"].decode("latin1", errors="replace"))
+                    for key in ("1", "path", "match", "url"):
+                        if key in qs and qs[key]:
+                            candidate = qs[key][0]
+                            if candidate.startswith("/"):
+                                real_path = candidate
+                                break
+                if real_path:
+                    if not real_path.startswith("/"):
+                        real_path = "/" + real_path
+                    if real_path not in ("/api/index.py", "/api/index"):
+                        scope["path"] = real_path
+                        scope["raw_path"] = real_path.encode("latin1")
+        await self.app(scope, receive, send)
+
+
 app = FastAPI(
     title="Retail Sales Forecasting & Inventory System",
     description="Intelligent Demand Prediction & Supply Chain Optimization for Small Retailers",
@@ -73,6 +116,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(VercelPathRewriteMiddleware)
 
 def get_repo() -> Repository:
     init_db()

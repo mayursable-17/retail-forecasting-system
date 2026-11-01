@@ -2,7 +2,8 @@
   "0": "baseline.py",
   "1": "Repository",
   "2": "charts.py",
-  "4": "2. Comprehensive Test Execution Matrix",
+  "3": "test_integration.py",
+  "4": "read_uploaded_file",
   "5": "test_inventory.py",
   "6": "Retail Sales Forecasting & Inventory Optimization System Using Machine Learning",
   "7": "1. Database Schema Specifications",
@@ -10,7 +11,7 @@
   "9": "index.py",
   "10": "Retail Sales Forecasting & Inventory Optimization System",
   "11": "validation.py",
-  "12": "pandas",
+  "12": "DataCleaner",
   "13": "analytics/__init__.py",
   "14": "database/__init__.py",
   "15": "exports/__init__.py",
@@ -22,8 +23,13 @@
   "21": "tests/__init__.py",
   "22": "test_api.py",
   "23": "test_forecasting.py",
+  "24": "test_upload.py",
   "25": "train.py",
   "26": ".train_and_evaluate",
   "27": "vercel.json",
-  "29": "DemandModelTrainer"
+  "28": "2. Comprehensive Test Execution Matrix",
+  "29": "DemandModelTrainer",
+  "30": "pandas",
+  "31": "Retail Sales Forecasting & Inventory Optimization System",
+  "32": "VercelPathRewriteMiddleware"
 }

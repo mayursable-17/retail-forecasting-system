@@ -225,3 +225,14 @@ def test_api_upload_process_inventory(client):
     data = response.json()
     assert data["success"] is True
     assert data["products_count"] == 1
+
+
+def test_vercel_rewrite_middleware(client):
+    # Simulate Vercel rewrite where scope['path'] is /api/index.py but x-matched-path is set
+    res_get = client.get("/api/index.py", headers={"x-matched-path": "/api/health"})
+    assert res_get.status_code == 200
+    assert res_get.json()["status"] == "healthy"
+
+    res_post = client.post("/api/index.py", headers={"x-matched-path": "/api/demo/seed"})
+    assert res_post.status_code == 200
+    assert res_post.json()["success"] is True
